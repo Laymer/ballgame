@@ -1,10 +1,22 @@
+!_checkouts
+.rebar3
+_*
 .eunit
-deps
 *.o
 *.beam
 *.plt
-erl_crash.dump
+*.swp
+*.swo
+.erlang.cookie
 ebin
-rel/example_project
-.concrete/DEV_MODE
+log
+erl_crash.dump
 .rebar
+logs
+_build
+.idea
+rebar3.crashdump
+.DS_Store
+
+# GRiSP
+_grisp

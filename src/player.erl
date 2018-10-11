@@ -27,13 +27,13 @@
 %% Macros
 %%====================================================================
 
--define(MACRO_TEMPLATE(X), {X} ).
+-define(MGR, partisan_peer_service:manager() ).
 
 %%====================================================================
 %% Records
 %%====================================================================
-
--record(state, {}).
+-record(state, {balls           :: #{atom() => integer()},
+                total           :: integer()}).
 
 %%====================================================================
 %% API
@@ -75,7 +75,7 @@ handle_info(_Info, State) ->
 
 %%--------------------------------------------------------------------
 
-handle_continue(Continue, State) ->
+handle_continue(_Continue, State) ->
   % {noreply,NewState} | {noreply,NewState,Timeout}
   % | {noreply,NewState,hibernate}
   % | {noreply,NewState,{continue,Continue}}

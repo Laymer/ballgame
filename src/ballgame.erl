@@ -1,15 +1,12 @@
-% @doc ballgame public API.
-% @end
 -module(ballgame).
 
--behavior(application).
+-export([start/0,
+         stop/0]).
 
-% Callbacks
--export([start/2]).
--export([stop/1]).
+%% @doc Start the application.
+start() ->
+  application:ensure_all_started(ballgame).
 
-%--- Callbacks -----------------------------------------------------------------
-
-start(_Type, _Args) -> ballgame_sup:start_link().
-
-stop(_State) -> ok.
+%% @doc Stop the application.
+stop() ->
+  application:stop(ballgame).

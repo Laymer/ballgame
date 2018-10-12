@@ -11,19 +11,27 @@
 -export([start/2, stop/1]).
 
 %%====================================================================
+%% Macros
+%%====================================================================
+
+
+
+%%====================================================================
 %% API
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
+    prepare_game(),
     {ok, Supervisor} = ballgame_sup:start_link(),
-    LEDs = [1, 2],
-    [grisp_led:flash(L, red, 500) || L <- LEDs],
-    timer:sleep(5000),
-    grisp_led:off(2),
-    Random = fun() ->
-        {rand:uniform(2) - 1, rand:uniform(2) -1, rand:uniform(2) - 1}
-    end,
-    grisp_led:pattern(1, [{100, Random}]),
+    % LEDs = [1, 2],
+    % [grisp_led:flash(L, red, 500) || L <- LEDs],
+    % timer:sleep(5000),
+    % grisp_led:off(2),
+    % Random = fun() ->
+    %     {rand:uniform(2) - 1, rand:uniform(2) -1, rand:uniform(2) - 1}
+    logger:log(info, "The game is about to start"),
+    % end,
+    % grisp_led:pattern(1, [{100, Random}]),
     {ok, Supervisor}.
 
 %%--------------------------------------------------------------------
@@ -33,3 +41,9 @@ stop(_State) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
+
+prepare_game() ->
+  logger:log(info, "Preparing cluster"),
+  {ok, _} = application:ensure_all_started(partisan),
+  Maker = ballgame_util:get(matchmaker),
+  Maker:start().

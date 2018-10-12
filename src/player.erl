@@ -12,7 +12,8 @@
 -include("ballgame.hrl").
 
 %% API
--export([start_link/0]).
+-export([start_link/1]).
+-export([shoot/1]).
 
 %% Gen Server Callbacks
 -export([init/1,
@@ -27,32 +28,43 @@
 %% Macros
 %%====================================================================
 
--define(MGR, partisan_peer_service:manager() ).
+-define(GLOBALNAME(Number),   list_to_atom(unicode:characters_to_list(["player", "_", integer_to_list(Number)], utf8))).
 
 %%====================================================================
 %% Records
 %%====================================================================
--record(state, {balls           :: #{atom() => integer()},
-                total           :: integer()}).
+
+-record(state, {balls           :: #{atom() => integer()} | #{},
+              current           :: integer()}).
 
 %%====================================================================
 %% API
 %%====================================================================
 
-start_link() ->
-    gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
+start_link(Number) ->
+    gen_server:start_link({global, ?GLOBALNAME(Number)}, ?MODULE, [Number], []).
+
+shoot(Target) ->
+  gen_server:call(?MODULE, {shoot, Target}).
 
 %%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
 
-init([]) ->
-    {ok, #state{}}.
+init([Number]) ->
+    Others = [ballgame_util:get(players)] -- [Number],
+    {ok, #state{balls = maps:new(), current = 0}, {continue, {play, Others}}}.
+
+%%--------------------------------------------------------------------
+
+handle_call({shoot, Target}, _From, State = #state{balls = B, current = Current}) ->
+  partisan_peer_service_manager:forward_message(Target, 1, player_2, Current, []),
+  {noreply, hibernate, State = #state{balls = B, current = (Current + 1)}};
 
 %%--------------------------------------------------------------------
 
 handle_call(_Request, _From, State) ->
-    {reply, ignored, State}.
+  {reply, ignored, State}.
 
 %%--------------------------------------------------------------------
 
@@ -75,12 +87,20 @@ handle_info(_Info, State) ->
 
 %%--------------------------------------------------------------------
 
-handle_continue(_Continue, State) ->
+handle_continue({continue, {play, _Others}}, State) ->
   % {noreply,NewState} | {noreply,NewState,Timeout}
   % | {noreply,NewState,hibernate}
   % | {noreply,NewState,{continue,Continue}}
   % | {stop,Reason,NewState}
+
+    % case Continue of
+    %   {play, Target} ->
+    %     logger:log(info, "Player ~p will shoot in 3 seconds~n", [node()]),
+    %     ?PAUSE3,
+    %     shoot(Target);
+    %   _ ->
     {noreply, State}.
+    % end.
 
 %%--------------------------------------------------------------------
 

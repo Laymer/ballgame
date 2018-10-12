@@ -42,13 +42,13 @@
 %% Records
 %%====================================================================
 
--record(shade, {
-    measurements = [],
-    count = 0
+-record(rec, {
+    tab = [],
+    int = 0
 }).
 
 %%====================================================================
-%% Records
+%% TEAMS
 %%====================================================================
 
 
@@ -58,4 +58,6 @@
 -define(TEAM2,      lists:seq(5,8,1) ).
 -define(TEAM3,   lists:seq(9,12,1) ).
 
--define(BOARDS(Name),   [ list_to_atom(lists:flatten(lists:concat([ballgame@my_grisp_board, "_", X]))) || X <- Name ] ).
+-define(PLAYER(Number),   list_to_atom(unicode:characters_to_list(["ballgame@my_grisp_board", "_", integer_to_list(Number)], utf8))).
+
+-define(TEAM(Numbers),   [ ?PLAYER(X) || X <- Numbers ] ).

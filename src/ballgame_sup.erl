@@ -13,18 +13,19 @@
 %--- API -----------------------------------------------------------------------
 
 start_link() ->
-  supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %--- Callbacks -----------------------------------------------------------------
 
 init([]) ->
-  SupFlags = #{strategy => one_for_one,
-               intensity => 1,
-               period => 10},
-  ChildSpecs = [#{id => player,
-                  start => {player, start_link, []},
-                  restart => permanent,
-                  type => worker,
-                  shutdown => 10000,
-                  modules => [player]}],
-  {ok, {SupFlags, ChildSpecs}}.
+    Number = ballgame_util:get(number),
+    SupFlags = #{strategy => one_for_one,
+                 intensity => 3,
+                 period => 10},
+    ChildSpecs = [#{id => {player, Number},
+                start => {player, start_link, [Number]},
+                restart => permanent,
+                type => worker,
+                shutdown => 10000,
+                modules => [player]}],
+    {ok, {SupFlags, ChildSpecs}}.

@@ -13,7 +13,7 @@
 
 %% API
 -export([start_link/1]).
--export([shoot/1]).
+-export([shoot/2]).
 
 %% Gen Server Callbacks
 -export([init/1,
@@ -35,7 +35,8 @@
 %%====================================================================
 
 -record(state, {balls           :: #{atom() => integer()} | #{},
-              current           :: integer()}).
+              current           :: integer(),
+              others            :: list()}).
 
 %%====================================================================
 %% API
@@ -44,22 +45,26 @@
 start_link(Number) ->
     gen_server:start_link({global, ?GLOBALNAME(Number)}, ?MODULE, [Number], []).
 
-shoot(Target) ->
-  gen_server:call(?MODULE, {shoot, Target}).
+shoot(Target, Pid) ->
+  % gen_server:call(?MODULE, {shoot, Target}).
+  gen_server:call(Pid, {shoot, Target}).
 
 %%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
 
 init([Number]) ->
-    Others = [ballgame_util:get(players)] -- [Number],
-    {ok, #state{balls = maps:new(), current = 0}, {continue, {play, Others}}}.
+    [Others] = [ballgame_util:get(players)] -- [Number],
+    % {ok, #state{balls = maps:new(), current = 0}, {continue, {play, Others}}}.
+    % {ok,State,{continue,Continue}}.
+    {ok, #state{balls = maps:new(), current = 0, others = Others}}.
 
 %%--------------------------------------------------------------------
 
-handle_call({shoot, Target}, _From, State = #state{balls = B, current = Current}) ->
-  partisan_peer_service_manager:forward_message(Target, 1, player_2, Current, []),
-  {noreply, hibernate, State = #state{balls = B, current = (Current + 1)}};
+handle_call({shoot, Target}, _From, State = #state{balls = B, current = Current, others = Others}) ->
+    Manager = ballgame_util:mgr(),
+    ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
+    {noreply, hibernate, State = #state{balls = B, current = (Current + 1), others = Others}};
 
 %%--------------------------------------------------------------------
 
@@ -87,7 +92,11 @@ handle_info(_Info, State) ->
 
 %%--------------------------------------------------------------------
 
-handle_continue({continue, {play, _Others}}, State) ->
+handle_continue({continue, _Continue}, State) ->
+    % {noreply, State};
+    {noreply, State}.
+% handle_continue({continue, {play, Others}}, State) ->
+% handle_continue({continue, Continue}, State) ->
   % {noreply,NewState} | {noreply,NewState,Timeout}
   % | {noreply,NewState,hibernate}
   % | {noreply,NewState,{continue,Continue}}
@@ -99,7 +108,7 @@ handle_continue({continue, {play, _Others}}, State) ->
     %     ?PAUSE3,
     %     shoot(Target);
     %   _ ->
-    {noreply, State}.
+    % {noreply, State}.
     % end.
 
 %%--------------------------------------------------------------------

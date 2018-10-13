@@ -87,6 +87,11 @@ checkoutsclean:
 #
 # Test targets
 #
+shell:
+	$(REBAR) shell --sname $(GRISPAPP) --setcookie $(COOKIE) --apps $(GRISPAPP)
+#
+# Test targets
+#
 # shell: test-app-src
 # 	$(REBAR) shell --sname $(GRISPAPP) --setcookie $(COOKIE) --apps grisplite
 #

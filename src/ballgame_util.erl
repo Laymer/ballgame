@@ -21,6 +21,16 @@ get(Key) ->
 
 get(Key, Default) -> application:get_env(ballgame, Key, Default).
 
+mgr() ->
+  partisan_peer_service:manager().
+
+me() ->
+  (mgr()):myself().
+
+members() ->
+  {ok, Members} = partisan_peer_service:members(),
+  Members.
+
 % -ifdef(debug).
 % -define(LOG(X), io:format("{~p,~p}: ~p~n", [?MODULE,?LINE,X])).
 % -else.

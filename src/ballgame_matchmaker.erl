@@ -66,16 +66,6 @@ code_change(_OldVsn, State, _Extra) ->
 %% Clustering functions
 %%====================================================================
 
-mgr() ->
-  partisan_peer_service:manager().
-
-me() ->
-  (mgr()):myself().
-
-members() ->
-  {ok, Team} = partisan_peer_service:members(),
-  Team.
-
 join(Host) ->
   Manager = rpc:call(Host, partisan_peer_service, manager, []),
   case Manager of
@@ -91,10 +81,10 @@ join(Host) ->
 
 clusterize() ->
   logger:log(info, "Joining reachable nodes ~n"),
-  Numbers = ballgame_util:get(players),
+  [Numbers] = ballgame_util:get(players),
   Team = ?TEAM(Numbers),
   _L = [ join(X) ||
       X <- Team,
       X =/= node(),
       net_adm:ping(X) =:= pong ],
-  members().
+  ballgame_util:members().

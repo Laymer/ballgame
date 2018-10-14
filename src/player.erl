@@ -63,7 +63,7 @@ init([Number]) ->
     [Others] = [ballgame_util:get(players)] -- [Number],
     % {ok, #state{balls = maps:new(), current = 0}, {continue, {play, Others}}}.
     % {ok,State,{continue,Continue}}.
-    {ok, #state{balls = maps:new(), current = 0, others = Others}}.
+    {ok, #state{balls = maps:new(), current = 0, others = lists:flatten(Others)}}.
 
 %%--------------------------------------------------------------------
 

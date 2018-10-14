@@ -14,6 +14,7 @@
 %% API
 -export([start_link/1]).
 -export([greet/1]).
+-export([greetpid/1]).
 -export([shoot/2]).
 
 %% Gen Server Callbacks
@@ -55,6 +56,10 @@ greet(Node) ->
   % gen_server:call(?MODULE, {shoot, Target}).
   gen_server:call(?MODULE, {greet, Node}).
 
+greetpid(Node) ->
+  % gen_server:call(?MODULE, {shoot, Target}).
+  gen_server:call(?MODULE, {greetpid, Node}).
+
 %%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
@@ -95,6 +100,20 @@ handle_call({greet, Node}, _From, _State = #state{balls = B, current = Current, 
     % partisan_peer_service:forward_message(ballgame@LaymerMac,player,{hello}).
     % partisan_peer_service:cast_message(ballgame@LaymerMac,player,{hello}).
     % ok = Manager:forward_message(Node, 1, player_1, {msg, Current}, []),
+    NewState = #state{balls = B, current = (Current + 1), others = Others},
+    {reply, said_hello, NewState};
+
+%%--------------------------------------------------------------------
+
+handle_call({greetpid, Node}, _From, _State = #state{balls = B, current = Current, others = Others}) ->
+    logger:log(notice, "Saying hello to Player ~p ! ~n", [Node]),
+    Manager = ballgame_util:mgr(),
+    Pid = rpc:call(Node, erlang, whereis, [player]),
+    % partisan_peer_service:forward_message(Node,player,{hello}),
+    % partisan_peer_service:cast_message(Node,player,{hello}).
+    % partisan_peer_service:forward_message(ballgame@LaymerMac,player,{hello}).
+    % partisan_peer_service:cast_message(ballgame@LaymerMac,player,{hello}).
+    ok = Manager:forward_message(Node, 1, Pid, {hello}, []),
     NewState = #state{balls = B, current = (Current + 1), others = Others},
     {reply, said_hello, NewState};
 

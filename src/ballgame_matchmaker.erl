@@ -37,7 +37,7 @@ start_link() ->
 
 clusterize() ->
   % gen_server:call(?MODULE, {shoot, Target}).
-  gen_server:call(?MODULE, {clusterize}, infinity).
+  gen_server:call(?MODULE, {clusterize}).
 
 %%====================================================================
 %% Gen Server Callbacks
@@ -51,15 +51,19 @@ init([]) ->
 
 handle_call({clusterize}, _From, State) ->
     logger:log(info, "Joining reachable nodes ~n"),
-    [Numbers] = ballgame_util:get(players),
-    Team = ?TEAM(Numbers),
-    _L = [ ballgame_util:join(X) ||
+    % [Numbers] = ballgame_util:get(players),
+    [Numbers] = ballgame_util:get(fakeplayers),
+    % Team = ?TEAM(Numbers),
+    Team = ?FAKETEAM(Numbers),
+    % _L = [ ballgame_util:join(X) ||
+    L = [ ballgame_util:join(X) ||
         X <- Team,
         X =/= node(),
         net_adm:ping(X) =:= pong ],
-    M = ballgame_util:members(),
-    logger:log(info, "Joined = ~p ~n", [M]),
-   {noreply, State};
+    % M = ballgame_util:members(),
+    % logger:log(info, "Joined = ~p ~n", [M]),
+    logger:log(info, "Joined = ~p ~n", [L]),
+   {reply, L, State};
 
 handle_call(_Request, _From, State) ->
    {reply, ignored, State}.

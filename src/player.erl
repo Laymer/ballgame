@@ -71,7 +71,7 @@ handle_call({shoot, _Target}, _From, _State = #state{balls = B, current = Curren
     Manager = ballgame_util:mgr(),
     ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
     NewState = #state{balls = B, current = (Current + 1), others = Others},
-    {noreply, ok, NewState, hibernate};
+    {reply, ok, NewState};
 
 %%--------------------------------------------------------------------
 
@@ -80,7 +80,7 @@ handle_call({hello}, From, _State = #state{balls = B, current = Current, others 
     % Manager = ballgame_util:mgr(),
     % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
     NewState = #state{balls = B, current = (Current + 1), others = Others},
-    {noreply, ok, NewState, hibernate};
+    {reply, received_hello, NewState};
 
 %%--------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ handle_call({greet, Node}, _From, _State = #state{balls = B, current = Current, 
     partisan_peer_service:forward_message(Node,player,{hello}),
     % ok = Manager:forward_message(Node, 1, player_1, {msg, Current}, []),
     NewState = #state{balls = B, current = (Current + 1), others = Others},
-    {noreply, ok, NewState, hibernate};
+    {reply, said_hello, NewState};
 
 %%--------------------------------------------------------------------
 

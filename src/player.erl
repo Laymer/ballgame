@@ -78,7 +78,7 @@ handle_call({hello}, From, State = #state{balls = B, current = Current, others =
     logger:log(info, "Player ~p said hi ! ~n", [From]),
     % Manager = ballgame_util:mgr(),
     % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
-    {noreply, hibernate, State = #state{balls = B, current = (Current + 1), others = Others}};
+    {noreply, hibernate, NewState = #state{balls = B, current = (Current + 1), others = Others}};
 
 %%--------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ handle_call({greet, Node}, _From, State = #state{balls = B, current = Current, o
     % Manager = ballgame_util:mgr(),
     partisan_peer_service:forward_message(Node,player,{hello}),
     % ok = Manager:forward_message(Node, 1, player_1, {msg, Current}, []),
-    {noreply, hibernate, State = #state{balls = B, current = (Current + 1), others = Others}};
+    {noreply, hibernate, NewState = #state{balls = B, current = (Current + 1), others = Others}};
 
 %%--------------------------------------------------------------------
 

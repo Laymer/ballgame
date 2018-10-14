@@ -43,6 +43,9 @@ join(Host) ->
       logger:log(error, "Unable to retrieve remote : ~p~n", [Manager]),
       {error, Reason}
   end.
+
+name(Host) ->
+    list_to_atom(unicode:characters_to_list(["ballgame@", Host], utf8)).
 % -ifdef(debug).
 % -define(LOG(X), io:format("{~p,~p}: ~p~n", [?MODULE,?LINE,X])).
 % -else.

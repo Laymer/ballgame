@@ -67,7 +67,7 @@ init([Number]) ->
 
 handle_call({shoot, Target}, _From, _State = #state{current = Current, others = Others}) ->
     Manager = ballgame_util:mgr(),
-    ok = Manager:cast_message(Target, 1, player, {ball, Current}, []),
+    ok = Manager:cast_message(Target, 1, player, {ball, Current, node()}, []),
     % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
     % ok = partisan_hyparview_peer_service_manager:forward_message(ballgame@LaymerMac, 1, player, {hello}, []).
     % ok = partisan_hyparview_peer_service_manager:cast_message(N, 1, PidR, {hello}, []).

@@ -12,7 +12,8 @@
 -include("ballgame.hrl").
 
 %% API
--export([start/0]).
+-export([start_link/0]).
+-export([clusterize/0]).
 
 %% Gen Server Callbacks
 -export([init/1,
@@ -26,18 +27,39 @@
 %% API
 %%====================================================================
 
-start() ->
+start_link() ->
    gen_server:start({local, ?MODULE}, ?MODULE, [], []).
+
+%%====================================================================
+%% Clustering functions
+%%====================================================================
+
+
+clusterize() ->
+  % gen_server:call(?MODULE, {shoot, Target}).
+  gen_server:call(?MODULE, {clusterize}, infinity).
 
 %%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
 
 init([]) ->
-  clusterize(),
+  % clusterize(),
   {ok, #{}}.
 
 %%--------------------------------------------------------------------
+
+handle_call({clusterize}, _From, State) ->
+    logger:log(info, "Joining reachable nodes ~n"),
+    [Numbers] = ballgame_util:get(players),
+    Team = ?TEAM(Numbers),
+    _L = [ ballgame_util:join(X) ||
+        X <- Team,
+        X =/= node(),
+        net_adm:ping(X) =:= pong ],
+    M = ballgame_util:members(),
+    logger:log(info, "Joined = ~p ~n", [M]),
+   {noreply, State};
 
 handle_call(_Request, _From, State) ->
    {reply, ignored, State}.
@@ -61,30 +83,3 @@ terminate(_Reason, _State) ->
 
 code_change(_OldVsn, State, _Extra) ->
    {ok, State}.
-
-%%====================================================================
-%% Clustering functions
-%%====================================================================
-
-join(Host) ->
-  Manager = rpc:call(Host, partisan_peer_service, manager, []),
-  case Manager of
-    partisan_hyparview_peer_service_manager ->
-      Node = rpc:call(Host, Manager, myself, []),
-      ok = partisan_peer_service:join(Node),
-      logger:log(info, "Joined ~p~n", [Host]),
-      Node;
-    {error, Reason} ->
-      logger:log(error, "Unable to retrieve remote : ~p~n", [Manager]),
-      {error, Reason}
-  end.
-
-clusterize() ->
-  logger:log(info, "Joining reachable nodes ~n"),
-  [Numbers] = ballgame_util:get(players),
-  Team = ?TEAM(Numbers),
-  _L = [ join(X) ||
-      X <- Team,
-      X =/= node(),
-      net_adm:ping(X) =:= pong ],
-  ballgame_util:members().

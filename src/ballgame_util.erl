@@ -31,6 +31,18 @@ members() ->
   {ok, Members} = partisan_peer_service:members(),
   Members.
 
+join(Host) ->
+  Manager = rpc:call(Host, partisan_peer_service, manager, []),
+  case Manager of
+    partisan_hyparview_peer_service_manager ->
+      Node = rpc:call(Host, Manager, myself, []),
+      ok = partisan_peer_service:join(Node),
+      logger:log(info, "Joined ~p~n", [Host]),
+      Node;
+    {error, Reason} ->
+      logger:log(error, "Unable to retrieve remote : ~p~n", [Manager]),
+      {error, Reason}
+  end.
 % -ifdef(debug).
 % -define(LOG(X), io:format("{~p,~p}: ~p~n", [?MODULE,?LINE,X])).
 % -else.

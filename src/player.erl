@@ -13,6 +13,7 @@
 
 %% API
 -export([start_link/1]).
+-export([greet/1]).
 -export([shoot/2]).
 
 %% Gen Server Callbacks
@@ -28,7 +29,7 @@
 %% Macros
 %%====================================================================
 
--define(GLOBALNAME(Number),   list_to_atom(unicode:characters_to_list(["player", "_", integer_to_list(Number)], utf8))).
+% -define(NAME(Number),   list_to_atom(unicode:characters_to_list(["player", "_", integer_to_list(Number)], utf8))).
 
 %%====================================================================
 %% Records
@@ -43,11 +44,16 @@
 %%====================================================================
 
 start_link(Number) ->
-    gen_server:start_link({global, ?GLOBALNAME(Number)}, ?MODULE, [Number], []).
+    % gen_server:start_link({local, ?GLOBALNAME(Number)}, ?MODULE, [Number], []).
+    gen_server:start_link({local, ?MODULE}, ?MODULE, [Number], []).
 
 shoot(Target, Pid) ->
   % gen_server:call(?MODULE, {shoot, Target}).
   gen_server:call(Pid, {shoot, Target}).
+
+greet(Node) ->
+  % gen_server:call(?MODULE, {shoot, Target}).
+  gen_server:call(?MODULE, {greet, Node}, infinity).
 
 %%====================================================================
 %% Gen Server Callbacks
@@ -64,6 +70,23 @@ init([Number]) ->
 handle_call({shoot, Target}, _From, State = #state{balls = B, current = Current, others = Others}) ->
     Manager = ballgame_util:mgr(),
     ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
+    {noreply, hibernate, State = #state{balls = B, current = (Current + 1), others = Others}};
+
+%%--------------------------------------------------------------------
+
+handle_call({hello}, From, State = #state{balls = B, current = Current, others = Others}) ->
+    logger:log(info, "Player ~p said hi ! ~n", [From]),
+    % Manager = ballgame_util:mgr(),
+    % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
+    {noreply, hibernate, State = #state{balls = B, current = (Current + 1), others = Others}};
+
+%%--------------------------------------------------------------------
+
+handle_call({greet, Node}, _From, State = #state{balls = B, current = Current, others = Others}) ->
+    logger:log(info, "Saying hello to Player ~p ! ~n", [Node]),
+    % Manager = ballgame_util:mgr(),
+    partisan_peer_service:forward_message(Node,player,{hello}),
+    % ok = Manager:forward_message(Node, 1, player_1, {msg, Current}, []),
     {noreply, hibernate, State = #state{balls = B, current = (Current + 1), others = Others}};
 
 %%--------------------------------------------------------------------
@@ -105,6 +128,7 @@ handle_continue({continue, _Continue}, State) ->
     % case Continue of
     %   {play, Target} ->
     %     logger:log(info, "Player ~p will shoot in 3 seconds~n", [node()]),
+    %
     %     ?PAUSE3,
     %     shoot(Target);
     %   _ ->

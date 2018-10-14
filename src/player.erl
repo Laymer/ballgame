@@ -14,8 +14,7 @@
 %% API
 -export([start_link/1]).
 -export([greet/1]).
--export([greetpid/1]).
--export([shoot/2]).
+-export([shoot/1]).
 
 %% Gen Server Callbacks
 -export([init/1,
@@ -30,36 +29,29 @@
 %% Macros
 %%====================================================================
 
+-define(P,  partisan_peer_service).
 % -define(NAME(Number),   list_to_atom(unicode:characters_to_list(["player", "_", integer_to_list(Number)], utf8))).
 
 %%====================================================================
 %% Records
 %%====================================================================
 
--record(state, {balls           :: #{atom() => integer()} | #{},
-              current           :: integer(),
-              others            :: list()}).
+-record(state,  {current           :: integer(),
+                received           :: integer(),
+                others             :: list()}).
 
 %%====================================================================
 %% API
 %%====================================================================
 
 start_link(Number) ->
-    % gen_server:start_link({local, ?GLOBALNAME(Number)}, ?MODULE, [Number], []).
     gen_server:start_link({local, ?MODULE}, ?MODULE, [Number], []).
 
-shoot(Target, Pid) ->
-  % gen_server:call(?MODULE, {shoot, Target}).
-  gen_server:call(Pid, {shoot, Target}).
+shoot(Target) ->
+    gen_server:call(?MODULE, {shoot, Target}).
 
 greet(Node) ->
-  % gen_server:call(?MODULE, {shoot, Target}).
-  gen_server:call(?MODULE, {greet, Node}).
-
-greetpid(Node) ->
-  % gen_server:call(?MODULE, {shoot, Target}).
-  % gen_server:call(?MODULE, {greetpid, Node}).
-  partisan_peer_service:forward_message(?MODULE, {greetpid, Node}).
+    gen_server:call(?MODULE, {greet, Node}).
 
 %%====================================================================
 %% Gen Server Callbacks
@@ -69,31 +61,32 @@ init([Number]) ->
     [Others] = [ballgame_util:get(players)] -- [Number],
     % {ok, #state{balls = maps:new(), current = 0}, {continue, {play, Others}}}.
     % {ok,State,{continue,Continue}}.
-    {ok, #state{balls = maps:new(), current = 0, others = lists:flatten(Others)}}.
+    {ok, #state{current = 0, received = 0, others = lists:flatten(Others)}}.
 
 %%--------------------------------------------------------------------
 
-handle_call({shoot, _Target}, _From, _State = #state{balls = B, current = Current, others = Others}) ->
+handle_call({shoot, Target}, _From, _State = #state{current = Current, others = Others}) ->
     Manager = ballgame_util:mgr(),
-    ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
+    ok = Manager:cast_message(Target, 1, player, {ball, Current}, []),
+    % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
     % ok = partisan_hyparview_peer_service_manager:forward_message(ballgame@LaymerMac, 1, player, {hello}, []).
     % ok = partisan_hyparview_peer_service_manager:cast_message(N, 1, PidR, {hello}, []).
     % ok = partisan_hyparview_peer_service_manager:send_message(ballgame@LaymerMac, {hello}).
-    NewState = #state{balls = B, current = (Current + 1), others = Others},
+    NewState = #state{current = (Current + 1), others = Others},
     {reply, ok, NewState};
 
 %%--------------------------------------------------------------------
 
-handle_call({hello}, From, _State = #state{balls = B, current = Current, others = Others}) ->
+handle_call({hello}, From, _State = #state{current = Current, others = Others}) ->
     logger:log(notice, "Player ~p said hi ! ~n", [From]),
     % Manager = ballgame_util:mgr(),
     % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
-    NewState = #state{balls = B, current = (Current + 1), others = Others},
+    NewState = #state{current = (Current + 1), others = Others},
     {reply, received_hello, NewState};
 % Pid = rpc:call('ballgame@LaymerMac', erlang, list_to_pid, ["<0.365.0>"]).
 %%--------------------------------------------------------------------
 
-handle_call({greet, Node}, _From, _State = #state{balls = B, current = Current, others = Others}) ->
+handle_call({greet, Node}, _From, _State = #state{current = Current, others = Others}) ->
     logger:log(notice, "Saying hello to Player ~p ! ~n", [Node]),
     % Manager = ballgame_util:mgr(),
     % partisan_peer_service:forward_message(Node,player,{hello}),
@@ -102,12 +95,12 @@ handle_call({greet, Node}, _From, _State = #state{balls = B, current = Current, 
     % partisan_peer_service:forward_message(ballgame@LaymerMac,player,{hello}).
     % partisan_peer_service:cast_message(ballgame@LaymerMac,player,{hello}).
     % ok = Manager:forward_message(Node, 1, player_1, {msg, Current}, []),
-    NewState = #state{balls = B, current = (Current + 1), others = Others},
+    NewState = #state{current = (Current + 1), others = Others},
     {reply, said_hello, NewState};
 
 %%--------------------------------------------------------------------
 
-handle_call({greetpid, Node}, _From, _State = #state{balls = B, current = Current, others = Others}) ->
+handle_call({greetpid, Node}, _From, _State = #state{current = Current, others = Others}) ->
     logger:log(notice, "Saying hello to Player ~p ! ~n", [Node]),
     Manager = ballgame_util:mgr(),
     Pid = rpc:call(Node, erlang, whereis, [player]),
@@ -116,7 +109,7 @@ handle_call({greetpid, Node}, _From, _State = #state{balls = B, current = Curren
     % partisan_peer_service:forward_message(ballgame@LaymerMac,player,{hello}).
     % partisan_peer_service:cast_message(ballgame@LaymerMac,player,{hello}).
     ok = Manager:forward_message(Node, 1, Pid, {hello}, []),
-    NewState = #state{balls = B, current = (Current + 1), others = Others},
+    NewState = #state{current = (Current + 1), others = Others},
     {reply, said_hello, NewState};
 
 %%--------------------------------------------------------------------
@@ -130,6 +123,14 @@ handle_call(Request, From, State) ->
 handle_cast({hello}, State) ->
     logger:log(notice, "Player casted hi ! ~n"),
     {noreply, State};
+
+%%--------------------------------------------------------------------
+
+handle_cast({ball, Number, Player}, State = #state{received = Rcv}) ->
+    logger:log(notice, "Received a ball with number ~p from player ~p ! ~n",[Number,Player]),
+    NewState = State#state{received = (Rcv + 1)},
+    {noreply, NewState};
+
 %%--------------------------------------------------------------------
 
 handle_cast(_Msg, State) ->

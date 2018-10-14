@@ -34,9 +34,9 @@ start_link() ->
 %%====================================================================
 
 init([]) ->
-  Members = ballgame_util:clusterize(),
-  erlang:send_after(?MIN, self(), {refresh}),
-  {ok, #{members => Members}}.
+  % Members = ballgame_util:clusterize(),
+  erlang:send_after(?ONE, self(), {refresh}),
+  {ok, #{members => []}}.
 
 %%--------------------------------------------------------------------
 

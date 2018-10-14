@@ -58,7 +58,8 @@ greet(Node) ->
 
 greetpid(Node) ->
   % gen_server:call(?MODULE, {shoot, Target}).
-  gen_server:call(?MODULE, {greetpid, Node}).
+  % gen_server:call(?MODULE, {greetpid, Node}).
+  partisan_peer_service:forward_message(?MODULE, {greetpid, Node}).
 
 %%====================================================================
 %% Gen Server Callbacks
@@ -76,7 +77,7 @@ handle_call({shoot, _Target}, _From, _State = #state{balls = B, current = Curren
     Manager = ballgame_util:mgr(),
     ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
     % ok = partisan_hyparview_peer_service_manager:forward_message(ballgame@LaymerMac, 1, player, {hello}, []).
-    % ok = partisan_hyparview_peer_service_manager:cast_message(ballgame@LaymerMac, 1, player, {hello}, []).
+    % ok = partisan_hyparview_peer_service_manager:cast_message(N, 1, PidR, {hello}, []).
     % ok = partisan_hyparview_peer_service_manager:send_message(ballgame@LaymerMac, {hello}).
     NewState = #state{balls = B, current = (Current + 1), others = Others},
     {reply, ok, NewState};
@@ -89,7 +90,7 @@ handle_call({hello}, From, _State = #state{balls = B, current = Current, others 
     % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
     NewState = #state{balls = B, current = (Current + 1), others = Others},
     {reply, received_hello, NewState};
-
+% Pid = rpc:call('ballgame@LaymerMac', erlang, list_to_pid, ["<0.365.0>"]).
 %%--------------------------------------------------------------------
 
 handle_call({greet, Node}, _From, _State = #state{balls = B, current = Current, others = Others}) ->
@@ -119,9 +120,15 @@ handle_call({greetpid, Node}, _From, _State = #state{balls = B, current = Curren
 
 %%--------------------------------------------------------------------
 
-handle_call(_Request, _From, State) ->
-  {reply, ignored, State}.
+handle_call(Request, From, State) ->
+    logger:log(notice, "Received unhandled ~p request from ~p ! ~n", [Request,From]),
+    {reply, ignored, State}.
 
+%%--------------------------------------------------------------------
+
+handle_cast({hello}, State) ->
+    logger:log(notice, "Player casted hi ! ~n"),
+    {noreply, State};
 %%--------------------------------------------------------------------
 
 handle_cast(_Msg, State) ->
@@ -129,7 +136,8 @@ handle_cast(_Msg, State) ->
 
 %%--------------------------------------------------------------------
 
-handle_info(_Info, State) ->
+handle_info(Info, State) ->
+    logger:log(notice, "Received INFO : ~p ! ~n", [Info]),
     {noreply, State}.
 
 %%--------------------------------------------------------------------

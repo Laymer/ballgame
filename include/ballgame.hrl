@@ -60,4 +60,7 @@
 
 -define(PLAYER(Number),   list_to_atom(unicode:characters_to_list(["ballgame@my_grisp_board", "_", integer_to_list(Number)], utf8))).
 
+-define(FAKEPLAYER(Name),   list_to_atom(unicode:characters_to_list(["ballgame@", Name], utf8))).
+
 -define(TEAM(Numbers),   [ ?PLAYER(X) || X <- Numbers ] ).
+-define(FAKETEAM(Names),   [ ?FAKEPLAYER(X) || X <- Names ] ).

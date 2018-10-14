@@ -67,27 +67,30 @@ init([Number]) ->
 
 %%--------------------------------------------------------------------
 
-handle_call({shoot, Target}, _From, State = #state{balls = B, current = Current, others = Others}) ->
+handle_call({shoot, _Target}, _From, _State = #state{balls = B, current = Current, others = Others}) ->
     Manager = ballgame_util:mgr(),
     ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
-    {noreply, hibernate, State = #state{balls = B, current = (Current + 1), others = Others}};
+    NewState = #state{balls = B, current = (Current + 1), others = Others},
+    {noreply, ok, NewState, hibernate};
 
 %%--------------------------------------------------------------------
 
-handle_call({hello}, From, State = #state{balls = B, current = Current, others = Others}) ->
+handle_call({hello}, From, _State = #state{balls = B, current = Current, others = Others}) ->
     logger:log(info, "Player ~p said hi ! ~n", [From]),
     % Manager = ballgame_util:mgr(),
     % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
-    {noreply, hibernate, NewState = #state{balls = B, current = (Current + 1), others = Others}};
+    NewState = #state{balls = B, current = (Current + 1), others = Others},
+    {noreply, ok, NewState, hibernate};
 
 %%--------------------------------------------------------------------
 
-handle_call({greet, Node}, _From, State = #state{balls = B, current = Current, others = Others}) ->
+handle_call({greet, Node}, _From, _State = #state{balls = B, current = Current, others = Others}) ->
     logger:log(info, "Saying hello to Player ~p ! ~n", [Node]),
     % Manager = ballgame_util:mgr(),
     partisan_peer_service:forward_message(Node,player,{hello}),
     % ok = Manager:forward_message(Node, 1, player_1, {msg, Current}, []),
-    {noreply, hibernate, NewState = #state{balls = B, current = (Current + 1), others = Others}};
+    NewState = #state{balls = B, current = (Current + 1), others = Others},
+    {noreply, ok, NewState, hibernate};
 
 %%--------------------------------------------------------------------
 

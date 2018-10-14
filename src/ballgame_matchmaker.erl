@@ -13,7 +13,6 @@
 
 %% API
 -export([start_link/0]).
--export([clusterize/0]).
 
 %% Gen Server Callbacks
 -export([init/1,
@@ -31,39 +30,15 @@ start_link() ->
    gen_server:start({local, ?MODULE}, ?MODULE, [], []).
 
 %%====================================================================
-%% Clustering functions
-%%====================================================================
-
-
-clusterize() ->
-  % gen_server:call(?MODULE, {shoot, Target}).
-  gen_server:call(?MODULE, {clusterize}).
-
-%%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
 
 init([]) ->
-  % clusterize(),
-  {ok, #{}}.
+  Members = ballgame_util:clusterize(),
+  erlang:send_after(?MIN, self(), {refresh}),
+  {ok, #{members => Members}}.
 
 %%--------------------------------------------------------------------
-
-handle_call({clusterize}, _From, State) ->
-    logger:log(info, "Joining reachable nodes ~n"),
-    % [Numbers] = ballgame_util:get(players),
-    [Numbers] = ballgame_util:get(fakeplayers),
-    % Team = ?TEAM(Numbers),
-    Team = ?FAKETEAM(Numbers),
-    % _L = [ ballgame_util:join(X) ||
-    L = [ ballgame_util:join(X) ||
-        X <- Team,
-        X =/= node(),
-        net_adm:ping(X) =:= pong ],
-    % M = ballgame_util:members(),
-    % logger:log(info, "Joined = ~p ~n", [M]),
-    logger:log(info, "Joined = ~p ~n", [L]),
-   {reply, L, State};
 
 handle_call(_Request, _From, State) ->
    {reply, ignored, State}.
@@ -72,6 +47,13 @@ handle_call(_Request, _From, State) ->
 
 handle_cast(_Msg, State) ->
    {noreply, State}.
+
+%%--------------------------------------------------------------------
+
+handle_info({refresh}, _State) ->
+    NewMembers = ballgame_util:clusterize(),
+    erlang:send_after(?MIN, self(), {refresh}),
+    {noreply, #{members => NewMembers}};
 
 %%--------------------------------------------------------------------
 

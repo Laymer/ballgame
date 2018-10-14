@@ -96,6 +96,7 @@ handle_call({hello}, From, _State = #state{balls = B, current = Current, others 
 handle_call({greet, Node}, _From, _State = #state{balls = B, current = Current, others = Others}) ->
     logger:log(notice, "Saying hello to Player ~p ! ~n", [Node]),
     % Manager = ballgame_util:mgr(),
+    % partisan_peer_service:forward_message(Node,player,{hello}),
     partisan_peer_service:forward_message(Node,player,{hello}),
     % partisan_peer_service:cast_message(Node,player,{hello}).
     % partisan_peer_service:forward_message(ballgame@LaymerMac,player,{hello}).

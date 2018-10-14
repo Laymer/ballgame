@@ -31,6 +31,10 @@ members() ->
   {ok, Members} = partisan_peer_service:members(),
   Members.
 
+%%====================================================================
+%% Clustering functions
+%%====================================================================
+
 join(Host) ->
   Manager = rpc:call(Host, partisan_peer_service, manager, []),
   case Manager of
@@ -43,6 +47,22 @@ join(Host) ->
       logger:log(error, "Unable to retrieve remote : ~p~n", [Manager]),
       {error, Reason}
   end.
+
+clusterize() ->
+    logger:log(info, "Joining reachable nodes ~n"),
+    % [Numbers] = ballgame_util:get(players),
+    [Numbers] = ballgame_util:get(fakeplayers),
+    % Team = ?TEAM(Numbers),
+    Team = ?FAKETEAM(Numbers),
+    % _L = [ ballgame_util:join(X) ||
+    L = [ ballgame_util:join(X) ||
+        X <- Team,
+        X =/= node(),
+        net_adm:ping(X) =:= pong ],
+    % M = ballgame_util:members(),
+    % logger:log(info, "Joined = ~p ~n", [M]),
+    logger:log(info, "Joined = ~p ~n", [L]),
+    L.
 
 name(Host) ->
     list_to_atom(unicode:characters_to_list(["ballgame@", Host], utf8)).

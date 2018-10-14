@@ -128,7 +128,8 @@ handle_cast({hello}, State) ->
 
 handle_cast({ball, Number, Player}, State = #state{received = Rcv}) ->
     logger:log(notice, "Received a ball with number ~p from player ~p ! ~n",[Number,Player]),
-    NewState = State#state{received = (Rcv + 1)},
+    % NewState = State#state{received = (Rcv + 1)},
+    NewState = State#state{received = (State#state.received+1)}.
     {noreply, NewState};
 
 %%--------------------------------------------------------------------

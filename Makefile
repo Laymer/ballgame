@@ -95,8 +95,8 @@ shell:
 # shell: test-app-src
 # 	$(REBAR) shell --sname $(GRISPAPP) --setcookie $(COOKIE) --apps grisplite
 #
-# testshell: test-app-src
-# 	$(REBAR) as test shell --sname $(GRISPAPP) --setcookie $(COOKIE) --apps grisplite
+testshell:
+	$(REBAR) as test shell --sname $(GRISPAPP) --setcookie $(COOKIE) --apps $(GRISPAPP)
 #
 # 2shell: test-app-src
 # 	$(REBAR) as test shell --sname $(GRISPAPP)2 --setcookie $(COOKIE) --apps grisplite

@@ -50,10 +50,10 @@ join(Host) ->
 
 clusterize() ->
     logger:log(info, "Joining reachable nodes ~n"),
-    % [Numbers] = ballgame_util:get(players),
-    [Numbers] = ballgame_util:get(fakeplayers),
-    % Team = ?TEAM(Numbers),
-    Team = ?FAKETEAM(Numbers),
+    [Numbers] = ballgame_util:get(players),
+    % [Numbers] = ballgame_util:get(fakeplayers),
+    Team = ?TEAM(Numbers),
+    % Team = ?FAKETEAM(Numbers),
     % _L = [ ballgame_util:join(X) ||
     L = [ ballgame_util:join(X) ||
         X <- Team,

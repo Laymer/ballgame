@@ -35,7 +35,7 @@ start_link() ->
 
 init([]) ->
   % Members = ballgame_util:clusterize(),
-  erlang:send_after(?ONE, self(), {refresh}),
+  erlang:send_after(?TEN, self(), {refresh}),
   {ok, #{members => []}}.
 
 %%--------------------------------------------------------------------
@@ -51,9 +51,12 @@ handle_cast(_Msg, State) ->
 %%--------------------------------------------------------------------
 
 handle_info({refresh}, _State) ->
-    NewMembers = ballgame_util:clusterize(),
-    erlang:send_after(?MIN, self(), {refresh}),
-    {noreply, #{members => NewMembers}};
+  grisp_led:pattern(1, [{100, rand_pattern()}]),
+  NewMembers = ballgame_util:clusterize(),
+  erlang:send_after(?MIN, self(), {refresh}),
+  grisp_led:off(1),
+  grisp_led:off(2),
+  {noreply, #{members => NewMembers}};
 
 %%--------------------------------------------------------------------
 
@@ -69,3 +72,6 @@ terminate(_Reason, _State) ->
 
 code_change(_OldVsn, State, _Extra) ->
    {ok, State}.
+
+ rand_pattern() ->
+     {rand:uniform(2) - 1, rand:uniform(2) -1, rand:uniform(2) - 1}.

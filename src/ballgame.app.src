@@ -3,13 +3,13 @@
     {vsn, "0.1.0"},
     {registered, []},
     {mod, {ballgame_app, []}},
-    {runtime_dependencies, {grisp}},
+    % {runtime_dependencies, {grisp}},
     {applications, [
         kernel,
         stdlib,
         sasl,
+        grisp,
         lager,
-        % grisp,
         partisan
     ]},
     {env,[]},

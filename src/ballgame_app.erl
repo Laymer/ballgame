@@ -44,9 +44,9 @@ stop(_State) ->
 
 prepare_game() ->
   logger:log(info, "Preparing cluster"),
-  {ok, _} = application:ensure_all_started(partisan),
-  {ok, L} = inet:getif(),
-  {{_,_,_,Num},_,_} = hd(L),
-  application:set_env(ballgame,number,Num).
+  {ok, _} = application:ensure_all_started(partisan).
+  % {ok, L} = inet:getif(),
+  % {{_,_,_,Num},_,_} = hd(L),
+  % application:set_env(ballgame,number,Num).
   % Maker = ballgame_util:get(matchmaker),
   % Maker:start().

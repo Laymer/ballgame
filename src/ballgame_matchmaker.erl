@@ -35,7 +35,7 @@ start_link() ->
 
 init([]) ->
   % Members = ballgame_util:clusterize(),
-  erlang:send_after(?TEN, self(), {refresh}),
+  erlang:send_after(?THREE, self(), {refresh}),
   {ok, #{members => []}}.
 
 %%--------------------------------------------------------------------
@@ -54,8 +54,8 @@ handle_info({refresh}, _State) ->
   grisp_led:pattern(1, [{100, rand_pattern()}]),
   NewMembers = ballgame_util:clusterize(),
   erlang:send_after(?MIN, self(), {refresh}),
-  grisp_led:off(1),
-  grisp_led:off(2),
+  % grisp_led:off(1),
+  % grisp_led:off(2),
   {noreply, #{members => NewMembers}};
 
 %%--------------------------------------------------------------------

@@ -28,7 +28,7 @@ DEPLOY_DEST		?=	/media/laymer/GRISP
 
 # .PHONY: grispbuild rel deps test plots dcos logs fpm no-cfg-build tarball-build build
 
-.PHONY: compile testshell shell 2shell 3shell deploy 10deploy 11deploy rel stage doubledeploy ndeploy \
+.PHONY: compile testshell shell 2testshell 3shell deploy 10deploy 11deploy rel stage doubledeploy ndeploy \
 	# cleaning targets :
 	wipe clean buildclean grispclean cacheclean elixirclean checkoutsclean ⁠\
 	# currently not working targets :
@@ -96,7 +96,10 @@ shell:
 # 	$(REBAR) shell --sname $(GRISPAPP) --setcookie $(COOKIE) --apps grisplite
 #
 testshell:
-	$(REBAR) as test shell --sname $(GRISPAPP) --setcookie $(COOKIE) --apps $(GRISPAPP)
+	$(REBAR) as test shell --sname $(GRISPAPP)$(n) --setcookie $(COOKIE) --apps $(GRISPAPP)
+
+2testshell:
+	$(REBAR) as test shell --sname $(GRISPAPP)2 --setcookie $(COOKIE) --apps $(GRISPAPP)
 #
 # 2shell: test-app-src
 # 	$(REBAR) as test shell --sname $(GRISPAPP)2 --setcookie $(COOKIE) --apps grisplite

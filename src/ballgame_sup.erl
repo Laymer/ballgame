@@ -12,18 +12,28 @@
 
 %--- API -----------------------------------------------------------------------
 
-start_link() ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+
+-ifdef (STRESS_TEST).
+  start_link() ->
+    supervisor:start_link({local, ?MODULE},
+        ?MODULE,
+        [{stress_test,ballgame_util:get(first_hand)}]).
+-else.
+  start_link() ->
+    supervisor:start_link({local, ?MODULE},
+    ?MODULE,
+    [ballgame_util:get(number)]).
+-endif.
 
 %--- Callbacks -----------------------------------------------------------------
 
-init([]) ->
-    Number = ballgame_util:get(number),
+init([Args]) ->
+    % Number = ballgame_util:get(number),
     SupFlags = #{strategy => one_for_one,
                  intensity => 3,
                  period => 10},
-    ChildSpecs = [#{id => {player, Number},
-                            start => {player, start_link, [Number]},
+    ChildSpecs = [#{id => {player, Args},
+                            start => {player, start_link, [Args]},
                             restart => permanent,
                             type => worker,
                             shutdown => 10000,

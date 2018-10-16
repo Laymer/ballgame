@@ -57,7 +57,7 @@ clusterize() ->
     %         ?TEAM(ballgame_util:get(players));
     %
     % end
-    Players = ballgame_util:get(players),
+    [Players] = ballgame_util:get(players),
     Team = team(Players),
     % _L = [ ballgame_util:join(X) ||
     L = [ ballgame_util:join(X) ||
@@ -74,8 +74,12 @@ team(Players) ->
 
 name(Host) when is_integer(Host) ->
     ?PLAYER(Host);
+name(Host) when is_atom(Host) ->
+    list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(Host)], utf8));
 name(Host) when is_list(Host) ->
-    ?FAKEPLAYER(Host).
+    [list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(X)], utf8)) || X <- lists:flatten(Host)].
+    % [list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(X)], utf8)) || X <- Host].
+    % ?FAKEPLAYER(Host).
     % list_to_atom(unicode:characters_to_list(["ballgame@", Host], utf8)).
 % -ifdef(debug).
 % -define(LOG(X), io:format("{~p,~p}: ~p~n", [?MODULE,?LINE,X])).
@@ -88,3 +92,17 @@ name(Host) when is_list(Host) ->
 % -elif(?OTP_RELEASE >= 21).
 %   %% Code that will work in OTP 21 or higher
 % -endif.
+
+%% TRACING LIST :
+% [ballgame,ballgame_app,ballgame_matchmaker,ballgame_sup,
+%  ballgame_util,player,partisan,partisan_app,partisan_sup,
+%  partisan_pool,partisan_pool_sup,
+%  partisan_acknowledgement_backend,partisan_peer_service,
+%  partisan_hyparview_peer_service_manager,
+%  partisan_plumtree_backend,
+%  partisan_rpc_backend].
+% [ballgame,ballgame_app,ballgame_matchmaker,ballgame_sup,
+%  ballgame_util,player,partisan,partisan_app,partisan_sup,
+%  partisan_pool,partisan_pool_sup,
+%  partisan_hyparview_peer_service_manager].
+% grapherl:modules("/home/laymer/EdgeComputing/ballgame/_build/test/lib/partisan/ebin","partisan", [partisan_acknowledgement_backend, partisan_causality_backend, partisan_client_server_peer_service_manager, partisan_default_peer_service_manager, partisan_hyparview_xbot_peer_service_manager, partisan_peer_service_client, partisan_peer_service_console, partisan_peer_service_events, partisan_peer_service_manager, partisan_plumtree_util, partisan_promise_backend, partisan_rpc_backend, partisan_static_peer_service_manager, partisan_transform,partisan_transformed_module, partisan_util,partisan_vclock]).

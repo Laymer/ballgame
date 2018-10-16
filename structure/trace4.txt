@@ -1,0 +1,1397 @@
+<0.461.0>;spawn;<0.469.0>;erlang;apply;2;ignore
+<0.42.0>;spawn;<0.470.0>;application_controller;init_starter;4;ignore
+<0.470.0>;spawn;<0.471.0>;proc_lib;init_p;5;ignore
+<0.471.0>;spawn;<0.472.0>;application_master;start_it;4;ignore
+<0.472.0>;spawn;<0.473.0>;proc_lib;init_p;5;ignore
+<0.473.0>;spawn;<0.474.0>;proc_lib;init_p;5;ignore
+<0.474.0>;spawn;<0.475.0>;proc_lib;init_p;5;ignore
+<0.473.0>;spawn;<0.476.0>;proc_lib;init_p;5;ignore
+<0.57.0>;spawn;<0.477.0>;erlang;apply;2;ignore
+<0.42.0>;spawn;<0.478.0>;application_controller;init_starter;4;ignore
+<0.42.0>;spawn;<0.479.0>;application_controller;init_starter;4;ignore
+<0.42.0>;spawn;<0.480.0>;application_controller;init_starter;4;ignore
+<0.480.0>;spawn;<0.481.0>;proc_lib;init_p;5;ignore
+<0.481.0>;spawn;<0.482.0>;application_master;start_it;4;ignore
+<0.482.0>;spawn;<0.483.0>;proc_lib;init_p;5;ignore
+<0.483.0>;spawn;<0.484.0>;proc_lib;init_p;5;ignore
+<0.483.0>;spawn;<0.485.0>;proc_lib;init_p;5;ignore
+<0.483.0>;spawn;<0.486.0>;proc_lib;init_p;5;ignore
+<0.42.0>;spawn;<0.487.0>;application_controller;init_starter;4;ignore
+<0.487.0>;spawn;<0.488.0>;proc_lib;init_p;5;ignore
+<0.488.0>;spawn;<0.489.0>;application_master;start_it;4;ignore
+<0.489.0>;spawn;<0.490.0>;proc_lib;init_p;5;ignore
+<0.490.0>;spawn;<0.491.0>;proc_lib;init_p;5;ignore
+<0.490.0>;spawn;<0.492.0>;proc_lib;init_p;5;ignore
+<0.490.0>;spawn;<0.493.0>;proc_lib;init_p;5;ignore
+<0.492.0>;spawn;<0.494.0>;proc_lib;init_p;5;ignore
+<0.494.0>;spawn;<0.495.0>;erlang;apply;2;ignore
+<0.492.0>;spawn;<0.496.0>;proc_lib;init_p;5;ignore
+<0.496.0>;spawn;<0.497.0>;erlang;apply;2;ignore
+<0.66.0>;spawn;<0.498.0>;proc_lib;init_p;5;ignore
+<0.40.0>;spawn;<0.499.0>;erlang;apply;2;ignore
+<0.492.0>;spawn;<0.500.0>;proc_lib;init_p;5;ignore
+<0.500.0>;spawn;<0.501.0>;erlang;apply;2;ignore
+<0.485.0>;spawn;<0.502.0>;proc_lib;init_p;5;ignore
+<0.484.0>;spawn;<0.503.0>;proc_lib;init_p;5;ignore
+<0.486.0>;spawn;<0.504.0>;proc_lib;init_p;5;ignore
+<0.486.0>;spawn;<0.505.0>;proc_lib;init_p;5;ignore
+<0.489.0>;spawn;<0.506.0>;erlang;apply;2;ignore
+<0.42.0>;spawn;<0.507.0>;application_controller;init_starter;4;ignore
+<0.507.0>;spawn;<0.508.0>;proc_lib;init_p;5;ignore
+<0.508.0>;spawn;<0.509.0>;application_master;start_it;4;ignore
+<0.509.0>;spawn;<0.510.0>;proc_lib;init_p;5;ignore
+<0.42.0>;spawn;<0.511.0>;application_controller;init_starter;4;ignore
+<0.42.0>;spawn;<0.512.0>;application_controller;init_starter;4;ignore
+<0.42.0>;spawn;<0.513.0>;application_controller;init_starter;4;ignore
+<0.42.0>;spawn;<0.514.0>;application_controller;init_starter;4;ignore
+<0.42.0>;spawn;<0.515.0>;application_controller;init_starter;4;ignore
+<0.515.0>;spawn;<0.516.0>;proc_lib;init_p;5;ignore
+<0.516.0>;spawn;<0.517.0>;application_master;start_it;4;ignore
+<0.517.0>;call;partisan_app;start;2;ignore
+<0.517.0>;call;partisan_sup;start_link;0;ignore
+<0.517.0>;spawn;<0.518.0>;proc_lib;init_p;5;ignore
+<0.518.0>;call;partisan_sup;init;1;ignore
+<0.518.0>;spawn;<0.519.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.520.0>;erlang;apply;2;ignore
+<0.65.0>;spawn;<0.521.0>;proc_lib;init_p;5;ignore
+<0.65.0>;spawn;<0.522.0>;proc_lib;init_p;5;ignore
+<0.522.0>;spawn;<0.523.0>;inet_gethost_native;server_init;2;ignore
+<0.518.0>;spawn;<0.524.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.525.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.526.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.527.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.528.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.529.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.530.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.531.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.532.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.533.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.534.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.535.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.536.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.537.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.538.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.539.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.540.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.541.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.542.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.543.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.544.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.545.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.546.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.547.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.548.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.549.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.550.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.551.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.552.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.553.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.554.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.555.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.556.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.557.0>;erlang;apply;2;ignore
+<0.518.0>;spawn;<0.558.0>;erlang;apply;2;ignore
+<0.518.0>;call;partisan_peer_service;manager;0;ignore
+<0.518.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.518.0>;returned from;partisan_sup;init;1;ignore
+<0.518.0>;call;partisan_rpc_backend;start_link;0;ignore
+<0.518.0>;spawn;<0.559.0>;proc_lib;init_p;5;ignore
+<0.559.0>;call;partisan_rpc_backend;init;1;ignore
+<0.559.0>;returned from;partisan_rpc_backend;init;1;ignore
+<0.518.0>;returned from;partisan_rpc_backend;start_link;0;ignore
+<0.518.0>;call;partisan_acknowledgement_backend;start_link;0;ignore
+<0.518.0>;spawn;<0.560.0>;proc_lib;init_p;5;ignore
+<0.560.0>;call;partisan_acknowledgement_backend;init;1;ignore
+<0.560.0>;returned from;partisan_acknowledgement_backend;init;1;ignore
+<0.518.0>;returned from;partisan_acknowledgement_backend;start_link;0;ignore
+<0.518.0>;spawn;<0.561.0>;proc_lib;init_p;5;ignore
+<0.518.0>;spawn;<0.562.0>;proc_lib;init_p;5;ignore
+<0.518.0>;call;partisan_plumtree_backend;start_link;0;ignore
+<0.518.0>;call;partisan_plumtree_backend;start_link;1;ignore
+<0.518.0>;spawn;<0.563.0>;proc_lib;init_p;5;ignore
+<0.563.0>;call;partisan_plumtree_backend;init;1;ignore
+<0.563.0>;call;partisan_plumtree_backend;schedule_heartbeat;0;ignore
+<0.563.0>;returned from;partisan_plumtree_backend;schedule_heartbeat;0;ignore
+<0.563.0>;returned from;partisan_plumtree_backend;init;1;ignore
+<0.518.0>;returned from;partisan_plumtree_backend;start_link;1;ignore
+<0.518.0>;returned from;partisan_plumtree_backend;start_link;0;ignore
+<0.518.0>;call;partisan_plumtree_broadcast;start_link;0;ignore
+<0.518.0>;call;partisan_peer_service;members;0;ignore
+<0.518.0>;call;partisan_peer_service;manager;0;ignore
+<0.518.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.518.0>;returned from;partisan_peer_service;members;0;ignore
+<0.518.0>;call;partisan_plumtree_broadcast;start_link;5;ignore
+<0.518.0>;spawn;<0.564.0>;proc_lib;init_p;5;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;init;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;reset_peers;4;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;reset_peers;4;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;init;1;ignore
+<0.518.0>;returned from;partisan_plumtree_broadcast;start_link;5;ignore
+<0.518.0>;call;partisan_peer_service;add_sup_callback;1;ignore
+<0.562.0>;call;partisan_peer_service;manager;0;ignore
+<0.562.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.562.0>;call;partisan_plumtree_broadcast;update;1;ignore
+<0.562.0>;call;partisan_peer_service;decode;1;ignore
+<0.562.0>;call;partisan_peer_service;manager;0;ignore
+<0.562.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.562.0>;call;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;call;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;returned from;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;returned from;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;returned from;partisan_peer_service;decode;1;ignore
+<0.562.0>;returned from;partisan_plumtree_broadcast;update;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_cast;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;neighbors_down;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-neighbors_down/2-lc$^0/1-0-';2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-neighbors_down/2-lc$^0/1-0-';2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-neighbors_down/2-lc$^1/1-1-';2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-neighbors_down/2-lc$^1/1-1-';2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;neighbors_down;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_cast;2;ignore
+<0.518.0>;returned from;partisan_peer_service;add_sup_callback;1;ignore
+<0.518.0>;returned from;partisan_plumtree_broadcast;start_link;0;ignore
+<0.518.0>;call;partisan_pool_sup;start_link;0;ignore
+<0.518.0>;spawn;<0.565.0>;proc_lib;init_p;5;ignore
+<0.565.0>;call;partisan_pool_sup;init;1;ignore
+<0.565.0>;call;partisan_pool_sup;pool;0;ignore
+<0.565.0>;returned from;partisan_pool_sup;pool;0;ignore
+<0.565.0>;call;partisan_pool_sup;'-init/1-lc$^0/1-0-';1;ignore
+<0.565.0>;call;partisan_pool_sup;socket;1;ignore
+<0.565.0>;returned from;partisan_pool_sup;socket;1;ignore
+<0.565.0>;call;partisan_pool_sup;'-init/1-lc$^0/1-0-';1;ignore
+<0.565.0>;returned from;partisan_pool_sup;'-init/1-lc$^0/1-0-';1;ignore
+<0.565.0>;returned from;partisan_pool_sup;'-init/1-lc$^0/1-0-';1;ignore
+<0.565.0>;returned from;partisan_pool_sup;init;1;ignore
+<0.565.0>;call;partisan_pool;start_link;0;ignore
+<0.565.0>;spawn;<0.566.0>;proc_lib;init_p;5;ignore
+<0.566.0>;call;partisan_pool;init;1;ignore
+<0.566.0>;returned from;partisan_pool;init;1;ignore
+<0.565.0>;returned from;partisan_pool;start_link;0;ignore
+<0.565.0>;spawn;<0.567.0>;proc_lib;init_p;5;ignore
+<0.567.0>;call;partisan_pool;accept_socket;2;ignore
+<0.566.0>;spawn;<0.568.0>;proc_lib;init_p;5;ignore
+<0.566.0>;spawn;<0.569.0>;proc_lib;init_p;5;ignore
+<0.566.0>;spawn;<0.570.0>;proc_lib;init_p;5;ignore
+<0.567.0>;returned from;partisan_pool;accept_socket;2;ignore
+<0.518.0>;returned from;partisan_pool_sup;start_link;0;ignore
+<0.517.0>;returned from;partisan_sup;start_link;0;ignore
+<0.517.0>;returned from;partisan_app;start;2;ignore
+<0.42.0>;spawn;<0.571.0>;application_controller;init_starter;4;ignore
+<0.571.0>;spawn;<0.572.0>;proc_lib;init_p;5;ignore
+<0.572.0>;spawn;<0.573.0>;application_master;start_it;4;ignore
+<0.573.0>;call;ballgame_app;start;2;ignore
+<0.573.0>;call;ballgame_app;prepare_game;0;ignore
+<0.573.0>;returned from;ballgame_app;prepare_game;0;ignore
+<0.573.0>;call;ballgame_sup;start_link;0;ignore
+<0.573.0>;spawn;<0.574.0>;proc_lib;init_p;5;ignore
+<0.574.0>;call;ballgame_sup;init;1;ignore
+<0.574.0>;call;ballgame_util;get;1;ignore
+<0.574.0>;returned from;ballgame_util;get;1;ignore
+<0.574.0>;returned from;ballgame_sup;init;1;ignore
+<0.574.0>;call;player;start_link;1;ignore
+<0.574.0>;spawn;<0.575.0>;proc_lib;init_p;5;ignore
+<0.575.0>;call;player;init;1;ignore
+<0.575.0>;call;ballgame_util;get;1;ignore
+<0.575.0>;returned from;ballgame_util;get;1;ignore
+<0.575.0>;returned from;player;init;1;ignore
+<0.574.0>;returned from;player;start_link;1;ignore
+<0.574.0>;call;ballgame_matchmaker;start_link;0;ignore
+<0.574.0>;spawn;<0.576.0>;proc_lib;init_p;5;ignore
+<0.576.0>;call;ballgame_matchmaker;init;1;ignore
+<0.576.0>;returned from;ballgame_matchmaker;init;1;ignore
+<0.574.0>;returned from;ballgame_matchmaker;start_link;0;ignore
+<0.573.0>;returned from;ballgame_sup;start_link;0;ignore
+<0.573.0>;call;ballgame_app;'-start/2-lc$^0/1-0-';1;ignore
+<0.573.0>;call;ballgame_app;'-start/2-lc$^0/1-0-';1;ignore
+<0.573.0>;call;ballgame_app;'-start/2-lc$^0/1-0-';1;ignore
+<0.573.0>;returned from;ballgame_app;'-start/2-lc$^0/1-0-';1;ignore
+<0.573.0>;returned from;ballgame_app;'-start/2-lc$^0/1-0-';1;ignore
+<0.573.0>;returned from;ballgame_app;'-start/2-lc$^0/1-0-';1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.573.0>;returned from;ballgame_app;start;2;ignore
+<0.461.0>;spawn;<0.577.0>;erlang;apply;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.576.0>;call;ballgame_matchmaker;handle_info;2;ignore
+<0.576.0>;call;ballgame_matchmaker;rand_pattern;0;ignore
+<0.576.0>;returned from;ballgame_matchmaker;rand_pattern;0;ignore
+<0.576.0>;call;ballgame_util;clusterize;0;ignore
+<0.576.0>;call;ballgame_util;get;1;ignore
+<0.576.0>;returned from;ballgame_util;get;1;ignore
+<0.576.0>;call;ballgame_util;team;1;ignore
+<0.576.0>;call;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;call;ballgame_util;name;1;ignore
+<0.576.0>;returned from;ballgame_util;name;1;ignore
+<0.576.0>;call;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;call;ballgame_util;name;1;ignore
+<0.576.0>;returned from;ballgame_util;name;1;ignore
+<0.576.0>;call;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;team;1;ignore
+<0.576.0>;call;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;call;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.455.0>;spawn;<0.578.0>;inet_tcp_dist;do_setup;7;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;spawn;<0.579.0>;erlang;apply;2;ignore
+<0.564.0>;returned from;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.579.0>;call;partisan_plumtree_backend;'-exchange/1-fun-0-';0;spawn
+<0.579.0>;returned from;partisan_plumtree_backend;'-exchange/1-fun-0-';0;ignore
+<0.578.0>;spawn;<0.580.0>;dist_util;setup_timer;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.51.0>;spawn;<0.581.0>;erlang;apply;2;ignore
+<0.576.0>;call;ballgame_util;join;1;ignore
+<0.576.0>;call;partisan_peer_service;join;1;ignore
+<0.576.0>;call;partisan_peer_service;join;2;ignore
+<0.576.0>;call;partisan_peer_service;attempt_join;1;ignore
+<0.576.0>;call;partisan_peer_service;manager;0;ignore
+<0.576.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.576.0>;returned from;partisan_peer_service;attempt_join;1;ignore
+<0.576.0>;returned from;partisan_peer_service;join;2;ignore
+<0.576.0>;returned from;partisan_peer_service;join;1;ignore
+<0.576.0>;returned from;ballgame_util;join;1;ignore
+<0.576.0>;call;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;clusterize;0;ignore
+<0.576.0>;returned from;ballgame_matchmaker;handle_info;2;ignore
+<0.561.0>;spawn;<0.582.0>;proc_lib;init_p;5;ignore
+<0.566.0>;spawn;<0.583.0>;proc_lib;init_p;5;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.561.0>;spawn;<0.584.0>;proc_lib;init_p;5;ignore
+<0.562.0>;call;partisan_plumtree_broadcast;update;1;ignore
+<0.562.0>;call;partisan_peer_service;decode;1;ignore
+<0.562.0>;call;partisan_peer_service;manager;0;ignore
+<0.562.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.562.0>;call;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;call;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;call;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;returned from;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;returned from;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;returned from;partisan_peer_service;'-decode/1-lc$^0/1-0-';1;ignore
+<0.562.0>;returned from;partisan_peer_service;decode;1;ignore
+<0.562.0>;returned from;partisan_plumtree_broadcast;update;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_cast;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;reset_peers;4;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;reset_peers;4;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;neighbors_down;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-neighbors_down/2-lc$^0/1-0-';2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-neighbors_down/2-lc$^0/1-0-';2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-neighbors_down/2-lc$^1/1-1-';2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-neighbors_down/2-lc$^1/1-1-';2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;neighbors_down;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_cast;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.566.0>;spawn;<0.585.0>;proc_lib;init_p;5;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.569.0>;call;partisan_peer_service;manager;0;ignore
+<0.569.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.460.0>;call;ballgame_util;module_info;0;ignore
+<0.460.0>;returned from;ballgame_util;module_info;0;ignore
+<0.462.0>;call;ballgame_util;members;0;ignore
+<0.462.0>;call;partisan_peer_service;members;0;ignore
+<0.462.0>;call;partisan_peer_service;manager;0;ignore
+<0.462.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.462.0>;returned from;partisan_peer_service;members;0;ignore
+<0.462.0>;returned from;ballgame_util;members;0;ignore
+<0.461.0>;spawn;<0.586.0>;erlang;apply;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;spawn;<0.587.0>;erlang;apply;2;ignore
+<0.564.0>;returned from;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.587.0>;call;partisan_plumtree_backend;'-exchange/1-fun-0-';0;spawn
+<0.587.0>;returned from;partisan_plumtree_backend;'-exchange/1-fun-0-';0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.460.0>;call;player;module_info;0;ignore
+<0.460.0>;returned from;player;module_info;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;spawn;<0.588.0>;erlang;apply;2;ignore
+<0.564.0>;returned from;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.588.0>;call;partisan_plumtree_backend;'-exchange/1-fun-0-';0;spawn
+<0.588.0>;returned from;partisan_plumtree_backend;'-exchange/1-fun-0-';0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.462.0>;call;player;shoot;1;ignore
+<0.575.0>;call;player;handle_call;3;ignore
+<0.575.0>;call;ballgame_util;mgr;0;ignore
+<0.575.0>;call;partisan_peer_service;manager;0;ignore
+<0.575.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.575.0>;returned from;ballgame_util;mgr;0;ignore
+<0.575.0>;returned from;player;handle_call;3;ignore
+<0.462.0>;returned from;player;shoot;1;ignore
+<0.461.0>;spawn;<0.589.0>;erlang;apply;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;spawn;<0.590.0>;erlang;apply;2;ignore
+<0.564.0>;returned from;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.590.0>;call;partisan_plumtree_backend;'-exchange/1-fun-0-';0;spawn
+<0.590.0>;returned from;partisan_plumtree_backend;'-exchange/1-fun-0-';0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.462.0>;call;player;shoot;1;ignore
+<0.575.0>;call;player;handle_call;3;ignore
+<0.575.0>;call;ballgame_util;mgr;0;ignore
+<0.575.0>;call;partisan_peer_service;manager;0;ignore
+<0.575.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.575.0>;returned from;ballgame_util;mgr;0;ignore
+<0.575.0>;returned from;player;handle_call;3;ignore
+<0.462.0>;returned from;player;shoot;1;ignore
+<0.461.0>;spawn;<0.591.0>;erlang;apply;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;spawn;<0.592.0>;erlang;apply;2;ignore
+<0.564.0>;returned from;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.592.0>;call;partisan_plumtree_backend;'-exchange/1-fun-0-';0;spawn
+<0.592.0>;returned from;partisan_plumtree_backend;'-exchange/1-fun-0-';0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.575.0>;call;player;handle_cast;2;ignore
+<0.575.0>;returned from;player;handle_cast;2;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.568.0>;call;partisan_peer_service;manager;0;ignore
+<0.568.0>;returned from;partisan_peer_service;manager;0;ignore
+<0.575.0>;call;player;handle_cast;2;ignore
+<0.575.0>;returned from;player;handle_cast;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;spawn;<0.593.0>;erlang;apply;2;ignore
+<0.564.0>;returned from;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.593.0>;call;partisan_plumtree_backend;'-exchange/1-fun-0-';0;spawn
+<0.593.0>;returned from;partisan_plumtree_backend;'-exchange/1-fun-0-';0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.81.0>;spawn;<0.594.0>;ssl_pem_cache;init_pem_cache_validator;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.576.0>;call;ballgame_matchmaker;handle_info;2;ignore
+<0.576.0>;call;ballgame_matchmaker;rand_pattern;0;ignore
+<0.576.0>;returned from;ballgame_matchmaker;rand_pattern;0;ignore
+<0.576.0>;call;ballgame_util;clusterize;0;ignore
+<0.576.0>;call;ballgame_util;get;1;ignore
+<0.576.0>;returned from;ballgame_util;get;1;ignore
+<0.576.0>;call;ballgame_util;team;1;ignore
+<0.576.0>;call;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;call;ballgame_util;name;1;ignore
+<0.576.0>;returned from;ballgame_util;name;1;ignore
+<0.576.0>;call;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;call;ballgame_util;name;1;ignore
+<0.576.0>;returned from;ballgame_util;name;1;ignore
+<0.576.0>;call;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-team/1-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;team;1;ignore
+<0.576.0>;call;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;call;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.455.0>;spawn;<0.595.0>;inet_tcp_dist;do_setup;7;ignore
+<0.595.0>;spawn;<0.596.0>;dist_util;setup_timer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_root;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_eager_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_peers;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;all_lazy_peers;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;myself;0;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_other_node;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;random_peer;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;call;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;spawn;<0.597.0>;erlang;apply;2;ignore
+<0.564.0>;returned from;partisan_plumtree_backend;exchange;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;maybe_exchange;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.597.0>;call;partisan_plumtree_backend;'-exchange/1-fun-0-';0;spawn
+<0.597.0>;returned from;partisan_plumtree_backend;'-exchange/1-fun-0-';0;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_exchange_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.576.0>;call;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;'-clusterize/0-lc$^0/1-0-';1;ignore
+<0.576.0>;returned from;ballgame_util;clusterize;0;ignore
+<0.576.0>;returned from;ballgame_matchmaker;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;handle_info;2;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;'-send_lazy/1-lc$^0/1-0-';1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;send_lazy;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;call;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_tick;3;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;schedule_lazy_tick;1;ignore
+<0.564.0>;returned from;partisan_plumtree_broadcast;handle_info;2;ignore

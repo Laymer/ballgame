@@ -50,10 +50,15 @@ join(Host) ->
 
 clusterize() ->
     logger:log(info, "Joining reachable nodes ~n"),
-    [Numbers] = ballgame_util:get(players),
-    % [Numbers] = ballgame_util:get(fakeplayers),
-    Team = ?TEAM(Numbers),
-    % Team = ?FAKETEAM(Numbers),
+    % {[Numbers],Team} = case ballgame_util:get(testing) of
+    %     true ->
+    %         ?FAKETEAM(ballgame_util:get(fakeplayers));
+    %     false ->
+    %         ?TEAM(ballgame_util:get(players));
+    %
+    % end
+    Players = ballgame_util:get(players),
+    Team = team(Players),
     % _L = [ ballgame_util:join(X) ||
     L = [ ballgame_util:join(X) ||
         X <- Team,
@@ -64,8 +69,14 @@ clusterize() ->
     logger:log(info, "Joined = ~p ~n", [L]),
     L.
 
-name(Host) ->
-    list_to_atom(unicode:characters_to_list(["ballgame@", Host], utf8)).
+team(Players) ->
+    [ name(X) || X <- Players ].
+
+name(Host) when is_integer(Host) ->
+    ?PLAYER(Host);
+name(Host) when is_list(Host) ->
+    ?FAKEPLAYER(Host).
+    % list_to_atom(unicode:characters_to_list(["ballgame@", Host], utf8)).
 % -ifdef(debug).
 % -define(LOG(X), io:format("{~p,~p}: ~p~n", [?MODULE,?LINE,X])).
 % -else.

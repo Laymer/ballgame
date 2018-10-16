@@ -21,9 +21,9 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
+    prepare_game(),
     {ok, Supervisor} = ballgame_sup:start_link(),
     logger:log(info, "The game is about to start"),
-    prepare_game(),
     LEDs = [1, 2],
     [grisp_led:flash(L, red, 500) || L <- LEDs],
     timer:sleep(5000),
@@ -44,6 +44,9 @@ stop(_State) ->
 
 prepare_game() ->
   logger:log(info, "Preparing cluster"),
-  {ok, _} = application:ensure_all_started(partisan).
+  {ok, _} = application:ensure_all_started(partisan),
+  {ok, L} = inet:getif(),
+  {{_,_,_,Num},_,_} = hd(L),
+  application:set_env(ballgame,number,Num).
   % Maker = ballgame_util:get(matchmaker),
   % Maker:start().

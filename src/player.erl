@@ -26,6 +26,9 @@
          terminate/2,
          code_change/3]).
 
+%% Test Func
+-export([init_test/0]).
+
 %%====================================================================
 %% Macros
 %%====================================================================
@@ -46,6 +49,9 @@
 %%====================================================================
 %% API
 %%====================================================================
+
+init_test() ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, [{stress_test,true}], []).
 
 start_link(Args) ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [Args], []).
@@ -78,7 +84,7 @@ handle_call({shoot, Target}, _From, State = #state{current = Current, others = _
     ok = Manager:cast_message(Target, 1, player, {ball, Current, node()}, []),
     NewState = State#state{current = (Current + 1)},
     {reply, ok, NewState};
-  
+
 %%--------------------------------------------------------------------
 
 handle_call({play, Target}, _From, State = #state_ball{has_ball = FirstHand}) ->

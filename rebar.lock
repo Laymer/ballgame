@@ -21,8 +21,8 @@
  {<<"quickrand">>,{pkg,<<"quickrand">>,<<"1.7.4">>},2},
  {<<"rand_compat">>,{pkg,<<"rand_compat">>,<<"0.0.3">>},1},
  {<<"time_compat">>,{pkg,<<"time_compat">>,<<"0.0.1">>},1},
- {<<"types">>,{pkg,<<"types">>,<<"0.1.6">>},1},
- {<<"uuid">>,{pkg,<<"uuid_erl">>,<<"1.7.3">>},1}]}.
+ {<<"types">>,{pkg,<<"types">>,<<"0.1.8">>},1},
+ {<<"uuid">>,{pkg,<<"uuid_erl">>,<<"1.7.4">>},1}]}.
 [
 {pkg_hash,[
  {<<"acceptor_pool">>, <<"679D741DF87FC13599B1AEF2DF8F78F1F880449A6BEFAB7C44FB6FAE0E92A2DE">>},
@@ -31,6 +31,6 @@
  {<<"quickrand">>, <<"F91F34469D6AC153B951BB34DD9C78029882426BD61E12B85E5EE465850C08ED">>},
  {<<"rand_compat">>, <<"011646BC1F0B0C432FE101B816F25B9BBB74A085713CEE1DAFD2D62E9415EAD3">>},
  {<<"time_compat">>, <<"23FE0AD1FDF3B5B88821B2D04B4B5E865BF587AE66056D671FE0F53514ED8139">>},
- {<<"types">>, <<"03BB7140016C896D3441A77CB0B7D6ACAA583D6D6E9C4A3E1FD3C25123710290">>},
- {<<"uuid">>, <<"C5DF97D1A3D626235C2415E74053C47B2138BB863C5CD802AB5CAECB8ECC019F">>}]}
+ {<<"types">>, <<"5782B67231E8C174FE2835395E71E669FE0121076779D2A09F1C0D58EE0E2F13">>},
+ {<<"uuid">>, <<"4EC01367FEDFBAEEB9D9BC88B2D239D42CE5B53AD284741262F86B71EB82FBFA">>}]}
 ].

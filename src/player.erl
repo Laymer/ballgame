@@ -72,6 +72,7 @@ greet(Node) ->
 init([Args]) ->
     case Args of
       {stress_test, First} ->
+        % erlang:send_after(200,self(),{rc}),
         {ok, #state_ball{has_ball = First}};
       _ ->
         {ok, #state{current = 0, received = 0, others = []}}
@@ -142,6 +143,13 @@ handle_cast({ball, Number, Player}, State = #state{received = Rcv}) ->
 
 handle_cast(_Msg, State) ->
     {noreply, State}.
+
+%%--------------------------------------------------------------------
+
+handle_info({rc}, State) ->
+    logger:log(notice, "Received INFO : RC ! ~n"),
+    ballgame_util:seek_neighbors(),
+    {noreply, State};
 
 %%--------------------------------------------------------------------
 

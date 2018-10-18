@@ -73,3 +73,5 @@
 
 -define(TEAM(Numbers),   [ ?PLAYER(X) || X <- Numbers ] ).
 -define(FAKETEAM(Names),   [ ?FAKEPLAYER(X) || X <- Names ] ).
+
+-define(RC,     "erl_inetrc" ).

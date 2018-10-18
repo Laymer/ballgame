@@ -13,16 +13,16 @@
 %--- API -----------------------------------------------------------------------
 
 
--ifdef (STRESS_TEST).
-  start_link() ->
-    supervisor:start_link({local, ?MODULE},
+-ifdef (SHELL).
+    start_link() ->
+        supervisor:start_link({local, ?MODULE},
         ?MODULE,
         [{stress_test,ballgame_util:get(first_hand)}]).
 -else.
-  start_link() ->
-    supervisor:start_link({local, ?MODULE},
-    ?MODULE,
-    [ballgame_util:get(number)]).
+    start_link() ->
+        supervisor:start_link({local, ?MODULE},
+        ?MODULE,
+        [ballgame_util:get(number)]).
 -endif.
 
 %--- Callbacks -----------------------------------------------------------------

@@ -42,6 +42,16 @@ members() ->
 -ifdef(SILENT).
 
 seek_neighbors() ->
+    case is_shell() of
+        true ->
+            % {ok,_} = application:ensure_all_started(inet_db),
+            {ok, Cwd} = file:get_cwd(),
+            Wc = filename:join(Cwd,"**/files/"),
+            {ok, Rc} = filelib:find_file("erl_inetrc", Wc),
+            ok = inet_db:add_rc(Rc);
+        _ ->
+            error
+    end,
   net_adm:ping_list(lists:filtermap(fun
     (Tup) ->
       case Tup of
@@ -75,14 +85,24 @@ clusterize() ->
 
 seek_neighbors() ->
   logger:log(info, "Pinging possible neighbors ~n"),
-
+  {ok, F} = case is_shell() of
+      true ->
+          {ok, Cwd} = file:get_cwd(),
+          Wc = filename:join(Cwd,"**/files/"),
+          filelib:find_file("erl_inetrc", Wc);
+      _ ->
+          {error, "nofile"}
+  end,
+  ok = inet_db:add_rc(F),
   Rc = inet_db:get_rc(),
   Hosts = lists:filtermap(fun
     (Tup) ->
       case Tup of
+        % {host,_Addr,[Hostname]} andalso not string:equal(myname(),Hostname) ->
         {host,_Addr,[Hostname]} ->
           % [Sname|_] = string:split(atom_to_binary(node(),utf8),"@"),
           % Str = unicode:characters_to_list([Sname,"@",Hostname],utf8),
+          % N = list_to_atom("ballgame@" ++ Hostname),
           {true, list_to_atom("ballgame@" ++ Hostname)};
         _ ->
           false
@@ -112,6 +132,10 @@ clusterize() ->
     L.
 
 -endif.
+
+myname() ->
+    {ok, N} = inet:gethostname(),
+    N.
 
 team(Players) ->
   [ name(X) || X <- Players ].

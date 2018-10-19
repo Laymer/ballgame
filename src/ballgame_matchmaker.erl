@@ -13,6 +13,9 @@
 
 %% API
 -export([start_link/0]).
+-export([run/0]).
+-export([check/0]).
+
 
 %% Gen Server Callbacks
 -export([init/1,
@@ -29,23 +32,55 @@
 start_link() ->
    gen_server:start({local, ?MODULE}, ?MODULE, [], []).
 
+-spec run() -> ok.
+run() ->
+    gen_server:cast(?MODULE, <<"run">>).
+
+-spec check() -> ok.
+check() ->
+    gen_server:call(?MODULE, <<"check">>).
+
+
 %%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
 
 init([]) ->
-  % Members = ballgame_util:clusterize(),
-  erlang:send_after(?THREE, self(), {refresh}),
-  {ok, #{members => []}}.
+  erlang:send_after(?THREE, ?MODULE, <<"check">>),
+  {ok, []}.
 
 %%--------------------------------------------------------------------
 
-handle_call(_Request, _From, State) ->
-   {reply, ignored, State}.
+handle_call(<<"check">>, _From, []) ->
+    % N = ballgame_util:maybe_get_first(State),
+
+    Members = ballgame_util:clusterize(),
+    % case length(Members) > 0 of
+    %     true ->
+    %         Members;
+    %     false ->
+    %         logger:log(notice, "No remote ! ~n"),
+    %         logger:log(notice, "Retrying .... ~n"),
+    %         []
+    % end,
+    erlang:send_after(?THREE, ?MODULE, <<"check">>),
+    {reply, checked, Members}.
 
 %%--------------------------------------------------------------------
 
-handle_cast(_Msg, State) ->
+handle_cast(<<"run">>, State) ->
+    Alone = ballgame_util:alone(),
+    case Alone of
+        false ->
+            {stress,player:stress(hd(nodes()))};
+        _ ->
+            erlang:send_after(?THREE, ?MODULE, <<"check">>),
+            {stress,erralone}
+    end,
+    % M = ballgame_util:members(),
+    % logger:log(notice, "Available remotes for stress test : ~n"),
+    % logger:log(notice, "Nodes ~p : ~n",[M]),
+    %
    {noreply, State}.
 
 %%--------------------------------------------------------------------

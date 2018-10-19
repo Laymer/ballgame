@@ -6,19 +6,9 @@ args = erl.rtems -- +MHas aobf +MMmcs 5 +MHlmbcs 256 -mode embedded -home . -pa 
 
 [network]
 wlan=enable
-ip_self=169.254.16.2
+ip_self=169.254.16.1
 ip_netmask=255.255.0.0
 wlanmode=adhoc
 adhocname=edge
 channel=6
-hostname=my_grisp_board_2
-
-
-<!-- +hmax Size
-Sets the default maximum heap size of processes to the size Size. Defaults to 0, which means that no maximum heap size is used. For more information, see process_flag(max_heap_size, MaxHeapSize).
-
-+hmaxel true|false
-Sets whether to send an error logger message or not for processes reaching the maximum heap size. Defaults to true. For more information, see process_flag(max_heap_size, MaxHeapSize).
-
-+hmaxk true|false
-Sets whether to kill processes reaching the maximum heap size or not. Default to true. For more information, see process_flag(max_heap_size, MaxHeapSize). -->
+hostname=my_grisp_board_1

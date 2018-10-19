@@ -32,6 +32,7 @@ start(_StartType, _StartArgs) ->
     %     {rand:uniform(2) - 1, rand:uniform(2) -1, rand:uniform(2) - 1}
     % end,
     % grisp_led:pattern(1, [{100, Random}]),
+    % inetconf(),
     {ok, Supervisor}.
 
 %%--------------------------------------------------------------------
@@ -44,7 +45,13 @@ stop(_State) ->
 
 prepare_game() ->
   logger:log(info, "Preparing cluster"),
+
   {ok, _} = application:ensure_all_started(partisan).
+
+inetconf() ->
+  logger:log(info, "Preparing DB"),
+  whereis(inet_db).
+  % erlang:send_after(200,self(),{rc}).
   % {ok, L} = inet:getif(),
   % {{_,_,_,Num},_,_} = hd(L),
   % application:set_env(ballgame,number,Num).

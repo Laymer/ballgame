@@ -73,3 +73,10 @@
 
 -define(TEAM(Numbers),   [ ?PLAYER(X) || X <- Numbers ] ).
 -define(FAKETEAM(Names),   [ ?FAKEPLAYER(X) || X <- Names ] ).
+
+-define(RC,     "erl_inetrc" ).
+
+
+-define(NODE1,      ballgame@my_grisp_board_1).
+-define(NODE2,      ballgame@my_grisp_board_2).
+-define(NODE3,      ballgame@my_grisp_board_3).

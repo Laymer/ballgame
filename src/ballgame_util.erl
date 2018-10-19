@@ -31,9 +31,35 @@ members() ->
   {ok, Members} = partisan_peer_service:members(),
   Members.
 
+alone() ->
+    length(members() -- [node()]) == 0.
+% maybe_get_remote() ->
+%     MList = members(),
+%     maybe_get_remote(MList).
+% maybe_get_remote(Mlist) when is_list(MList) and length(MList) == 1 ->
+%     N = hd(MList),
+%     maybe_get_remote(N).
+% maybe_get_remote()
+%
+%
+%   try hd(List) of
+%     Hd ->
+%       Hd
+%   catch
+%     badarg:T ->
+%       {badarg,T}
+% end.
+
 %%====================================================================
 %% Clustering functions
 %%====================================================================
+
+
+-ifdef(SHELL).
+-define(GET_RC(), fetch_resolv_conf()).
+-else.
+-define(GET_RC(), inet_db:get_rc()).
+-endif.
 
 
 %%====================================================================
@@ -42,6 +68,16 @@ members() ->
 -ifdef(SILENT).
 
 seek_neighbors() ->
+    case is_shell() of
+        true ->
+            % {ok,_} = application:ensure_all_started(inet_db),
+            {ok, Cwd} = file:get_cwd(),
+            Wc = filename:join(Cwd,"**/files/"),
+            {ok, Rc} = filelib:find_file("erl_inetrc", Wc),
+            ok = inet_db:add_rc(Rc);
+        _ ->
+            error
+    end,
   net_adm:ping_list(lists:filtermap(fun
     (Tup) ->
       case Tup of
@@ -53,15 +89,15 @@ seek_neighbors() ->
     end, inet_db:get_rc())).
 
 join(Host) ->
-Manager = rpc:call(Host, partisan_peer_service, manager, []),
-case Manager of
-  partisan_hyparview_peer_service_manager ->
-    Node = rpc:call(Host, Manager, myself, []),
-    ok = partisan_peer_service:join(Node),
-    Node;
-  {error, Reason} ->
-    {error, Reason}
-end.
+    Manager = rpc:call(Host, partisan_peer_service, manager, []),
+    case Manager of
+      partisan_hyparview_peer_service_manager ->
+        Node = rpc:call(Host, Manager, myself, []),
+        ok = partisan_peer_service:join(Node),
+        Node;
+      {error, Reason} ->
+        {error, Reason}
+    end.
 
 clusterize() ->
     [ ballgame_util:join(X) ||
@@ -75,14 +111,12 @@ clusterize() ->
 
 seek_neighbors() ->
   logger:log(info, "Pinging possible neighbors ~n"),
-
-  Rc = inet_db:get_rc(),
+  Rc = ?GET_RC(),
+  MyName = myname(),
   Hosts = lists:filtermap(fun
     (Tup) ->
       case Tup of
-        {host,_Addr,[Hostname]} ->
-          % [Sname|_] = string:split(atom_to_binary(node(),utf8),"@"),
-          % Str = unicode:characters_to_list([Sname,"@",Hostname],utf8),
+        {host,_Addr,[Hostname]} when MyName =/= Hostname ->
           {true, list_to_atom("ballgame@" ++ Hostname)};
         _ ->
           false
@@ -113,6 +147,23 @@ clusterize() ->
 
 -endif.
 
+
+fetch_resolv_conf() ->
+    {ok, F} = case is_shell() of
+        true ->
+            {ok, Cwd} = file:get_cwd(),
+            Wc = filename:join(Cwd,"**/files/"),
+            filelib:find_file("erl_inetrc", Wc);
+        _ ->
+            {ok, "nofile"}
+    end,
+    ok = inet_db:add_rc(F),
+    inet_db:get_rc().
+
+myname() ->
+    {ok, N} = inet:gethostname(),
+    N.
+
 team(Players) ->
   [ name(X) || X <- Players ].
 
@@ -122,6 +173,24 @@ name(Host) when is_atom(Host) ->
   list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(Host)], utf8));
 name(Host) when is_list(Host) ->
   [list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(X)], utf8)) || X <- lists:flatten(Host)].
+
+% {ok, F} = case is_shell() of
+%     true ->
+%         {ok, Cwd} = file:get_cwd(),
+%         Wc = filename:join(Cwd,"**/files/"),
+%         filelib:find_file("erl_inetrc", Wc);
+%     _ ->
+%         {error, "nofile"}
+% end,
+% ok = inet_db:add_rc(F),
+% Rc = inet_db:get_rc(),
+
+% {host,_Addr,[Hostname]} ->
+  % [Sname|_] = string:split(atom_to_binary(node(),utf8),"@"),
+  % Str = unicode:characters_to_list([Sname,"@",Hostname],utf8),
+  % N = list_to_atom("ballgame@" ++ Hostname),
+
+
     % {[Numbers],Team} = case ballgame_util:get(testing) of
     %     true ->
     %         ?FAKETEAM(ballgame_util:get(fakeplayers));

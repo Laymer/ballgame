@@ -8,7 +8,7 @@
         kernel,
         stdlib,
         sasl,
-        % grisp,
+        grisp,
         lager,
         partisan
     ]},

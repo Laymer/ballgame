@@ -11,6 +11,10 @@
 
 -include("ballgame.hrl").
 
+-compile({nowarn_export_all}).
+
+-compile(export_all).
+
 %% API
 -export([start_link/1]).
 -export([greet/1]).
@@ -65,6 +69,10 @@ play(Target) ->
 greet(Node) ->
     gen_server:call(?MODULE, {greet, Node}).
 
+fwd(Node) ->
+  %% NOTE : corrent call :
+  % ok = partisan_hyparview_peer_service_manager:forward_message('ballgame@laymer-3',1,player,{ball,forward,node()},[]).
+    gen_server:cast(self(),{ball, forward, Node}).
 %%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
@@ -150,8 +158,32 @@ handle_cast({ball}, State = #state{received = Rcv}) ->
 
 %%--------------------------------------------------------------------
 
+handle_cast({ball,forward,P}, State = #state{received = Rcv}) ->
+    logger:log(notice, "Forward a ball ! ~n"),
+    Manager = ballgame_util:mgr(),
+    % ok = Manager:cast_message(Target, 1, player, {ball, Current, node()}, []),
+    ok = Manager:forward_message(P, 1, player, {ball,forward,node()}, []),
+    % erlang:send_after(?ONE,self(),{shoot, P}),
+    % NewState = State#state{received = (Rcv + 1)},
+    NewState = State#state{received = (State#state.received+1)},
+    {noreply, NewState};
+
+%%--------------------------------------------------------------------
+
 handle_cast(_Msg, State) ->
     {noreply, State}.
+
+%%--------------------------------------------------------------------
+
+% handle_info({ball,forward,Player}, _State = #state_ball{has_ball = Catched}) ->
+handle_info({ball,forward,Player}, State) ->
+    % NewState = State#state_ball{has_ball = not Catched},
+    logger:log(notice, "Received ball from : ~p ! ~n", [Player]),
+    ?PAUSE1,
+    Manager = ballgame_util:mgr(),
+    % ok = Manager:cast_message(Target, 1, player, {ball, Current, node()}, []),
+    ok = Manager:forward_message(Player, 1, player, {ball,forward,node()}, []),
+    {noreply, State};
 
 %%--------------------------------------------------------------------
 
@@ -213,6 +245,7 @@ code_change(_OldVsn, State, _Extra) ->
 % ok = partisan_hyparview_peer_service_manager:forward_message(ballgame@LaymerMac, 1, player, {hello}, []).
 % ok = partisan_hyparview_peer_service_manager:cast_message(N, 1, PidR, {hello}, []).
 % ok = partisan_hyparview_peer_service_manager:send_message(ballgame@LaymerMac, {hello}).
+% ok = partisan_hyparview_peer_service_manager:forward_message('ballgame@laymer-3',1,player,{ball,forward,node()},[]).
 
 % handle_continue({continue, {play, Others}}, State) ->
 % handle_continue({continue, Continue}, State) ->

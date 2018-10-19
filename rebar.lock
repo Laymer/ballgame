@@ -11,7 +11,7 @@
   0},
  {<<"lager">>,
   {git,"https://github.com/erlang-lager/lager.git",
-       {ref,"69b4ada2341b8ab2cf5c8e464ac936e5e4a9f62b"}},
+       {ref,"ecb78c54cff72bb34cdacf19fd02d2eda4114ecc"}},
   0},
  {<<"mapz">>,{pkg,<<"mapz">>,<<"0.3.0">>},1},
  {<<"partisan">>,

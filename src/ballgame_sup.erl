@@ -13,17 +13,28 @@
 %--- API -----------------------------------------------------------------------
 
 
--ifdef (SHELL).
-    start_link() ->
-        supervisor:start_link({local, ?MODULE},
-        ?MODULE,
-        [{stress_test,ballgame_util:get(first_hand)}]).
--else.
-    start_link() ->
-        supervisor:start_link({local, ?MODULE},
-        ?MODULE,
-        [ballgame_util:get(number)]).
--endif.
+% -ifdef (SHELL).
+%     start_link() ->
+%         supervisor:start_link({local, ?MODULE},
+%         ?MODULE,
+%         [{stress_test,ballgame_util:get(first_hand)}]).
+% -else.
+%     start_link() ->
+%         supervisor:start_link({local, ?MODULE},
+%         ?MODULE,
+%         [ballgame_util:get(number)]).
+% -endif.
+% -ifndef (SILENT).
+start_link() ->
+    supervisor:start_link({local, ?MODULE},
+    ?MODULE,
+    [{stress_test,ballgame_util:get(first_hand)}]).
+% -else.
+%     start_link() ->
+%         supervisor:start_link({local, ?MODULE},
+%         ?MODULE,
+%         [ballgame_util:get(number)]).
+% -endif.
 
 %--- Callbacks -----------------------------------------------------------------
 

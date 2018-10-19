@@ -13,7 +13,7 @@
 
 %% API
 -export([start_link/1]).
--export([greet/1]).
+-export([stress/1]).
 -export([shoot/1]).
 -export([play/1]).
 
@@ -27,34 +27,36 @@
          code_change/3]).
 
 %% Test Func
--export([init_test/0]).
-
+% -export([init_test/0]).
+-compile(export_all).
 %%====================================================================
 %% Macros
 %%====================================================================
 
--define(P,  partisan_peer_service).
+-define(SERVICE,   partisan_peer_service).
+-define(HYPAR,      partisan_hyparview_peer_service_manager).
+-define(DELAY,      ballgame_util:get(stress_delay)).
+% -define(PEER,      partisan_hyparview_peer_service_manager).
 % -define(NAME(Number),   list_to_atom(unicode:characters_to_list(["player", "_", integer_to_list(Number)], utf8))).
 
 %%====================================================================
 %% Records
 %%====================================================================
 
--record(state,  {current           :: integer(),
-                received           :: integer(),
-                others             :: list()}).
 
--record(state_ball,  {has_ball     :: boolean()}).
+-record(state, {minutes :: pos_integer(),
+                ball :: false|true,
+                remote :: atom()}).
+
+-type stress_state() :: #state{}.
 
 %%====================================================================
 %% API
 %%====================================================================
 
-init_test() ->
-    gen_server:start_link({local, ?MODULE}, ?MODULE, [{stress_test,true}], []).
-
-start_link(Args) ->
-    gen_server:start_link({local, ?MODULE}, ?MODULE, [Args], []).
+-spec start_link({stress_test, false|true}) -> {ok, pid()}.
+start_link({stress_test, First}) ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, {stress_test, First}, []).
 
 shoot(Target) ->
     gen_server:call(?MODULE, {shoot, Target}).
@@ -62,62 +64,18 @@ shoot(Target) ->
 play(Target) ->
     gen_server:call(?MODULE, {play, Target}).
 
-greet(Node) ->
-    gen_server:call(?MODULE, {greet, Node}).
+stress(Remote) ->
+    gen_server:cast(?MODULE, {stress, Remote}).
 
 %%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
 
-init([Args]) ->
-    case Args of
-      {stress_test, First} ->
-        % erlang:send_after(200,self(),{rc}),
-        {ok, #state_ball{has_ball = First}};
-      _ ->
-        {ok, #state{current = 0, received = 0, others = []}}
-    end.
-
-%%--------------------------------------------------------------------
-
-handle_call({shoot, Target}, _From, State = #state{current = Current, others = _Others}) ->
-    Manager = ballgame_util:mgr(),
-    ok = Manager:cast_message(Target, 1, player, {ball, Current, node()}, []),
-    NewState = State#state{current = (Current + 1)},
-    {reply, ok, NewState};
-
-%%--------------------------------------------------------------------
-
-handle_call({play, Target}, _From, State = #state_ball{has_ball = FirstHand}) ->
-    NewState = State#state_ball{has_ball = not FirstHand},
-    (ballgame_util:mgr()):forward_message(Target, 1, player, {ball, node()}, []),
-    {noreply, NewState};
-
-%%--------------------------------------------------------------------
-
-handle_call({hello}, From, State = #state{current = Current, others = _Others}) ->
-    logger:log(notice, "Player ~p said hi ! ~n", [From]),
-    NewState = State#state{current = (Current + 1)},
-    {reply, received_hello, NewState};
-
-%%--------------------------------------------------------------------
-
-handle_call({greet, Node}, _From, State = #state{current = Current, others = _Others}) ->
-    logger:log(notice, "Saying hello to Player ~p ! ~n", [Node]),
-    NewState = State#state{current = (Current + 1)},
-    ?P:forward_message(Node,player,{hello}),
-    {reply, said_hello, NewState};
-
-%%--------------------------------------------------------------------
-
-handle_call({greetpid, Node}, _From, State = #state{current = Current, others = _Others}) ->
-    logger:log(notice, "Saying hello to Player ~p ! ~n", [Node]),
-    Manager = ballgame_util:mgr(),
-    % Pid = rpc:call('ballgame@LaymerMac', erlang, list_to_pid, ["<0.365.0>"]).
-    Pid = rpc:call(Node, erlang, whereis, [player]),
-    ok = Manager:forward_message(Node, 1, Pid, {hello}, []),
-    NewState = State#state{current = (Current + 1)},
-    {reply, said_hello, NewState};
+-spec init({stress_test, false|true}) -> {'ok', stress_state()}.
+init({stress_test, true}) ->
+    {ok, #state{minutes = 0, ball = true, remote = node()}};
+init({stress_test, false}) ->
+    {ok, #state{minutes = 0, ball = false, remote = node()}}.
 
 %%--------------------------------------------------------------------
 
@@ -127,18 +85,25 @@ handle_call(Request, From, State) ->
 
 %%--------------------------------------------------------------------
 
+-spec handle_cast({stress,atom()}|{hello}, stress_state()) -> {'noreply', stress_state()}.
 handle_cast({hello}, State) ->
     logger:log(notice, "Player casted hi ! ~n"),
     {noreply, State};
 
 %%--------------------------------------------------------------------
 
-handle_cast({ball, Number, Player}, State = #state{received = Rcv}) ->
-    logger:log(notice, "Received a ball with number ~p from player ~p ! ~n",[Number,Player]),
-    % NewState = State#state{received = (Rcv + 1)},
-    NewState = State#state{received = (State#state.received+1)},
-    {noreply, NewState};
-
+% handle_cast({ball, Number, Player}, State = #state{received = Rcv}) ->
+%     logger:log(notice, "Received a ball with number ~p from player ~p ! ~n",[Number,Player]),
+%     % NewState = State#state{received = (Rcv + 1)},
+%     NewState = State#state{received = (State#state.received+1)},
+%     {noreply, NewState};
+% handle_cast({stress, Remote}, State) ->
+%     logger:log(notice, "Stressing ~p ! ~n", [Remote]),
+%     ok = ?HYPAR:forward_message(Remote, 1, player, <<1:1>>, []),
+%     {reply, ok, }.
+handle_cast({stress,Remote}, State) ->
+    ?HYPAR:forward_message(Remote, 1, player, {<<1:1>>,node()}, []),
+    {noreply, State#state{ball = not State#state.ball, remote = Remote}};
 %%--------------------------------------------------------------------
 
 handle_cast(_Msg, State) ->
@@ -146,21 +111,24 @@ handle_cast(_Msg, State) ->
 
 %%--------------------------------------------------------------------
 
+
+-spec handle_info(any(), stress_state()) -> {'noreply', stress_state()}.
+handle_info({<<1:1>>,Remote}, State) ->
+    ?HYPAR:forward_message(Remote, 1, player, <<1:1>>, []),
+    {noreply, State#state{remote = Remote}};
+
+handle_info(<<1:1>>, State) ->
+    % logger:log(notice, "BINARY BALL EXCHANGE ! ~n"),
+    % ?PAUSE1,
+    timer:sleep(?DELAY),
+    ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    {noreply, State};
+
 handle_info({rc}, State) ->
     logger:log(notice, "Received INFO : RC ! ~n"),
     ballgame_util:seek_neighbors(),
     {noreply, State};
 
-%%--------------------------------------------------------------------
-
-handle_info({ball,Player}, State = #state_ball{has_ball = Catched}) ->
-    NewState = State#state_ball{has_ball = not Catched},
-    logger:log(notice, "Received ball from : ~p ! ~n", [Player]),
-    ?PAUSE1,
-    (ballgame_util:mgr()):forward_message(Player, 1, player, {ball, node()}, []),
-    {noreply, NewState};
-
-%%--------------------------------------------------------------------
 
 handle_info(Info, State) ->
     logger:log(notice, "Received INFO : ~p ! ~n", [Info]),
@@ -201,6 +169,79 @@ code_change(_OldVsn, State, _Extra) ->
 %%====================================================================
 %% Snippets
 %%====================================================================
+
+
+    % erlang:send_after(500,?MODULE,{rc}),
+    % case Args of
+    %   {stress_test, First} ->
+    %     {ok, #state{minutes = 0, ball = First}};
+    %   _ ->
+    % end.
+
+%%--------------------------------------------------------------------
+
+
+%%--------------------------------------------------------------------
+
+% handle_info({ball,Player}, State = #state_ball{has_ball = Catched}) ->
+%     NewState = State#state_ball{has_ball = not Catched},
+%     logger:log(notice, "Received ball from : ~p ! ~n", [Player]),
+%     ?PAUSE1,
+%     (ballgame_util:mgr()):forward_message(Player, 1, player, {ball, node()}, []),
+%     {noreply, NewState};
+%%--------------------------------------------------------------------
+
+% handle_info({ball,Player}, State = #state_ball{has_ball = Catched}) ->
+%     NewState = State#state_ball{has_ball = not Catched},
+%     logger:log(notice, "Received ball from : ~p ! ~n", [Player]),
+%     ?PAUSE1,
+%     (ballgame_util:mgr()):forward_message(Player, 1, player, {ball, node()}, []),
+%     {noreply, NewState};
+
+%%--------------------------------------------------------------------
+
+%%--------------------------------------------------------------------
+
+% handle_call({shoot, Target}, _From, State = #state{current = Current, others = _Others}) ->
+%     Manager = ballgame_util:mgr(),
+%     ok = Manager:cast_message(Target, 1, player, {ball, Current, node()}, []),
+%     NewState = State#state{current = (Current + 1)},
+%     {reply, ok, NewState};
+
+%%--------------------------------------------------------------------
+
+% handle_call({play, Target}, _From, State = #state_ball{has_ball = FirstHand}) ->
+%     NewState = State#state_ball{has_ball = not FirstHand},
+%     (ballgame_util:mgr()):forward_message(Target, 1, player, {ball, node()}, []),
+%     {noreply, NewState};
+
+%%--------------------------------------------------------------------
+
+% handle_call({hello}, From, State = #state{current = Current, others = _Others}) ->
+%     logger:log(notice, "Player ~p said hi ! ~n", [From]),
+%     NewState = State#state{current = (Current + 1)},
+%     {reply, received_hello, NewState};
+
+%%--------------------------------------------------------------------
+
+% handle_call({greet, Node}, _From, State = #state{current = Current, others = _Others}) ->
+%     logger:log(notice, "Saying hello to Player ~p ! ~n", [Node]),
+%     NewState = State#state{current = (Current + 1)},
+%     ?P:forward_message(Node,player,{hello}),
+%     {reply, said_hello, NewState};
+
+%%--------------------------------------------------------------------
+
+% handle_call({greetpid, Node}, _From, State = #state{current = Current, others = _Others}) ->
+%     logger:log(notice, "Saying hello to Player ~p ! ~n", [Node]),
+%     Manager = ballgame_util:mgr(),
+%     % Pid = rpc:call('ballgame@LaymerMac', erlang, list_to_pid, ["<0.365.0>"]).
+%     Pid = rpc:call(Node, erlang, whereis, [player]),
+%     ok = Manager:forward_message(Node, 1, Pid, {hello}, []),
+%     NewState = State#state{current = (Current + 1)},
+%     {reply, said_hello, NewState};
+
+
 
 % ok = Manager:forward_message(node(), 1, player_1, {msg, Current}, []),
 % ok = partisan_hyparview_peer_service_manager:forward_message(ballgame@LaymerMac, 1, player, {hello}, []).

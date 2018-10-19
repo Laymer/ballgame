@@ -32,7 +32,7 @@ start(_StartType, _StartArgs) ->
     %     {rand:uniform(2) - 1, rand:uniform(2) -1, rand:uniform(2) - 1}
     % end,
     % grisp_led:pattern(1, [{100, Random}]),
-    inetconf(),
+    % inetconf(),
     {ok, Supervisor}.
 
 %%--------------------------------------------------------------------
@@ -50,8 +50,8 @@ prepare_game() ->
 
 inetconf() ->
   logger:log(info, "Preparing DB"),
-  Pid = whereis(inet_db),
-  erlang:send_after(200,self(),{rc}).
+  whereis(inet_db).
+  % erlang:send_after(200,self(),{rc}).
   % {ok, L} = inet:getif(),
   % {{_,_,_,Num},_,_} = hd(L),
   % application:set_env(ballgame,number,Num).

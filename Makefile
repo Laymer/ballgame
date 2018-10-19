@@ -30,7 +30,7 @@ DEPLOY_DEST		?=	/media/laymer/GRISP
 
 .PHONY: compile testshell shell 2testshell 3shell deploy 10deploy 11deploy rel stage doubledeploy ndeploy \
 	# cleaning targets :
-	wipe clean buildclean grispclean cacheclean elixirclean checkoutsclean ⁠\
+	wipe clean buildclean grispclean cacheclean elixirclean checkoutsclean ⁠fullclean \
 	# currently not working targets :
 	build no-cfg-build tarball-build \
 	# Others
@@ -66,7 +66,10 @@ wipe: clean grispclean
 	$(REBAR) unlock
 	$(REBAR) upgrade
 
-clean: buildclean elixirclean checkoutsclean cacheclean
+clean: buildclean checkoutsclean
+	$(REBAR) clean
+
+fullclean: buildclean elixirclean checkoutsclean cacheclean
 	$(REBAR) clean
 
 buildclean:
@@ -125,6 +128,9 @@ testshell:
 
 deploy:
 	$(REBAR) grisp deploy -n $(GRISPAPP) -v $(VERSION)
+
+devploy:
+	$(REBAR) as devrel grisp deploy -n $(GRISPAPP) -v $(VERSION)
 #
 # 1deploy: prod-app-src
 # 	cp $(DEPLOYMENTS_DIR)/1/grisp.ini.mustache $(GRISPFILES_DIR)/grisp.ini.mustache

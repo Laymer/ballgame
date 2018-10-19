@@ -81,7 +81,8 @@ init([Args]) ->
 
 handle_call({shoot, Target}, _From, State = #state{current = Current, others = _Others}) ->
     Manager = ballgame_util:mgr(),
-    ok = Manager:cast_message(Target, 1, player, {ball, Current, node()}, []),
+    % ok = Manager:cast_message(Target, 1, player, {ball, Current, node()}, []),
+    ok = Manager:cast_message(Target, 1, player, {ball}, []),
     NewState = State#state{current = (Current + 1)},
     {reply, ok, NewState};
 
@@ -134,6 +135,15 @@ handle_cast({hello}, State) ->
 
 handle_cast({ball, Number, Player}, State = #state{received = Rcv}) ->
     logger:log(notice, "Received a ball with number ~p from player ~p ! ~n",[Number,Player]),
+    % NewState = State#state{received = (Rcv + 1)},
+    NewState = State#state{received = (State#state.received+1)},
+    {noreply, NewState};
+
+%%--------------------------------------------------------------------
+
+handle_cast({ball}, State = #state{received = Rcv}) ->
+    logger:log(notice, "Received a ball ! ~n"),
+    erlang:send_after(?ONE,self(),{shoot, hd(nodes())}),
     % NewState = State#state{received = (Rcv + 1)},
     NewState = State#state{received = (State#state.received+1)},
     {noreply, NewState};

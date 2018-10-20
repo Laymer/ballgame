@@ -121,7 +121,8 @@ handle_info(<<1:1>>, State) ->
     % logger:log(notice, "BINARY BALL EXCHANGE ! ~n"),
     % ?PAUSE1,
     timer:sleep(?DELAY),
-    ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    [ ?HYPAR:forward_message(State#state.remote, X, player, <<1:1>>, [])
+        || X <- partisan_config:get(channels)],
     {noreply, State};
 
 handle_info({rc}, State) ->
@@ -163,7 +164,16 @@ code_change(_OldVsn, State, _Extra) ->
 %% Internal functions
 %%====================================================================
 
-
+Fwd(<<0:1>>,Remote) ->
+    ?HYPAR:forward_message(Remote, 1, player, <<0:1>>, []);
+Fwd(<<1:1>>,Remote) ->
+    ?HYPAR:forward_message(Remote, 2, player, <<1:1>>, []);
+Fwd(<<2:1>>,Remote) ->
+    ?HYPAR:forward_message(Remote, 3, player, <<2:2>>, []);
+Fwd(<<3:1>>,Remote) ->
+    ?HYPAR:forward_message(Remote, 4, player, <<3:2>>, []);
+Fwd(<<4:1>>,Remote) ->
+    ?HYPAR:forward_message(Remote, 5, player, <<4:3>>, []);
 
 
 %%====================================================================

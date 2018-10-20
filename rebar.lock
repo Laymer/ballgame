@@ -22,7 +22,11 @@
  {<<"rand_compat">>,{pkg,<<"rand_compat">>,<<"0.0.3">>},1},
  {<<"time_compat">>,{pkg,<<"time_compat">>,<<"0.0.1">>},1},
  {<<"types">>,{pkg,<<"types">>,<<"0.1.8">>},1},
- {<<"uuid">>,{pkg,<<"uuid_erl">>,<<"1.7.4">>},1}]}.
+ {<<"uuid">>,{pkg,<<"uuid_erl">>,<<"1.7.4">>},1},
+ {<<"vmstats">>,
+  {git,"https://github.com/ferd/vmstats.git",
+       {ref,"3d8e4442494b4168166a570558823cf524acc67d"}},
+  0}]}.
 [
 {pkg_hash,[
  {<<"acceptor_pool">>, <<"679D741DF87FC13599B1AEF2DF8F78F1F880449A6BEFAB7C44FB6FAE0E92A2DE">>},

@@ -9,6 +9,7 @@
         stdlib,
         sasl,
         grisp,
+        % vmstats,
         lager,
         partisan
     ]},

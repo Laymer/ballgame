@@ -390,3 +390,212 @@ process_info/2     processes/0
  400  inet_tcp 398     43      <0.721.0>  169.254.16.2:59567 169.254.16.1:20000   ????      STREAM
  1456 inet_tcp 18997   56624   <0.1773.0> 169.254.16.2:26307 169.254.187.89:42299 ????      STREAM
  ok
+
+ (ballgame@my_grisp_board_2)14> erlang:memory().
+ [{total,18366896},
+  {processes,4354288},
+  {processes_used,4353392},
+  {system,14012608},
+  {atom,568821},
+  {atom_used,543995},
+  {binary,49944},
+  {code,8788540},
+  {ets,363304}]
+ (ballgame@my_grisp_board_2)15> process_info(whereis(player)).
+ [{registered_name,player},
+  {current_function,{timer,sleep,1}},
+  {initial_call,{proc_lib,init_p,5}},
+  {status,waiting},
+  {message_queue_len,0},
+  {links,[<0.682.0>]},
+  {dictionary,[{'$initial_call',{player,init,1}},
+               {'$ancestors',[ballgame_sup,<0.681.0>]},
+               {rand_seed,{#{bits => 58,jump => #Fun<rand.8.10897371>,
+                             next => #Fun<rand.5.10897371>,type => exrop,
+                             uniform => #Fun<rand.6.10897371>,
+                             uniform_n => #Fun<rand.7.10897371>,weak_low_bits => 1},
+                           [220650411045671869|81992440032966717]}}]},
+  {trap_exit,false},
+  {error_handler,error_handler},
+  {priority,normal},
+  {group_leader,<0.680.0>},
+  {total_heap_size,2585},
+  {heap_size,1598},
+  {stack_size,22},
+  {reductions,91795506},
+  {garbage_collection,[{max_heap_size,#{error_logger => true,kill => true,size => 0}},
+                       {min_bin_vheap_size,46422},
+                       {min_heap_size,233},
+                       {fullsweep_after,65535},
+                       {minor_gcs,38298}]},
+  {suspending,[]}]
+ (ballgame@my_grisp_board_2)16> sys:statistics(whereis(player),get).
+ {ok,[{start_time,{{1988,1,1},{0,16,45}}},
+      {current_time,{{1988,1,2},{2,55,47}}},
+      {reductions,91335801},
+      {messages_in,846484},
+      {messages_out,0}]}
+ (ballgame@my_grisp_board_2)17> inet:i().
+ Port Module   Recv     Sent     Owner       Local Address      Foreign Address      State     Type
+ 32   inet_tcp 0        0        <0.520.0>   *:4369             *:*                  ACCEPTING STREAM
+ 48   inet_tcp 0        0        <0.524.0>   *:26307            *:*                  ACCEPTING STREAM
+ 80   inet_tcp 4        23       <0.522.0>   localhost:45890    localhost:4369       ????      STREAM
+ 96   inet_tcp 23       4        <0.521.0>   localhost:4369     localhost:45890      ????      STREAM
+ 224  inet_tcp 0        0        <0.675.0>   169.254.16.2:20000 *:*                  ACCEPTING STREAM
+ 320  inet_tcp 28414    27478    <0.712.0>   169.254.16.2:26307 169.254.16.1:19278   ????      STREAM
+ 352  inet_tcp 35118423 398      <0.676.0>   169.254.16.2:20000 169.254.16.1:42542   ????      STREAM
+ 368  inet_tcp 398      35118526 <0.719.0>   169.254.16.2:20281 169.254.16.1:20000   ????      STREAM
+ 384  inet_tcp 43       398      <0.677.0>   169.254.16.2:20000 169.254.16.1:33417   ????      STREAM
+ 400  inet_tcp 398      43       <0.721.0>   169.254.16.2:59567 169.254.16.1:20000   ????      STREAM
+ 2480 inet_tcp 20486    59636    <0.11020.0> 169.254.16.2:26307 169.254.187.89:54757 ????      STREAM
+ ok
+ (ballgame@my_grisp_board_2)18> calendar:universal_time().
+ {{1988,1,2},{2,56,5}}
+ (ballgame@my_grisp_board_2)19>
+ (ballgame@my_grisp_board_2)20> erlang:memory().
+ [{total,19467240},
+  {processes,5454612},
+  {processes_used,5454176},
+  {system,14012628},
+  {atom,568821},
+  {atom_used,543995},
+  {binary,49816},
+  {code,8788540},
+  {ets,363304}]
+ (ballgame@my_grisp_board_2)21> process_info(whereis(player)).
+ [{registered_name,player},
+  {current_function,{gen_server,loop,7}},
+  {initial_call,{proc_lib,init_p,5}},
+  {status,waiting},
+  {message_queue_len,0},
+  {links,[<0.682.0>]},
+  {dictionary,[{'$initial_call',{player,init,1}},
+               {'$ancestors',[ballgame_sup,<0.681.0>]},
+               {rand_seed,{#{bits => 58,jump => #Fun<rand.8.10897371>,
+                             next => #Fun<rand.5.10897371>,type => exrop,
+                             uniform => #Fun<rand.6.10897371>,
+                             uniform_n => #Fun<rand.7.10897371>,weak_low_bits => 1},
+                           [107246636148730380|4185388444969649]}}]},
+  {trap_exit,false},
+  {error_handler,error_handler},
+  {priority,normal},
+  {group_leader,<0.680.0>},
+  {total_heap_size,1363},
+  {heap_size,376},
+  {stack_size,10},
+  {reductions,94106239},
+  {garbage_collection,[{max_heap_size,#{error_logger => true,kill => true,size => 0}},
+                       {min_bin_vheap_size,46422},
+                       {min_heap_size,233},
+                       {fullsweep_after,65535},
+                       {minor_gcs,44229}]},
+  {suspending,[]}]
+ (ballgame@my_grisp_board_2)22> sys:statistics(whereis(player),get).
+ {ok,[{start_time,{{1988,1,1},{0,16,45}}},
+      {current_time,{{1988,1,2},{3,36,52}}},
+      {reductions,93642596},
+      {messages_in,867863},
+      {messages_out,0}]}
+ (ballgame@my_grisp_board_2)23> sys:statistics(whereis(player),get).
+ {ok,[{start_time,{{1988,1,1},{0,16,45}}},
+      {current_time,{{1988,1,2},{3,36,58}}},
+      {reductions,93647741},
+      {messages_in,867910},
+      {messages_out,0}]}
+ (ballgame@my_grisp_board_2)24> inet:i().
+ Port Module   Recv     Sent     Owner       Local Address      Foreign Address      State     Type
+ 32   inet_tcp 0        0        <0.520.0>   *:4369             *:*                  ACCEPTING STREAM
+ 48   inet_tcp 0        0        <0.524.0>   *:26307            *:*                  ACCEPTING STREAM
+ 80   inet_tcp 4        23       <0.522.0>   localhost:45890    localhost:4369       ????      STREAM
+ 96   inet_tcp 23       4        <0.521.0>   localhost:4369     localhost:45890      ????      STREAM
+ 224  inet_tcp 0        0        <0.675.0>   169.254.16.2:20000 *:*                  ACCEPTING STREAM
+ 320  inet_tcp 29070    28138    <0.712.0>   169.254.16.2:26307 169.254.16.1:19278   ????      STREAM
+ 352  inet_tcp 36001107 398      <0.676.0>   169.254.16.2:20000 169.254.16.1:42542   ????      STREAM
+ 368  inet_tcp 398      36001210 <0.719.0>   169.254.16.2:20281 169.254.16.1:20000   ????      STREAM
+ 384  inet_tcp 43       398      <0.677.0>   169.254.16.2:20000 169.254.16.1:33417   ????      STREAM
+ 400  inet_tcp 398      43       <0.721.0>   169.254.16.2:59567 169.254.16.1:20000   ????      STREAM
+ 2480 inet_tcp 28638    77117    <0.11020.0> 169.254.16.2:26307 169.254.187.89:54757 ????      STREAM
+ ok
+ (ballgame@my_grisp_board_2)25> calendar:universal_time().
+ {{1988,1,2},{3,37,12}}
+ (ballgame@my_grisp_board_2)28> erlang:memory().
+ [{total,19357728},
+  {processes,5342316},
+  {processes_used,5342120},
+  {system,14015412},
+  {atom,568821},
+  {atom_used,543995},
+  {binary,52648},
+  {code,8788540},
+  {ets,363304}]
+ (ballgame@my_grisp_board_2)29> sys:statistics(whereis(player),get).
+ {ok,[{start_time,{{1988,1,1},{0,16,45}}},
+      {current_time,{{1988,1,2},{4,55,26}}},
+      {reductions,98008149},
+      {messages_in,908320},
+      {messages_out,0}]}
+ (ballgame@my_grisp_board_2)30> process_info(whereis(player)).
+ [{registered_name,player},
+  {current_function,{gen_server,loop,7}},
+  {initial_call,{proc_lib,init_p,5}},
+  {status,waiting},
+  {message_queue_len,0},
+  {links,[<0.682.0>]},
+  {dictionary,[{'$initial_call',{player,init,1}},
+               {'$ancestors',[ballgame_sup,<0.681.0>]},
+               {rand_seed,{#{bits => 58,jump => #Fun<rand.8.10897371>,
+                             next => #Fun<rand.5.10897371>,type => exrop,
+                             uniform => #Fun<rand.6.10897371>,
+                             uniform_n => #Fun<rand.7.10897371>,weak_low_bits => 1},
+                           [23201237054132422|265584053265814913]}}]},
+  {trap_exit,false},
+  {error_handler,error_handler},
+  {priority,normal},
+  {group_leader,<0.680.0>},
+  {total_heap_size,2585},
+  {heap_size,1598},
+  {stack_size,10},
+  {reductions,98485200},
+  {garbage_collection,[{max_heap_size,#{error_logger => true,kill => true,size => 0}},
+                       {min_bin_vheap_size,46422},
+                       {min_heap_size,233},
+                       {fullsweep_after,65535},
+                       {minor_gcs,55496}]},
+  {suspending,[]}]
+ (ballgame@my_grisp_board_2)31> sys:get_status(player).
+ {status,<0.683.0>,
+         {module,gen_server},
+         [[{'$initial_call',{player,init,1}},
+           {'$ancestors',[ballgame_sup,<0.681.0>]},
+           {rand_seed,{#{bits => 58,jump => #Fun<rand.8.10897371>,
+                         next => #Fun<rand.5.10897371>,type => exrop,
+                         uniform => #Fun<rand.6.10897371>,
+                         uniform_n => #Fun<rand.7.10897371>,weak_low_bits => 1},
+                       [231591518414216268|226584816707956498]}}],
+          running,<0.682.0>,
+          [{statistics,{{{1988,1,1},{0,16,45}},
+                        {reductions,467995},
+                        908439,0}}],
+          [{header,"Status for generic server player"},
+           {data,[{"Status",running},
+                  {"Parent",<0.682.0>},
+                  {"Logged events",[]}]},
+           {data,[{"State",
+                   {state,0,false,ballgame@my_grisp_board_1}}]}]]}
+ (ballgame@my_grisp_board_2)32> inet:i().
+ Port Module   Recv     Sent     Owner       Local Address      Foreign Address      State     Type
+ 32   inet_tcp 0        0        <0.520.0>   *:4369             *:*                  ACCEPTING STREAM
+ 48   inet_tcp 0        0        <0.524.0>   *:26307            *:*                  ACCEPTING STREAM
+ 80   inet_tcp 4        23       <0.522.0>   localhost:45890    localhost:4369       ????      STREAM
+ 96   inet_tcp 23       4        <0.521.0>   localhost:4369     localhost:45890      ????      STREAM
+ 224  inet_tcp 0        0        <0.675.0>   169.254.16.2:20000 *:*                  ACCEPTING STREAM
+ 320  inet_tcp 30330    29398    <0.712.0>   169.254.16.2:26307 169.254.16.1:19278   ????      STREAM
+ 352  inet_tcp 37675545 398      <0.676.0>   169.254.16.2:20000 169.254.16.1:42542   ????      STREAM
+ 368  inet_tcp 398      37675648 <0.719.0>   169.254.16.2:20281 169.254.16.1:20000   ????      STREAM
+ 384  inet_tcp 43       398      <0.677.0>   169.254.16.2:20000 169.254.16.1:33417   ????      STREAM
+ 400  inet_tcp 398      43       <0.721.0>   169.254.16.2:59567 169.254.16.1:20000   ????      STREAM
+ 2480 inet_tcp 35273    94575    <0.11020.0> 169.254.16.2:26307 169.254.187.89:54757 ????      STREAM
+ ok
+ (ballgame@my_grisp_board_2)33> calendar:universal_time().
+ {{1988,1,2},{4,56,1}}
+ (ballgame@my_grisp_board_2)34>

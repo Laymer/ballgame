@@ -14,8 +14,10 @@
 %% API
 -export([start_link/0]).
 -export([run/0]).
+-export([spawn_players/0]).
 -export([check/0]).
 
+-define(SERVER, ?MODULE).
 
 %% Gen Server Callbacks
 -export([init/1,
@@ -26,15 +28,31 @@
          code_change/3]).
 
 %%====================================================================
+%% Records
+%%====================================================================
+
+
+-record(state, {players :: list(),
+                channels :: list()}).
+
+-type stress_state() :: #state{}.
+%%====================================================================
 %% API
 %%====================================================================
 
 start_link() ->
-   gen_server:start({local, ?MODULE}, ?MODULE, [], []).
+   gen_server:start({local, ?SERVER}, ?MODULE, [], []).
 
 -spec run() -> ok.
 run() ->
     gen_server:cast(?MODULE, <<"run">>).
+
+-spec spawn_players() -> {ok, list()}|{error, atom()}.
+spawn_players() ->
+    % Num = ballgame_util:get(players),
+    % Players = ?PLAYER_TEAM(Num),
+    % gen_server:call(?SERVER, {spawn,Players}).
+    gen_server:call(?SERVER, spawn).
 
 -spec check() -> ok.
 check() ->
@@ -47,8 +65,26 @@ check() ->
 
 init([]) ->
   erlang:send_after(?THREE, ?MODULE, <<"check">>),
-  {ok, []}.
+  Channels = partisan_config:get(channels),
+  Num = ballgame_util:get(players),
+  Players = ?PLAYER_TEAM(Num),
+  Zip = lists:zip(Players, Channels),
+  State = #state{players = Players, channels = Zip},
+  {ok, State}.
 
+%%--------------------------------------------------------------------
+
+handle_call(spawn, _From, State) ->
+    % L = [ {player:start_link({stress_test, true}, X),X,1}
+    %     || X <- Players
+    %     , C <- State#state.channels ],
+    L = [ player:start_link({stress_test, true}, P, C)
+        || {P,C} <- State#state.channels ],
+
+    % [{{ok, Pid}, Name},{{ok, Pid}, Name2}, ...]
+    % {ok,[{{ok,<0.587.0>},player1,1},{{ok,<0.588.0>},player2,2}]}.
+
+    {reply, {ok, L}, State};
 %%--------------------------------------------------------------------
 
 handle_call(<<"check">>, _From, []) ->
@@ -107,6 +143,14 @@ terminate(_Reason, _State) ->
 
 code_change(_OldVsn, State, _Extra) ->
    {ok, State}.
+
+
+
+%%====================================================================
+%% Internal functions
+%%====================================================================
+
+
 
  rand_pattern() ->
      {rand:uniform(2) - 1, rand:uniform(2) -1, rand:uniform(2) - 1}.

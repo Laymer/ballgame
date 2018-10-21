@@ -13,6 +13,7 @@
 
 %% API
 -export([start_link/1]).
+-export([start_link/3]).
 -export([stress/1]).
 -export([shoot/1]).
 -export([play/1]).
@@ -44,19 +45,25 @@
 %%====================================================================
 
 
--record(state, {minutes :: pos_integer(),
-                ball :: false|true,
+-record(state, {channel :: pos_integer(),
+                ball :: first(),
+                name :: atom(),
                 remote :: atom()}).
 
 -type stress_state() :: #state{}.
+-type first()        :: false|true.
 
 %%====================================================================
 %% API
 %%====================================================================
 
--spec start_link({stress_test, false|true}) -> {ok, pid()}.
+-spec start_link({stress_test, first()}) -> {ok, pid()}.
 start_link({stress_test, First}) ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, {stress_test, First}, []).
+
+-spec start_link({stress_test, first()}, atom(), pos_integer()) -> {ok, pid()}.
+start_link({stress_test, First}, Name, Channel) ->
+    gen_server:start_link({local, Name}, ?MODULE, {stress_test, First, Name, Channel}, []).
 
 shoot(Target) ->
     gen_server:call(?MODULE, {shoot, Target}).
@@ -71,11 +78,15 @@ stress(Remote) ->
 %% Gen Server Callbacks
 %%====================================================================
 
--spec init({stress_test, false|true}) -> {'ok', stress_state()}.
-init({stress_test, true}) ->
-    {ok, #state{minutes = 0, ball = true, remote = node()}};
-init({stress_test, false}) ->
-    {ok, #state{minutes = 0, ball = false, remote = node()}}.
+% -spec init({stress_test, first()}) -> {'ok', stress_state()}.
+init({stress_test, First}) ->
+    {ok, #state{channel = 1, ball = First, remote = node()}};
+init({stress_test, First, Name}) ->
+    % logger:log(notice, "Name = ~p  ! ~n", [Name]),
+    {ok, #state{channel = 1, ball = First, remote = node()}};
+init({stress_test, First, Name, Channel}) ->
+    % logger:log(notice, "Name = ~p  ! ~n", [Name]),
+    {ok, #state{channel = Channel, ball = First, remote = node(), name = Name}}.
 
 %%--------------------------------------------------------------------
 
@@ -102,7 +113,8 @@ handle_cast({hello}, State) ->
 %     ok = ?HYPAR:forward_message(Remote, 1, player, <<1:1>>, []),
 %     {reply, ok, }.
 handle_cast({stress,Remote}, State) ->
-    ?HYPAR:forward_message(Remote, 1, player, {<<1:1>>,node()}, []),
+    % ?HYPAR:forward_message(Remote, 1, player, {<<1:1>>,node()}, []),
+    ?HYPAR:forward_message(Remote, State#state.channel, State#state.name, {<<1:1>>,node()}, []),
     {noreply, State#state{ball = not State#state.ball, remote = Remote}};
 %%--------------------------------------------------------------------
 
@@ -114,14 +126,16 @@ handle_cast(_Msg, State) ->
 
 -spec handle_info(any(), stress_state()) -> {'noreply', stress_state()}.
 handle_info({<<1:1>>,Remote}, State) ->
-    ?HYPAR:forward_message(Remote, 1, player, <<1:1>>, []),
+    % ?HYPAR:forward_message(Remote, 1, player, <<1:1>>, []),
+    ?HYPAR:forward_message(Remote, State#state.channel, State#state.name, {<<1:1>>,node()}, []),
     {noreply, State#state{remote = Remote}};
 
 handle_info(<<1:1>>, State) ->
     % logger:log(notice, "BINARY BALL EXCHANGE ! ~n"),
     % ?PAUSE1,
     timer:sleep(?DELAY),
-    ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
     {noreply, State};
 
 handle_info({rc}, State) ->
@@ -174,7 +188,7 @@ code_change(_OldVsn, State, _Extra) ->
     % erlang:send_after(500,?MODULE,{rc}),
     % case Args of
     %   {stress_test, First} ->
-    %     {ok, #state{minutes = 0, ball = First}};
+    %     {ok, #state{channel = 0, ball = First}};
     %   _ ->
     % end.
 

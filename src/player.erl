@@ -73,7 +73,7 @@ play(Target) ->
 
 stress(Remote) ->
     gen_server:cast(?MODULE, {stress, Remote}).
-
+    % gen_server:cast(whereis(player1), {stress, ballgame@Laymer540}).
 %%====================================================================
 %% Gen Server Callbacks
 %%====================================================================
@@ -176,7 +176,6 @@ code_change(_OldVsn, State, _Extra) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
-
 
 
 

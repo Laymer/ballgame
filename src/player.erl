@@ -48,8 +48,10 @@
 -record(state, {channel :: pos_integer(),
                 ball :: first(),
                 name :: atom(),
+                set :: lasp_ip(),
                 remote :: atom()}).
 
+-type lasp_ip()       :: { bitstring(), atom() }.
 -type stress_state() :: #state{}.
 -type first()        :: false|true.
 
@@ -73,6 +75,10 @@ play(Target) ->
 
 stress(Remote) ->
     gen_server:cast(?MODULE, {stress, Remote}).
+
+awset() ->
+    gen_server:call(?MODULE, awset).
+    % gen_server:call(whereis(player1), awset).
     % gen_server:cast(whereis(player1), {stress, ballgame@Laymer540}).
 %%====================================================================
 %% Gen Server Callbacks
@@ -87,6 +93,14 @@ init({stress_test, First, Name}) ->
 init({stress_test, First, Name, Channel}) ->
     % logger:log(notice, "Name = ~p  ! ~n", [Name]),
     {ok, #state{channel = Channel, ball = First, remote = node(), name = Name}}.
+
+%%--------------------------------------------------------------------
+
+handle_call(awset, _From, State) ->
+    logger:log(notice, "AWSET request ! ~n"),
+    Id = ballgame_util:declare_awset(set),
+    erlang:send_after(?ONE,self(),<<"add">>),
+    {reply, ok, State#state{set = Id}};
 
 %%--------------------------------------------------------------------
 
@@ -136,6 +150,31 @@ handle_info(<<1:1>>, State) ->
     timer:sleep(?DELAY),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
+    {noreply, State};
+
+handle_info(<<"add">>, State) ->
+    % logger:log(notice, "ADD ! ~n"),
+    % ?PAUSE1,
+    % timer:sleep(?DELAY),
+    lasp:update(State#state.set, {add, <<1:1>>}, self()),
+    erlang:send_after(10,self(),<<"rmv">>),
+    % erlang:send_after(10,self(),<<"rmv">>),
+    % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
+    % {noreply, State#state{set = NewSet}};
+    {noreply, State};
+
+handle_info(<<"rmv">>, State) ->
+    % logger:log(notice, "RMV ! ~n"),
+    % ?PAUSE1,
+    % timer:sleep(?DELAY),
+    % {ok, {NewSet, _, _, _}} = lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
+    lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
+    erlang:send_after(10,self(),<<"add">>),
+    % erlang:send_after(10,self(),<<"add">>),
+    % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
+    % {noreply, State#state{set = NewSet}};
     {noreply, State};
 
 handle_info({rc}, State) ->

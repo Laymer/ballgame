@@ -10,7 +10,8 @@
         sasl,
         grisp,
         lager,
-        partisan
+        partisan,
+        lasp
     ]},
     {env,[]},
     {modules, []},

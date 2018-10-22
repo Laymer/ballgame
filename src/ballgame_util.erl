@@ -33,6 +33,14 @@ members() ->
 
 alone() ->
     length(members() -- [node()]) == 0.
+
+declare_awset(Name) ->
+  String = atom_to_list(Name),
+  AWName = list_to_bitstring(String),
+  AWSetType = state_awset,
+  {ok, {AWSet, _, _, _}} = lasp:declare({AWName, AWSetType}, AWSetType),
+  AWSet.
+  % {ok, {AWSet1, _, _, _}} = lasp:update(AWSet, {add, AWSetVal1}, self()).
 % maybe_get_remote() ->
 %     MList = members(),
 %     maybe_get_remote(MList).

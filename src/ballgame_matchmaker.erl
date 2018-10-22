@@ -45,7 +45,7 @@ start_link() ->
 
 -spec run() -> ok.
 run() ->
-    gen_server:cast(?MODULE, <<"run">>).
+    gen_server:cast(?MODULE, <<"run_awset">>).
 
 -spec spawn_players() -> {ok, list()}|{error, atom()}.
 spawn_players() ->
@@ -104,15 +104,16 @@ handle_call(<<"check">>, _From, []) ->
 
 %%--------------------------------------------------------------------
 
-handle_cast(<<"run">>, State) ->
-    Alone = ballgame_util:alone(),
-    case Alone of
-        false ->
-            {stress,player:stress(hd(nodes()))};
-        _ ->
-            erlang:send_after(?THREE, ?MODULE, <<"check">>),
-            {stress,erralone}
-    end,
+handle_cast(<<"run_awset">>, State) ->
+    [ gen_server:call(whereis(X),awset) || X <- State#state.players ],
+    % Alone = ballgame_util:alone(),
+    % case Alone of
+    %     false ->
+    %         {stress,player:stress(hd(nodes()))};
+    %     _ ->
+    %         erlang:send_after(?THREE, ?MODULE, <<"check">>),
+    %         {stress,erralone}
+    % end,
     % M = ballgame_util:members(),
     % logger:log(notice, "Available remotes for stress test : ~n"),
     % logger:log(notice, "Nodes ~p : ~n",[M]),

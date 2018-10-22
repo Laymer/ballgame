@@ -37,7 +37,15 @@ start_link() ->
 % -endif.
 
 %--- Callbacks -----------------------------------------------------------------
-
+% ballgame_matchmaker:spawn_players().
+% sys:get_status(player1).
+% process_info(whereis(player1)).
+% sys:statistics(whereis(player1),true),sys:statistics(whereis(player2),true).
+% sys:statistics(whereis(player1),get).
+% sys:statistics(whereis(player2),get).net_adm:ping(ballgame@my_grisp_board_1).
+% gen_server:cast(whereis(player1), {stress, ballgame@my_grisp_board_1}).
+% gen_server:cast(whereis(player2), {stress, ballgame@my_grisp_board_1}).
+% gen_server:cast()
 init([Args]) ->
     % Number = ballgame_util:get(number),
     SupFlags = #{strategy => one_for_one,

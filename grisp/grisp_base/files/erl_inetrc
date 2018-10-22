@@ -13,7 +13,7 @@
 %  % Edge wireless network :
 %
 {host, {169,254,187,89}, ["Laymer"]}.
-% {host, {169,254,187,90}, ["LaymerMac"]}.
+{host, {169,254,187,90}, ["LaymerMac"]}.
 % {host, {169,254,187,91}, ["Laymer540"]}.
 
 

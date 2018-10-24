@@ -17,6 +17,7 @@
 -export([stress/1]).
 -export([shoot/1]).
 -export([play/1]).
+-export([set_ops_count/1]).
 
 %% Gen Server Callbacks
 -export([init/1,
@@ -36,8 +37,9 @@
 
 -define(SERVICE,   partisan_peer_service).
 -define(HYPAR,      partisan_hyparview_peer_service_manager).
--define(DELAY,      ballgame_util:get(stress_delay)).
--define(OPS_COUNT,      ballgame_util:get(operations_count)).
+
+% -define(ballgame_util:get(stress_delay),      ballgame_util:get(stress_ballgame_util:get(stress_delay))).
+% -define(ballgame_util:get(operations_count),      ballgame_util:get(operations_count)).
 % -define(PEER,      partisan_hyparview_peer_service_manager).
 % -define(NAME(Number),   list_to_atom(unicode:characters_to_list(["player", "_", integer_to_list(Number)], utf8))).
 
@@ -51,7 +53,9 @@
                 name :: atom(),
                 set :: lasp_id(),
                 ops :: pos_integer(),
+                stress_delay :: pos_integer(),
                 packet :: bitstring(),
+                packet_size :: pos_integer(),
                 remote :: atom()}).
 
 -type lasp_id()       :: { bitstring(), atom() }.
@@ -62,13 +66,17 @@
 %% API
 %%====================================================================
 
--spec start_link({stress_test, first()}) -> {ok, pid()}.
+-spec start_link({awset|stress_test, first()|map()}) -> {ok, pid()}.
 start_link({stress_test, First}) ->
-    gen_server:start_link({local, ?MODULE}, ?MODULE, {stress_test, First}, []).
+    gen_server:start_link({local, ?MODULE}, ?MODULE, {stress_test, First}, []);
+% -spec start_link({awset, map()}) -> {ok, pid()}.
+start_link({awset, PacketConfig}) ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, {awset, PacketConfig}, []).
 
 -spec start_link({stress_test, first()}, atom(), pos_integer()) -> {ok, pid()}.
 start_link({stress_test, First}, Name, Channel) ->
     gen_server:start_link({local, Name}, ?MODULE, {stress_test, First, Name, Channel}, []).
+
 
 shoot(Target) ->
     gen_server:call(?MODULE, {shoot, Target}).
@@ -87,6 +95,9 @@ heavy_awset() ->
 
 get_awset() ->
     gen_server:call(?MODULE, get_awset).
+
+set_ops_count(Ops) ->
+    gen_server:call(?MODULE, {set_ops_count, Ops}).
     % gen_server:call(whereis(player1), awset).
     % gen_server:cast(whereis(player1), {stress, ballgame@Laymer540}).
 %%====================================================================
@@ -94,15 +105,20 @@ get_awset() ->
 %%====================================================================
 
 % -spec init({stress_test, first()}) -> {'ok', stress_state()}.
+init({awset, PacketConfig}) when is_map(PacketConfig) ->
+    % logger:log(notice, "Name = ~p  ! ~n", [Name]),
+    {ok, #state{ops = maps:get(operations_count, PacketConfig)
+        , channel = maps:get(channel, PacketConfig)
+        , name = ?MODULE
+        , ball = false
+        , remote = node()
+        , stress_delay = maps:get(stress_delay, PacketConfig)
+        , packet_size = maps:get(packet_size, PacketConfig)}};
 init({stress_test, First}) ->
-    {ok, #state{ops = ?OPS_COUNT, channel = 1, ball = First, remote = node()}};
+    {ok, #state{ops = ballgame_util:get(operations_count), channel = 1, ball = First, remote = node()}};
 init({stress_test, First, Name}) ->
     % logger:log(notice, "Name = ~p  ! ~n", [Name]),
-    {ok, #state{ops = ?OPS_COUNT, channel = 1, ball = First, remote = node()}};
-init({stress_test, First, Name, Channel}) ->
-    % logger:log(notice, "Name = ~p  ! ~n", [Name]),
-    {ok, #state{ops = ?OPS_COUNT, channel = Channel, ball = First, remote = node(), name = Name, packet = <<1:1>>}}.
-
+    {ok, #state{ops = ballgame_util:get(operations_count), channel = 1, ball = First, remote = node()}}.
 %%--------------------------------------------------------------------
 
 handle_call(awset, _From, State) ->
@@ -110,13 +126,19 @@ handle_call(awset, _From, State) ->
     Id = ballgame_util:declare_awset(set),
     erlang:send_after(?ONE,self(),<<"add">>),
     {reply, ok, State#state{set = Id}};
+%%--------------------------------------------------------------------
+
+handle_call({set_ops_count, Ops}, _From, State) ->
+    logger:log(notice, "RESET OPS ! ~n"),
+    {reply, ok, State#state{ops = Ops}};
 
 %%--------------------------------------------------------------------
 
 handle_call(heavy_awset, _From, State) ->
     logger:log(notice, "AWSET WITH PACKET request ! ~n"),
     Id = ballgame_util:declare_awset(set),
-    Packet = ballgame_util:bitstring_name(),
+    Packet = ballgame_util:get_packet(State#state.packet_size),
+    logger:log(notice, "PACKET =  ~p Size ~p bits ~n",[Packet, bit_size(Packet)]),
     erlang:send_after(?ONE,self(),<<"add">>),
     {reply, ok, State#state{set = Id, packet = Packet}};
 
@@ -175,17 +197,18 @@ handle_info({<<1:1>>,Remote}, State) ->
 handle_info(<<1:1>>, State) ->
     % logger:log(notice, "BINARY BALL EXCHANGE ! ~n"),
     % ?PAUSE1,
-    timer:sleep(?DELAY),
+    timer:sleep(ballgame_util:get(stress_delay)),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
     {noreply, State};
 
 handle_info(<<"add">>, State) when State#state.ops > 0 ->
-    logger:log(notice, "ADD ! ~n"),
+    logger:log(info, "ADD ! ~n"),
+    logger:log(info, "PACKET =  ~p Size ~p bits ~n",[State#state.packet, bit_size(State#state.packet)]),
     % ?PAUSE1,
-    % timer:sleep(?DELAY),
+    % timer:sleep(ballgame_util:get(stress_delay)),
     lasp:update(State#state.set, {add, State#state.packet}, self()),
-    erlang:send_after(?DELAY,self(),<<"rmv">>),
+    erlang:send_after(State#state.stress_delay,self(),<<"rmv">>),
     % erlang:send_after(10,self(),<<"rmv">>),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
@@ -195,9 +218,9 @@ handle_info(<<"add">>, State) when State#state.ops > 0 ->
 handle_info(<<"add">>, State) ->
     logger:log(notice, "FINISHED ! ~n"),
     % ?PAUSE1,
-    % timer:sleep(?DELAY),
+    % timer:sleep(ballgame_util:get(stress_delay)),
     % lasp:update(State#state.set, {add, <<1:1>>}, self()),
-    % erlang:send_after(?DELAY,self(),<<"rmv">>),
+    % erlang:send_after(ballgame_util:get(stress_delay),self(),<<"rmv">>),
     % erlang:send_after(10,self(),<<"rmv">>),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
@@ -205,12 +228,13 @@ handle_info(<<"add">>, State) ->
     {noreply, State};
 
 handle_info(<<"rmv">>, State) ->
-    logger:log(notice, "RMV ! ~n"),
+    % logger:log(notice, "RMV ! ~n"),
     % ?PAUSE1,
-    % timer:sleep(?DELAY),
+    % timer:sleep(ballgame_util:get(stress_delay)),
     % {ok, {NewSet, _, _, _}} = lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
-    lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
-    erlang:send_after(?DELAY,self(),<<"add">>),
+    % lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
+    lasp:update(State#state.set, {rmv, State#state.packet}, self()),
+    erlang:send_after(State#state.stress_delay,self(),<<"add">>),
     % erlang:send_after(10,self(),<<"add">>),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
@@ -221,6 +245,17 @@ handle_info({rc}, State) ->
     logger:log(notice, "Received INFO : RC ! ~n"),
     ballgame_util:seek_neighbors(),
     {noreply, State};
+%
+% handle_info(timeout, State) ->
+%     logger:log(notice, "Received INFO : <<packet>> ! ~n"),
+%     logger:log(notice, "Initializing Packet ! ~n"),
+%     Stress_delay = ballgame_util:get(stress_delay),
+%     Packet_size = ballgame_util:get(packet_size),
+%     Packet = ballgame_util:get_packet(Packet_size),
+%     {noreply, State#state{packet = Packet
+%     , stress_delay = Stress_delay
+%     , packet_size = Packet_size}};
+    % {noreply, State};
 
 
 handle_info(Info, State) ->

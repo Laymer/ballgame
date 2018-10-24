@@ -10,6 +10,8 @@
 %% Utility functions
 %%====================================================================
 
+
+
 is_shell() ->
   case os:type() of
     {unix, rtems} -> false;
@@ -33,6 +35,10 @@ members() ->
 
 alone() ->
     length(members() -- [node()]) == 0.
+
+get_packet(Size) ->
+    % <<Packet:Size/bitstring>> = <<1:Size>>.
+    <<1:Size>>.
 
 bitstring_name() ->
     N = node(),
@@ -77,6 +83,14 @@ declare_awset(Name) ->
 -endif.
 
 
+% remotes_to_atoms(L) -> sum(L, []).
+%
+% map_pairs2(_Map, [], Ys) ->
+%     Ys;
+% map_pairs2(_Map, [_|_]=Xs, [] ) ->
+%     Xs;
+% map_pairs2(Map, [X|Xs], [Y|Ys]) ->
+%     [Map(X, Y)|map_pairs2(Map, Xs, Ys)].
 %%====================================================================
 %% NO LOGGING
 %%====================================================================
@@ -89,11 +103,74 @@ remotes_to_atoms([H|T]) ->
 remotes_to_atoms([]) ->
     [].
 
+binary_remotes_to_atoms([H|T]) ->
+    [binary_to_atom(H,utf8)|binary_remotes_to_atoms(T)];
+binary_remotes_to_atoms([]) ->
+    [].
+
+main() ->
+    L = lists:seq(1,100000),
+    % F = fun(X) -> X end,
+    spawn(fun() -> io:format("New : ~p~n", [element(1, timer:tc(?MODULE, new_time, [L]))]) end),
+    spawn(fun() -> io:format("Old : ~p~n", [element(1, timer:tc(?MODULE, old_time, [L]))]) end).
+%
+% tail_map(F, L) ->
+%     tail_map(F, L, []).
+%
+% tail_map(_, [], Acc) -> lists:reverse(Acc);
+% tail_map(F, [H|T], Acc) -> tail_map(F, T, [F(H)|Acc]).
+%
+% body_map(_, []) -> [];
+% body_map(F, [H|T]) -> [F(H) | body_map(F, T)].
+
+
+new_time(L) ->
+    % L = lists:seq(1,100),
+    % F = fun(X) -> X end,
+    Times = [ element(1, timer:tc(?MODULE, clusterize, []) ) || X <- L],
+    lists:sum(Times).
+
+old_time(L) ->
+    % L = lists:seq(1,100),
+    % F = fun(X) -> X end,
+    Times = [ element(1, timer:tc(?MODULE, old_clusterize, []) ) || X <- L],
+    lists:sum(Times).
+    % T = element(1, timer:tc(?MODULE, clusterize, []) ),
+    % spawn(fun() -> io:format("Old:~p~n", [element(1, timer:tc(?MODULE, m_tail_map, []))]) end),
+    % spawn(fun() ->
+        % io:format("New:~p~n", [element(1, timer:tc(?MODULE, clusterize, []) )])
+    % end).
+%
+% m_tail_map(_, _, 0) -> ok;
+% m_tail_map(F, L, N) ->
+%     tail_map(F,L),
+%     m_tail_map(F, L, N-1).
+%
+% m_body_map(_, _, 0) -> ok;
+% m_body_map(F, L, N) ->
+%     body_map(F,L),
+%     m_body_map(F, L, N-1).
+%
+% remotes_to_bin([H|T]) ->
+    % remote
+% remotes_to_bin([H|T]) ->
+%     C = unicode:characters_to_list(["ballgame@",H]),
+%     R = list_to_atom(C),
+%     [R|remotes_to_bin(T)];
+% remotes_to_bin([]) ->
+%     [].
+
 seek_neighbors() ->
+    % T1 = erlang:monotonic_time(),
     Rc = inet_db:get_rc(),
     seek_neighbors(Rc).
+    % L = seek_neighbors(Rc),
+    % T2 = erlang:monotonic_time() - T1,
+    % logger:log(notice, "New seek time : ~p~n", [T2]),
+    % L.
 seek_neighbors([{host,_Addr,N}|T]) ->
-    [N|seek_neighbors(T)];
+    [list_to_bitstring(["ballgame@",N])|seek_neighbors(T)];
+    % [N|seek_neighbors(T)];
 seek_neighbors([{_Arg,_Val}|T]) ->
     seek_neighbors(T);
 seek_neighbors([]) ->
@@ -108,16 +185,57 @@ seek_neighbors([]) ->
 % seek_neighbors(Rc) when is_list(Rc) ->
 %     seek_neighbors({<<"rc">>,Rc}) ->
 %
-%     net_adm:ping_list(lists:filtermap(fun
-%     (Tup) ->
-%         case Tup of
-%         {host,_Addr,[Hostname]} ->
-%           {true, list_to_atom("ballgame@" ++ Hostname)};
-%         _ ->
-%           false
-%         end
-%     end, Rc)).
+old_seek() ->
+    % T1 = erlang:monotonic_time(),
+    lists:filtermap(fun
+    (Tup) ->
+        case Tup of
+        {host,_Addr,[Hostname]} ->
+          % {true, list_to_atom("ballgame@" ++ Hostname)};
+          % N = list_to_bitstring(["ballgame@",Hostname]),
+          % {true, <<"ballgame@",N/bitstring>>};
+          {true, list_to_bitstring(["ballgame@",Hostname])};
+        _ ->
+          false
+        end
+    end, inet_db:get_rc()).
+    % T1 = erlang:monotonic_time(),
+    % L = net_adm:ping_list(lists:filtermap(fun
+    % (Tup) ->
+    %     case Tup of
+    %     {host,_Addr,[Hostname]} ->
+    %       {true, list_to_atom("ballgame@" ++ Hostname)};
+    %     _ ->
+    %       false
+    %     end
+    % end, inet_db:get_rc())),
+    % L = lists:filtermap(fun
+    % (Tup) ->
+    %     case Tup of
+    %     {host,_Addr,[Hostname]} ->
+    %       {true, list_to_atom("ballgame@" ++ Hostname)};
+    %       % {true, Hostname};
+    %     _ ->
+    %       false
+    %     end
+    % end, inet_db:get_rc()),
+    % T2 = erlang:monotonic_time() - T1,
+    % logger:log(notice, "Old seek time : ~p~n", [T2]),
+    % L.
+    % << << (X*2) >> || <<X>> <= <<1,2,3>> >>.
+fakejoin(Host) ->
+    timer:sleep(rand:uniform(50)),
+    partisan_hyparview_peer_service_manager:myself().
+% foo(N, Bin) ->
+%    <<X:N,T/binary>> = Bin,
+%    {X,T}.
+bin_fakejoin(Host) ->
+    binary_to_atom(Host,utf8),
+    timer:sleep(rand:uniform(50)),
+    partisan_hyparview_peer_service_manager:myself().
+
 join(Host) ->
+
     Manager = rpc:call(Host, partisan_peer_service, manager, []),
 %% TODO : separate in funcs
     case Manager of
@@ -136,14 +254,21 @@ join(Host) ->
     end.
 
 clusterize() ->
+    % T1 = erlang:monotonic_time(),
     N = seek_neighbors(),
-    Remotes = remotes_to_atoms(N),
+    % Remotes = remotes_to_atoms(N),
+    Remotes = binary_remotes_to_atoms(N),
     Self = node(),
     clusterize(Remotes,Self).
+    % L = clusterize(Remotes,Self),
+    % T2 = erlang:monotonic_time() - T1,
+    % logger:log(notice, "New clusterize time : ~p~n", [T2]),
+    % L.
 clusterize([H|Remotes],Self) ->
     case H =/= Self of
         true ->
             Res = ballgame_util:join(H),
+            % Res = ballgame_util:fakejoin(H),
             [Res|clusterize(Remotes,Self)];
         _ ->
             [clusterize(Remotes,Self)]
@@ -153,6 +278,23 @@ clusterize([],_Self) ->
     [].
       % X <- Remotes(),
       % X =/= node() ].
+
+
+old_clusterize() ->
+    % T1 = erlang:monotonic_time(),
+    % L = [ ballgame_util:join(X) ||
+    % L = [ ballgame_util:fakejoin(X) ||
+    %     X <- old_seek(),
+    %     % X =/= atom_to_binary(node(),utf8) ],
+    %     X =/= node() ],
+    _L = [ ballgame_util:join(X) ||
+        X <- old_seek(),
+        X =/= atom_to_binary(node(),utf8) ].
+        % X =/= node() ].
+    % T2 = erlang:monotonic_time() - T1,
+    % logger:log(notice, "Old clusterize : ~p~n", [T2]),
+    % L.
+  % logger:log(info, "Joined = ~p ~n", [L]).
 
 -else.
 %%====================================================================

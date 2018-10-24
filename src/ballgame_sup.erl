@@ -6,6 +6,7 @@
 
 % API
 -export([start_link/0]).
+-export([start_link/1]).
 
 % Callbacks
 -export([init/1]).
@@ -28,7 +29,12 @@
 start_link() ->
     supervisor:start_link({local, ?MODULE},
     ?MODULE,
-    [{stress_test,ballgame_util:get(first_hand)}]).
+    [{stress_test, ballgame_util:get(first_hand)}]).
+
+start_link(awset) ->
+    supervisor:start_link({local, ?MODULE},
+    ?MODULE,
+    [ {awset, ballgame_util:get(packet_config)} ]).
 % -else.
 %     start_link() ->
 %         supervisor:start_link({local, ?MODULE},
@@ -46,23 +52,29 @@ start_link() ->
 % gen_server:cast(whereis(player1), {stress, ballgame@my_grisp_board_1}).
 % gen_server:cast(whereis(player2), {stress, ballgame@my_grisp_board_1}).
 % gen_server:cast()
+% init([{awset, PacketConf }]) ->
+%     SupFlags = #{strategy => one_for_one,
+%     intensity => 3,
+%     period => 10},
+%     ChildSpecs = [#{id => ballgame_matchmaker,
+%                     start => {ballgame_matchmaker, start_link, []},
+%                     restart => permanent,
+%                     type => worker,
+%                     shutdown => 10000,
+%                     modules => [ballgame_matchmaker]},
+%                 #{id => player,
+%                         start => {player, start_link, [{awset, PacketConf}]},
+%                         restart => permanent,
+%                         type => worker,
+%                         shutdown => 10000,
+%                         modules => [player]}],
+%     {ok, {SupFlags, ChildSpecs}}.
+
 init([Args]) ->
     % Number = ballgame_util:get(number),
     SupFlags = #{strategy => one_for_one,
                  intensity => 3,
                  period => 10},
-    % ChildSpecs = [#{id => {player, Args},
-    %                         start => {player, start_link, [Args]},
-    %                         restart => permanent,
-    %                         type => worker,
-    %                         shutdown => 10000,
-    %                         modules => [player]},
-    %             #{id => ballgame_matchmaker,
-    %                         start => {ballgame_matchmaker, start_link, []},
-    %                         restart => permanent,
-    %                         type => worker,
-    %                         shutdown => 10000,
-    %                         modules => [ballgame_matchmaker]}],
     ChildSpecs = [#{id => ballgame_matchmaker,
                             start => {ballgame_matchmaker, start_link, []},
                             restart => permanent,
@@ -76,3 +88,16 @@ init([Args]) ->
                     shutdown => 10000,
                     modules => [player]}],
     {ok, {SupFlags, ChildSpecs}}.
+
+% ChildSpecs = [#{id => {player, Args},
+%                         start => {player, start_link, [Args]},
+%                         restart => permanent,
+%                         type => worker,
+%                         shutdown => 10000,
+%                         modules => [player]},
+%             #{id => ballgame_matchmaker,
+%                         start => {ballgame_matchmaker, start_link, []},
+%                         restart => permanent,
+%                         type => worker,
+%                         shutdown => 10000,
+%                         modules => [ballgame_matchmaker]}],

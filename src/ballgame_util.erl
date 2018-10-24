@@ -34,11 +34,18 @@ members() ->
 alone() ->
     length(members() -- [node()]) == 0.
 
+bitstring_name() ->
+    N = node(),
+    bitstring_name(N).
+bitstring_name(N) ->
+    atom_to_binary(N,utf8).
+
 declare_awset(Name) ->
   String = atom_to_list(Name),
   AWName = list_to_bitstring(String),
   AWSetType = state_awset,
   {ok, {AWSet, _, _, _}} = lasp:declare({AWName, AWSetType}, AWSetType),
+  application:set_env(ballgame, awset, AWSet),
   AWSet.
   % {ok, {AWSet1, _, _, _}} = lasp:update(AWSet, {add, AWSetVal1}, self()).
 % maybe_get_remote() ->
@@ -73,44 +80,79 @@ declare_awset(Name) ->
 %%====================================================================
 %% NO LOGGING
 %%====================================================================
--ifdef(SILENT).
+-ifdef(GRISP).
+
+remotes_to_atoms([H|T]) ->
+    C = unicode:characters_to_list(["ballgame@",H]),
+    R = list_to_atom(C),
+    [R|remotes_to_atoms(T)];
+remotes_to_atoms([]) ->
+    [].
 
 seek_neighbors() ->
-    case is_shell() of
-        true ->
-            % {ok,_} = application:ensure_all_started(inet_db),
-            {ok, Cwd} = file:get_cwd(),
-            Wc = filename:join(Cwd,"**/files/"),
-            {ok, Rc} = filelib:find_file("erl_inetrc", Wc),
-            ok = inet_db:add_rc(Rc);
-        _ ->
-            error
-    end,
-  net_adm:ping_list(lists:filtermap(fun
-    (Tup) ->
-      case Tup of
-        {host,_Addr,[Hostname]} ->
-          {true, list_to_atom("ballgame@" ++ Hostname)};
-        _ ->
-          false
-      end
-    end, inet_db:get_rc())).
-
+    Rc = inet_db:get_rc(),
+    seek_neighbors(Rc).
+seek_neighbors([{host,_Addr,N}|T]) ->
+    [N|seek_neighbors(T)];
+seek_neighbors([{_Arg,_Val}|T]) ->
+    seek_neighbors(T);
+seek_neighbors([]) ->
+    [].
+%
+% seek_neighbors(Entry) when is_tuple(Entry) ->
+%
+%     Hosts = [ list_to_atom("ballgame@" ++ Hostname) ||
+%         X <- [H|T],
+%         element(1, X) =:= host,
+%         Hostname <- element(3,X) ],
+% seek_neighbors(Rc) when is_list(Rc) ->
+%     seek_neighbors({<<"rc">>,Rc}) ->
+%
+%     net_adm:ping_list(lists:filtermap(fun
+%     (Tup) ->
+%         case Tup of
+%         {host,_Addr,[Hostname]} ->
+%           {true, list_to_atom("ballgame@" ++ Hostname)};
+%         _ ->
+%           false
+%         end
+%     end, Rc)).
 join(Host) ->
     Manager = rpc:call(Host, partisan_peer_service, manager, []),
+%% TODO : separate in funcs
     case Manager of
       partisan_hyparview_peer_service_manager ->
         Node = rpc:call(Host, Manager, myself, []),
         ok = partisan_peer_service:join(Node),
         Node;
+      {badrpc, Reason} ->
+        logger:log(error, "Unable to RPC remote : ~p~n", [Reason]),
+        [];
       {error, Reason} ->
-        {error, Reason}
+        logger:log(error, "Error : ~p~n", [Reason]),
+        [];
+      _ ->
+        []
     end.
 
 clusterize() ->
-    [ ballgame_util:join(X) ||
-      X <- seek_neighbors(),
-      X =/= node() ].
+    N = seek_neighbors(),
+    Remotes = remotes_to_atoms(N),
+    Self = node(),
+    clusterize(Remotes,Self).
+clusterize([H|Remotes],Self) ->
+    case H =/= Self of
+        true ->
+            Res = ballgame_util:join(H),
+            [Res|clusterize(Remotes,Self)];
+        _ ->
+            [clusterize(Remotes,Self)]
+        end;
+
+clusterize([],_Self) ->
+    [].
+      % X <- Remotes(),
+      % X =/= node() ].
 
 -else.
 %%====================================================================
@@ -181,6 +223,17 @@ name(Host) when is_atom(Host) ->
   list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(Host)], utf8));
 name(Host) when is_list(Host) ->
   [list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(X)], utf8)) || X <- lists:flatten(Host)].
+
+% case is_shell() of
+%     true ->
+%         % {ok,_} = application:ensure_all_started(inet_db),
+%         {ok, Cwd} = file:get_cwd(),
+%         Wc = filename:join(Cwd,"**/files/"),
+%         {ok, Rc} = filelib:find_file("erl_inetrc", Wc),
+%         ok = inet_db:add_rc(Rc);
+%     _ ->
+%         error
+% end,
 
 % {ok, F} = case is_shell() of
 %     true ->

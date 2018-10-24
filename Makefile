@@ -102,7 +102,7 @@ testshell:
 	$(REBAR) as test shell --sname $(GRISPAPP)$(n) --setcookie $(COOKIE) --apps $(GRISPAPP)
 
 2testshell:
-	$(REBAR) as test shell --sname $(GRISPAPP)2 --setcookie $(COOKIE) --apps $(GRISPAPP)
+	$(REBAR) as test shell --sname $(GRISPAPP)2 --setcookie $(COOKIE) --apps $(GRISPAPP) --version 0.0.1
 #
 # 2shell: test-app-src
 # 	$(REBAR) as test shell --sname $(GRISPAPP)2 --setcookie $(COOKIE) --apps grisplite

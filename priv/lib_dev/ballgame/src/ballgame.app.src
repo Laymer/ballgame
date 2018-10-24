@@ -1,3 +1,5 @@
+%% -*- erlang -*-
+%% Test environment
 {application, ballgame, [
     {description, "A GRiSP application"},
     {vsn, "0.1.0"},
@@ -8,7 +10,7 @@
         kernel,
         stdlib,
         sasl,
-        % grisp,
+        grisp,
         lager,
         partisan,
         lasp

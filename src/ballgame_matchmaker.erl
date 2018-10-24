@@ -67,9 +67,17 @@ init([]) ->
   erlang:send_after(?THREE, ?MODULE, <<"check">>),
   Channels = partisan_config:get(channels),
   Num = ballgame_util:get(players),
-  Players = ?PLAYER_TEAM(Num),
-  Zip = lists:zip(Players, Channels),
-  State = #state{players = Players, channels = Zip},
+  Players = case Num of
+    1 ->
+      [player];
+    _ when Num > 1 ->
+      ?PLAYER_TEAM(Num);
+    _ ->
+      []
+    end,
+  % Zip = lists:zip(Players, Channels),
+  % State = #state{players = Players, channels = Channels},
+  State = #state{players = Players, channels = Channels},
   {ok, State}.
 
 %%--------------------------------------------------------------------

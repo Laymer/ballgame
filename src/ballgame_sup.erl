@@ -68,5 +68,11 @@ init([Args]) ->
                             restart => permanent,
                             type => worker,
                             shutdown => 10000,
-                            modules => [ballgame_matchmaker]}],
+                            modules => [ballgame_matchmaker]},
+                #{id => {player, Args},
+                    start => {player, start_link, [Args]},
+                    restart => permanent,
+                    type => worker,
+                    shutdown => 10000,
+                    modules => [player]}],
     {ok, {SupFlags, ChildSpecs}}.

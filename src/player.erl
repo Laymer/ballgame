@@ -37,6 +37,7 @@
 -define(SERVICE,   partisan_peer_service).
 -define(HYPAR,      partisan_hyparview_peer_service_manager).
 -define(DELAY,      ballgame_util:get(stress_delay)).
+-define(OPS_COUNT,      ballgame_util:get(operations_count)).
 % -define(PEER,      partisan_hyparview_peer_service_manager).
 % -define(NAME(Number),   list_to_atom(unicode:characters_to_list(["player", "_", integer_to_list(Number)], utf8))).
 
@@ -48,10 +49,12 @@
 -record(state, {channel :: pos_integer(),
                 ball :: first(),
                 name :: atom(),
-                set :: lasp_ip(),
+                set :: lasp_id(),
+                ops :: pos_integer(),
+                packet :: bitstring(),
                 remote :: atom()}).
 
--type lasp_ip()       :: { bitstring(), atom() }.
+-type lasp_id()       :: { bitstring(), atom() }.
 -type stress_state() :: #state{}.
 -type first()        :: false|true.
 
@@ -78,6 +81,12 @@ stress(Remote) ->
 
 awset() ->
     gen_server:call(?MODULE, awset).
+
+heavy_awset() ->
+    gen_server:call(?MODULE, heavy_awset).
+
+get_awset() ->
+    gen_server:call(?MODULE, get_awset).
     % gen_server:call(whereis(player1), awset).
     % gen_server:cast(whereis(player1), {stress, ballgame@Laymer540}).
 %%====================================================================
@@ -86,13 +95,13 @@ awset() ->
 
 % -spec init({stress_test, first()}) -> {'ok', stress_state()}.
 init({stress_test, First}) ->
-    {ok, #state{channel = 1, ball = First, remote = node()}};
+    {ok, #state{ops = ?OPS_COUNT, channel = 1, ball = First, remote = node()}};
 init({stress_test, First, Name}) ->
     % logger:log(notice, "Name = ~p  ! ~n", [Name]),
-    {ok, #state{channel = 1, ball = First, remote = node()}};
+    {ok, #state{ops = ?OPS_COUNT, channel = 1, ball = First, remote = node()}};
 init({stress_test, First, Name, Channel}) ->
     % logger:log(notice, "Name = ~p  ! ~n", [Name]),
-    {ok, #state{channel = Channel, ball = First, remote = node(), name = Name}}.
+    {ok, #state{ops = ?OPS_COUNT, channel = Channel, ball = First, remote = node(), name = Name, packet = <<1:1>>}}.
 
 %%--------------------------------------------------------------------
 
@@ -101,6 +110,25 @@ handle_call(awset, _From, State) ->
     Id = ballgame_util:declare_awset(set),
     erlang:send_after(?ONE,self(),<<"add">>),
     {reply, ok, State#state{set = Id}};
+
+%%--------------------------------------------------------------------
+
+handle_call(heavy_awset, _From, State) ->
+    logger:log(notice, "AWSET WITH PACKET request ! ~n"),
+    Id = ballgame_util:declare_awset(set),
+    Packet = ballgame_util:bitstring_name(),
+    erlang:send_after(?ONE,self(),<<"add">>),
+    {reply, ok, State#state{set = Id, packet = Packet}};
+
+%%--------------------------------------------------------------------
+
+handle_call(get_awset, _From, State) ->
+    logger:log(notice, "GET AWSET request ! ~n"),
+    % Id = ballgame_util:declare_awset(set),
+    % erlang:send_after(?ONE,self(),<<"add">>),
+    Name = ballgame_util:get(awset),
+    {ok, Set} = lasp:query(Name),
+    {reply, sets:to_list(Set), State};
 
 %%--------------------------------------------------------------------
 
@@ -152,12 +180,24 @@ handle_info(<<1:1>>, State) ->
     ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
     {noreply, State};
 
-handle_info(<<"add">>, State) ->
-    % logger:log(notice, "ADD ! ~n"),
+handle_info(<<"add">>, State) when State#state.ops > 0 ->
+    logger:log(notice, "ADD ! ~n"),
     % ?PAUSE1,
     % timer:sleep(?DELAY),
-    lasp:update(State#state.set, {add, <<1:1>>}, self()),
-    erlang:send_after(10,self(),<<"rmv">>),
+    lasp:update(State#state.set, {add, State#state.packet}, self()),
+    erlang:send_after(?DELAY,self(),<<"rmv">>),
+    % erlang:send_after(10,self(),<<"rmv">>),
+    % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
+    % {noreply, State#state{set = NewSet}};
+    {noreply, State};
+
+handle_info(<<"add">>, State) ->
+    logger:log(notice, "FINISHED ! ~n"),
+    % ?PAUSE1,
+    % timer:sleep(?DELAY),
+    % lasp:update(State#state.set, {add, <<1:1>>}, self()),
+    % erlang:send_after(?DELAY,self(),<<"rmv">>),
     % erlang:send_after(10,self(),<<"rmv">>),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
@@ -165,17 +205,17 @@ handle_info(<<"add">>, State) ->
     {noreply, State};
 
 handle_info(<<"rmv">>, State) ->
-    % logger:log(notice, "RMV ! ~n"),
+    logger:log(notice, "RMV ! ~n"),
     % ?PAUSE1,
     % timer:sleep(?DELAY),
     % {ok, {NewSet, _, _, _}} = lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
     lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
-    erlang:send_after(10,self(),<<"add">>),
+    erlang:send_after(?DELAY,self(),<<"add">>),
     % erlang:send_after(10,self(),<<"add">>),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
     % {noreply, State#state{set = NewSet}};
-    {noreply, State};
+    {noreply, State#state{ops = State#state.ops - 1}};
 
 handle_info({rc}, State) ->
     logger:log(notice, "Received INFO : RC ! ~n"),

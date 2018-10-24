@@ -118,22 +118,21 @@ seek_neighbors([]) ->
 %         end
 %     end, Rc)).
 join(Host) ->
-    Manager = rpc:call(Host, partisan_peer_service, manager, []),
-%% TODO : separate in funcs
-    case Manager of
-      partisan_hyparview_peer_service_manager ->
-        Node = rpc:call(Host, Manager, myself, []),
-        ok = partisan_peer_service:join(Node),
-        Node;
-      {badrpc, Reason} ->
+    Res = rpc:call(Host, partisan_peer_service, manager, []),
+    join(Host,Res).
+join(Host,partisan_hyparview_peer_service_manager) ->
+    Node = rpc:call(Host, partisan_hyparview_peer_service_manager, myself, []),
+    ok = partisan_peer_service:join(Node),
+    Node;
+join(Host,{badrpc, Reason}) ->
         logger:log(error, "Unable to RPC remote : ~p~n", [Reason]),
         [];
-      {error, Reason} ->
+join(Host,{error, Reason})->
         logger:log(error, "Error : ~p~n", [Reason]),
         [];
-      _ ->
-        []
-    end.
+join(Host,{error, unkown})->
+        logger:log(error, "Error : ~p~n", [unkown]),
+        [].
 
 clusterize() ->
     N = seek_neighbors(),

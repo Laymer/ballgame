@@ -10,7 +10,41 @@
 %% Utility functions
 %%====================================================================
 
+%% Stress intensity in Kbps
+% ballgame_util:stress_throughput().
+stress_throughput() ->
+    stress_throughput(ballgame_util:get(packet_config)).
+stress_throughput(#{stress_delay    := Interval,
+                operations_count     := Count,
+                packet_size          := Size}) ->
+    % ((Count * Size) * (Interval / (?MILLION))). %% returns float
+    (Count * Size * Interval) div ?MILLION.
 
+fetch_resolv_conf() ->
+    {ok, F} = case is_shell() of
+        true ->
+            {ok, Cwd} = file:get_cwd(),
+            Wc = filename:join(Cwd,"**/files/"),
+            filelib:find_file("erl_inetrc", Wc);
+        _ ->
+            {ok, "nofile"}
+    end,
+    ok = inet_db:add_rc(F),
+    inet_db:get_rc().
+
+myname() ->
+    {ok, N} = inet:gethostname(),
+    N.
+
+team(Players) ->
+  [ name(X) || X <- Players ].
+
+name(Host) when is_integer(Host) ->
+  ?PLAYER(Host);
+name(Host) when is_atom(Host) ->
+  list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(Host)], utf8));
+name(Host) when is_list(Host) ->
+  [list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(X)], utf8)) || X <- lists:flatten(Host)].
 
 is_shell() ->
   case os:type() of
@@ -36,8 +70,11 @@ members() ->
 alone() ->
     length(members() -- [node()]) == 0.
 
+% foo(N, Bin) ->
+%    <<X:N,T/binary>> = Bin,
+%    {X,T}.
+% <<Packet:Size/bitstring>> = <<1:Size>>.
 get_packet(Size) ->
-    % <<Packet:Size/bitstring>> = <<1:Size>>.
     <<1:Size>>.
 
 bitstring_name() ->
@@ -53,28 +90,11 @@ declare_awset(Name) ->
   {ok, {AWSet, _, _, _}} = lasp:declare({AWName, AWSetType}, AWSetType),
   application:set_env(ballgame, awset, AWSet),
   AWSet.
-  % {ok, {AWSet1, _, _, _}} = lasp:update(AWSet, {add, AWSetVal1}, self()).
-% maybe_get_remote() ->
-%     MList = members(),
-%     maybe_get_remote(MList).
-% maybe_get_remote(Mlist) when is_list(MList) and length(MList) == 1 ->
-%     N = hd(MList),
-%     maybe_get_remote(N).
-% maybe_get_remote()
-%
-%
-%   try hd(List) of
-%     Hd ->
-%       Hd
-%   catch
-%     badarg:T ->
-%       {badarg,T}
-% end.
+
 
 %%====================================================================
 %% Clustering functions
 %%====================================================================
-
 
 -ifdef(SHELL).
 -define(GET_RC(), fetch_resolv_conf()).
@@ -82,15 +102,6 @@ declare_awset(Name) ->
 -define(GET_RC(), inet_db:get_rc()).
 -endif.
 
-
-% remotes_to_atoms(L) -> sum(L, []).
-%
-% map_pairs2(_Map, [], Ys) ->
-%     Ys;
-% map_pairs2(_Map, [_|_]=Xs, [] ) ->
-%     Xs;
-% map_pairs2(Map, [X|Xs], [Y|Ys]) ->
-%     [Map(X, Y)|map_pairs2(Map, Xs, Ys)].
 %%====================================================================
 %% NO LOGGING
 %%====================================================================
@@ -108,162 +119,59 @@ binary_remotes_to_atoms([H|T]) ->
 binary_remotes_to_atoms([]) ->
     [].
 
-main() ->
-    L = lists:seq(1,100000),
-    % F = fun(X) -> X end,
-    spawn(fun() -> io:format("New : ~p~n", [element(1, timer:tc(?MODULE, new_time, [L]))]) end),
-    spawn(fun() -> io:format("Old : ~p~n", [element(1, timer:tc(?MODULE, old_time, [L]))]) end).
-%
-% tail_map(F, L) ->
-%     tail_map(F, L, []).
-%
-% tail_map(_, [], Acc) -> lists:reverse(Acc);
-% tail_map(F, [H|T], Acc) -> tail_map(F, T, [F(H)|Acc]).
-%
-% body_map(_, []) -> [];
-% body_map(F, [H|T]) -> [F(H) | body_map(F, T)].
-
-
-new_time(L) ->
-    % L = lists:seq(1,100),
-    % F = fun(X) -> X end,
-    Times = [ element(1, timer:tc(?MODULE, clusterize, []) ) || X <- L],
-    lists:sum(Times).
-
-old_time(L) ->
-    % L = lists:seq(1,100),
-    % F = fun(X) -> X end,
-    Times = [ element(1, timer:tc(?MODULE, old_clusterize, []) ) || X <- L],
-    lists:sum(Times).
-    % T = element(1, timer:tc(?MODULE, clusterize, []) ),
-    % spawn(fun() -> io:format("Old:~p~n", [element(1, timer:tc(?MODULE, m_tail_map, []))]) end),
-    % spawn(fun() ->
-        % io:format("New:~p~n", [element(1, timer:tc(?MODULE, clusterize, []) )])
-    % end).
-%
-% m_tail_map(_, _, 0) -> ok;
-% m_tail_map(F, L, N) ->
-%     tail_map(F,L),
-%     m_tail_map(F, L, N-1).
-%
-% m_body_map(_, _, 0) -> ok;
-% m_body_map(F, L, N) ->
-%     body_map(F,L),
-%     m_body_map(F, L, N-1).
-%
-% remotes_to_bin([H|T]) ->
-    % remote
-% remotes_to_bin([H|T]) ->
-%     C = unicode:characters_to_list(["ballgame@",H]),
-%     R = list_to_atom(C),
-%     [R|remotes_to_bin(T)];
-% remotes_to_bin([]) ->
-%     [].
-
 seek_neighbors() ->
-    % T1 = erlang:monotonic_time(),
     Rc = inet_db:get_rc(),
     seek_neighbors(Rc).
-    % L = seek_neighbors(Rc),
-    % T2 = erlang:monotonic_time() - T1,
-    % logger:log(notice, "New seek time : ~p~n", [T2]),
-    % L.
 seek_neighbors([{host,_Addr,N}|T]) ->
     [list_to_bitstring(["ballgame@",N])|seek_neighbors(T)];
-    % [N|seek_neighbors(T)];
 seek_neighbors([{_Arg,_Val}|T]) ->
     seek_neighbors(T);
 seek_neighbors([]) ->
     [].
-%
-% seek_neighbors(Entry) when is_tuple(Entry) ->
-%
-%     Hosts = [ list_to_atom("ballgame@" ++ Hostname) ||
-%         X <- [H|T],
-%         element(1, X) =:= host,
-%         Hostname <- element(3,X) ],
-% seek_neighbors(Rc) when is_list(Rc) ->
-%     seek_neighbors({<<"rc">>,Rc}) ->
-%
+
 old_seek() ->
-    % T1 = erlang:monotonic_time(),
     lists:filtermap(fun
     (Tup) ->
         case Tup of
         {host,_Addr,[Hostname]} ->
-          % {true, list_to_atom("ballgame@" ++ Hostname)};
-          % N = list_to_bitstring(["ballgame@",Hostname]),
-          % {true, <<"ballgame@",N/bitstring>>};
+
           {true, list_to_bitstring(["ballgame@",Hostname])};
         _ ->
           false
         end
     end, inet_db:get_rc()).
-    % T1 = erlang:monotonic_time(),
-    % L = net_adm:ping_list(lists:filtermap(fun
-    % (Tup) ->
-    %     case Tup of
-    %     {host,_Addr,[Hostname]} ->
-    %       {true, list_to_atom("ballgame@" ++ Hostname)};
-    %     _ ->
-    %       false
-    %     end
-    % end, inet_db:get_rc())),
-    % L = lists:filtermap(fun
-    % (Tup) ->
-    %     case Tup of
-    %     {host,_Addr,[Hostname]} ->
-    %       {true, list_to_atom("ballgame@" ++ Hostname)};
-    %       % {true, Hostname};
-    %     _ ->
-    %       false
-    %     end
-    % end, inet_db:get_rc()),
-    % T2 = erlang:monotonic_time() - T1,
-    % logger:log(notice, "Old seek time : ~p~n", [T2]),
-    % L.
-    % << << (X*2) >> || <<X>> <= <<1,2,3>> >>.
+
 fakejoin(Host) ->
     timer:sleep(rand:uniform(50)),
     partisan_hyparview_peer_service_manager:myself().
-% foo(N, Bin) ->
-%    <<X:N,T/binary>> = Bin,
-%    {X,T}.
+
 bin_fakejoin(Host) ->
     binary_to_atom(Host,utf8),
     timer:sleep(rand:uniform(50)),
     partisan_hyparview_peer_service_manager:myself().
 
 join(Host) ->
-
-    Manager = rpc:call(Host, partisan_peer_service, manager, []),
-%% TODO : separate in funcs
-    case Manager of
-      partisan_hyparview_peer_service_manager ->
-        Node = rpc:call(Host, Manager, myself, []),
-        ok = partisan_peer_service:join(Node),
-        Node;
-      {badrpc, Reason} ->
-        logger:log(error, "Unable to RPC remote : ~p~n", [Reason]),
-        [];
-join(Host,{error, Reason})->
-        logger:log(error, "Error : ~p~n", [Reason]),
-        [];
-join(Host,{error, unkown})->
-        logger:log(error, "Error : ~p~n", [unkown]),
-        [].
+  Manager = rpc:call(Host, partisan_peer_service, manager, []),
+  case Manager of
+    partisan_hyparview_peer_service_manager ->
+      Node = rpc:call(Host, Manager, myself, []),
+      ok = partisan_peer_service:join(Node),
+      logger:log(info, "Joined ~p~n", [Host]),
+      Node;
+    {badrpc, Reason} ->
+      logger:log(error, "Unable to RPC remote : ~p~n", [Reason]),
+      {error, Reason};
+    {error, Reason} ->
+      logger:log(error, "Unable to retrieve remote : ~p~n", [Manager]),
+      {error, Reason}
+  end.
 
 clusterize() ->
-    % T1 = erlang:monotonic_time(),
     N = seek_neighbors(),
-    % Remotes = remotes_to_atoms(N),
     Remotes = binary_remotes_to_atoms(N),
     Self = node(),
     clusterize(Remotes,Self).
-    % L = clusterize(Remotes,Self),
-    % T2 = erlang:monotonic_time() - T1,
-    % logger:log(notice, "New clusterize time : ~p~n", [T2]),
-    % L.
+
 clusterize([H|Remotes],Self) ->
     case H =/= Self of
         true ->
@@ -272,29 +180,10 @@ clusterize([H|Remotes],Self) ->
             [Res|clusterize(Remotes,Self)];
         _ ->
             [clusterize(Remotes,Self)]
-        end;
+    end;
 
 clusterize([],_Self) ->
     [].
-      % X <- Remotes(),
-      % X =/= node() ].
-
-
-old_clusterize() ->
-    % T1 = erlang:monotonic_time(),
-    % L = [ ballgame_util:join(X) ||
-    % L = [ ballgame_util:fakejoin(X) ||
-    %     X <- old_seek(),
-    %     % X =/= atom_to_binary(node(),utf8) ],
-    %     X =/= node() ],
-    _L = [ ballgame_util:join(X) ||
-        X <- old_seek(),
-        X =/= atom_to_binary(node(),utf8) ].
-        % X =/= node() ].
-    % T2 = erlang:monotonic_time() - T1,
-    % logger:log(notice, "Old clusterize : ~p~n", [T2]),
-    % L.
-  % logger:log(info, "Joined = ~p ~n", [L]).
 
 -else.
 %%====================================================================
@@ -340,31 +229,158 @@ clusterize() ->
 -endif.
 
 
-fetch_resolv_conf() ->
-    {ok, F} = case is_shell() of
-        true ->
-            {ok, Cwd} = file:get_cwd(),
-            Wc = filename:join(Cwd,"**/files/"),
-            filelib:find_file("erl_inetrc", Wc);
-        _ ->
-            {ok, "nofile"}
-    end,
-    ok = inet_db:add_rc(F),
-    inet_db:get_rc().
+% join(Host) ->
+%     Manager = rpc:call(Host, partisan_peer_service, manager, []),
+%     %% TODO : separate in funcs
+%     case Manager of
+%       partisan_hyparview_peer_service_manager ->
+%         Node = rpc:call(Host, Manager, myself, []),
+%         ok = partisan_peer_service:join(Node),
+%         Node;
+%       {badrpc, Reason} ->
+%         logger:log(error, "Unable to RPC remote : ~p~n", [Reason]),
+%         [];
+% join(Host,{error, Reason})->
+%         logger:log(error, "Error : ~p~n", [Reason]),
+%         [];
+% join(Host,{error, unkown})->
+%         logger:log(error, "Error : ~p~n", [unkown]),
+%         [].
 
-myname() ->
-    {ok, N} = inet:gethostname(),
-    N.
 
-team(Players) ->
-  [ name(X) || X <- Players ].
+% old_clusterize() ->
+%     [ ballgame_util:join(X) ||
+%         X <- old_seek(),
+%         X =/= atom_to_binary(node(),utf8) ].
+        % X =/= node() ].
+    % T2 = erlang:monotonic_time() - T1,
+    % logger:log(notice, "Old clusterize : ~p~n", [T2]),
+    % L.
+  % logger:log(info, "Joined = ~p ~n", [L]).
 
-name(Host) when is_integer(Host) ->
-  ?PLAYER(Host);
-name(Host) when is_atom(Host) ->
-  list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(Host)], utf8));
-name(Host) when is_list(Host) ->
-  [list_to_atom(unicode:characters_to_list(["ballgame@", atom_to_list(X)], utf8)) || X <- lists:flatten(Host)].
+
+
+% X <- Remotes(),
+% X =/= node() ].
+
+
+% T1 = erlang:monotonic_time(),
+% L = [ ballgame_util:join(X) ||
+% L = [ ballgame_util:fakejoin(X) ||
+%     X <- old_seek(),
+%     % X =/= atom_to_binary(node(),utf8) ],
+%     X =/= node() ],
+
+
+
+% T1 = erlang:monotonic_time(),
+% L = net_adm:ping_list(lists:filtermap(fun
+% (Tup) ->
+%     case Tup of
+%     {host,_Addr,[Hostname]} ->
+%       {true, list_to_atom("ballgame@" ++ Hostname)};
+%     _ ->
+%       false
+%     end
+% end, inet_db:get_rc())),
+% L = lists:filtermap(fun
+% (Tup) ->
+%     case Tup of
+%     {host,_Addr,[Hostname]} ->
+%       {true, list_to_atom("ballgame@" ++ Hostname)};
+%       % {true, Hostname};
+%     _ ->
+%       false
+%     end
+% end, inet_db:get_rc()),
+% T2 = erlang:monotonic_time() - T1,
+% logger:log(notice, "Old seek time : ~p~n", [T2]),
+% L.
+% << << (X*2) >> || <<X>> <= <<1,2,3>> >>.
+
+% remotes_to_atoms(L) -> sum(L, []).
+%
+% map_pairs2(_Map, [], Ys) ->
+%     Ys;
+% map_pairs2(_Map, [_|_]=Xs, [] ) ->
+%     Xs;
+% map_pairs2(Map, [X|Xs], [Y|Ys]) ->
+%     [Map(X, Y)|map_pairs2(Map, Xs, Ys)].
+
+
+
+% {ok, {AWSet1, _, _, _}} = lasp:update(AWSet, {add, AWSetVal1}, self()).
+% maybe_get_remote() ->
+%     MList = members(),
+%     maybe_get_remote(MList).
+% maybe_get_remote(Mlist) when is_list(MList) and length(MList) == 1 ->
+%     N = hd(MList),
+%     maybe_get_remote(N).
+% maybe_get_remote()
+%
+%
+%   try hd(List) of
+%     Hd ->
+%       Hd
+%   catch
+%     badarg:T ->
+%       {badarg,T}
+% end.
+
+
+% main() ->
+%     L = lists:seq(1,100000),
+%     % F = fun(X) -> X end,
+%     spawn(fun() -> io:format("New : ~p~n", [element(1, timer:tc(?MODULE, new_time, [L]))]) end),
+%     spawn(fun() -> io:format("Old : ~p~n", [element(1, timer:tc(?MODULE, old_time, [L]))]) end).
+%
+% tail_map(F, L) ->
+%     tail_map(F, L, []).
+%
+% tail_map(_, [], Acc) -> lists:reverse(Acc);
+% tail_map(F, [H|T], Acc) -> tail_map(F, T, [F(H)|Acc]).
+%
+% body_map(_, []) -> [];
+% body_map(F, [H|T]) -> [F(H) | body_map(F, T)].
+
+
+% new_time(L) ->
+%     % L = lists:seq(1,100),
+%     % F = fun(X) -> X end,
+%     Times = [ element(1, timer:tc(?MODULE, clusterize, []) ) || X <- L],
+%     lists:sum(Times).
+%
+% old_time(L) ->
+%     % L = lists:seq(1,100),
+%     % F = fun(X) -> X end,
+%     Times = [ element(1, timer:tc(?MODULE, old_clusterize, []) ) || X <- L],
+%     lists:sum(Times).
+    % T = element(1, timer:tc(?MODULE, clusterize, []) ),
+    % spawn(fun() -> io:format("Old:~p~n", [element(1, timer:tc(?MODULE, m_tail_map, []))]) end),
+    % spawn(fun() ->
+        % io:format("New:~p~n", [element(1, timer:tc(?MODULE, clusterize, []) )])
+    % end).
+%
+% m_tail_map(_, _, 0) -> ok;
+% m_tail_map(F, L, N) ->
+%     tail_map(F,L),
+%     m_tail_map(F, L, N-1).
+%
+% m_body_map(_, _, 0) -> ok;
+% m_body_map(F, L, N) ->
+%     body_map(F,L),
+%     m_body_map(F, L, N-1).
+%
+% remotes_to_bin([H|T]) ->
+    % remote
+% remotes_to_bin([H|T]) ->
+%     C = unicode:characters_to_list(["ballgame@",H]),
+%     R = list_to_atom(C),
+%     [R|remotes_to_bin(T)];
+% remotes_to_bin([]) ->
+%     [].
+
+
 
 % case is_shell() of
 %     true ->
@@ -488,3 +504,42 @@ name(Host) when is_list(Host) ->
 %  partisan_pool,partisan_pool_sup,
 %  partisan_hyparview_peer_service_manager].
 % grapherl:modules("/home/laymer/EdgeComputing/ballgame/_build/test/lib/partisan/ebin","partisan", [partisan_acknowledgement_backend, partisan_causality_backend, partisan_client_server_peer_service_manager, partisan_default_peer_service_manager, partisan_hyparview_xbot_peer_service_manager, partisan_peer_service_client, partisan_peer_service_console, partisan_peer_service_events, partisan_peer_service_manager, partisan_plumtree_util, partisan_promise_backend, partisan_rpc_backend, partisan_static_peer_service_manager, partisan_transform,partisan_transformed_module, partisan_util,partisan_vclock]).
+
+    % logger:log(notice, "sbcs_to_mbcs : current ~p ~n", [recon_alloc:sbcs_to_mbcs(current)]),
+    % logger:log(notice, "sbcs_to_mbcs : max ~p ~n", [recon_alloc:sbcs_to_mbcs(max)]),
+    % logger:log(notice, "average_block_sizes : current ~p ~n", [recon_alloc:average_block_sizes(current)]),
+    % logger:log(notice, "average_block_sizes : max ~p ~n", [recon_alloc:average_block_sizes(max)]),
+    % % logger:log(notice, "fragmentation : current ~p ~n", [recon_alloc:fragmentation(current)]),
+    % % logger:log(notice, "fragmentation : max ~p ~n", [recon_alloc:fragmentation(max)]),
+    % logger:log(notice, "Usage : current ~p ~n", [recon_alloc:memory(usage,current)]),
+    % logger:log(notice, "fragmentation : max ~p ~n", [recon_alloc:memory(usage,max)]),
+    % logger:log(notice, "recon_alloc:cache_hit_rates() : ~p ~n", [recon_alloc:cache_hit_rates()]).
+recon() ->
+    % L = recon_alloc:sbcs_to_mbcs(current),
+    [ io:format("sbcs_to_mbcs === ~p ~n", [X]) || X <- recon_alloc:sbcs_to_mbcs(current) ],
+    recon(avg).
+recon(avg) ->
+    [ io:format("average_block_sizes === ~p ~n", [X]) || X <- recon_alloc:average_block_sizes(current) ],
+    recon(usage);
+recon(usage) ->
+    io:format("memory === ~p ~n", [recon_alloc:memory(usage,current)]),
+    recon(cache);
+recon(cache) ->
+    recon_alloc:cache_hit_rates().
+
+maxrecon() ->
+    % L = recon_alloc:sbcs_to_mbcs(current),
+    [ io:format("sbcs_to_mbcs === ~p ~n", [X]) || X <- recon_alloc:sbcs_to_mbcs(current) ],
+    maxrecon(avg).
+maxrecon(avg) ->
+    [ io:format("average_block_sizes === ~p ~n", [X]) || X <- recon_alloc:average_block_sizes(current) ],
+    maxrecon(usage);
+maxrecon(usage) ->
+    io:format("memory === ~p ~n", [recon_alloc:memory(usage,current)]),
+    maxrecon(cache);
+maxrecon(cache) ->
+    recon_alloc:cache_hit_rates().
+    % recon_alloc:sbcs_to_mbcs(max),
+    % recon_alloc:average_block_sizes(max),
+    % recon_alloc:memory(usage,current),
+    % recon_alloc:memory(usage,max),

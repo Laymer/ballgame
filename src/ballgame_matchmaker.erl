@@ -64,7 +64,7 @@ check() ->
 %%====================================================================
 
 init([]) ->
-  erlang:send_after(?THREE, ?MODULE, <<"check">>),
+  % erlang:send_after(?THREE, ?MODULE, <<"check">>),
   Channels = partisan_config:get(channels),
   Num = ballgame_util:get(players),
   Players = case Num of
@@ -98,7 +98,7 @@ handle_call(spawn, _From, State) ->
 handle_call(<<"check">>, _From, []) ->
     % N = ballgame_util:maybe_get_first(State),
 
-    Members = ballgame_util:clusterize(),
+    % Members = ballgame_util:clusterize(),
     % case length(Members) > 0 of
     %     true ->
     %         Members;
@@ -108,7 +108,7 @@ handle_call(<<"check">>, _From, []) ->
     %         []
     % end,
     erlang:send_after(?THREE, ?MODULE, <<"check">>),
-    {reply, checked, Members}.
+    {noreply, []}.
 
 %%--------------------------------------------------------------------
 

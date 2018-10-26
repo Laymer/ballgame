@@ -7,11 +7,11 @@
     {applications, [
         kernel,
         stdlib,
-        sasl,
-        grisp,
-        lager,
-        partisan,
-        lasp
+        sasl
+        % grisp,
+        % lager,
+        % partisan,
+        % lasp
     ]},
     {env,[]},
     {modules, []},

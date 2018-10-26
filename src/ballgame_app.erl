@@ -21,8 +21,9 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
-    prepare_game(),
-    {ok, Supervisor} = ballgame_sup:start_link(awset),
+    % prepare_game(),
+    % {ok, Supervisor} = ballgame_sup:start_link(awset),
+    {ok, Supervisor} = ballgame_sup:start_link(nolasp),
     % {ok, Supervisor} = ballgame_sup:start_link(),
     logger:log(info, "The game is about to start"),
     LEDs = [1, 2],

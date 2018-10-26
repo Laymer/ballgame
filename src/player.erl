@@ -52,6 +52,7 @@
                 ball :: first(),
                 name :: atom(),
                 set :: lasp_id(),
+                erlset ::  list(),
                 ops :: pos_integer(),
                 stress_delay :: pos_integer(),
                 packet :: bitstring(),
@@ -59,6 +60,7 @@
                 remote :: atom()}).
 
 -type lasp_id()       :: { bitstring(), atom() }.
+% -type set_id()       :: { bitstring(), set() }.
 -type stress_state() :: #state{}.
 -type first()        :: false|true.
 
@@ -71,7 +73,9 @@ start_link({stress_test, First}) ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, {stress_test, First}, []);
 % -spec start_link({awset, map()}) -> {ok, pid()}.
 start_link({awset, PacketConfig}) ->
-    gen_server:start_link({local, ?MODULE}, ?MODULE, {awset, PacketConfig}, []).
+    gen_server:start_link({local, ?MODULE}, ?MODULE, {awset, PacketConfig}, []);
+start_link({nolasp, PacketConfig}) ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, {nolasp, PacketConfig}, []).
 
 -spec start_link({stress_test, first()}, atom(), pos_integer()) -> {ok, pid()}.
 start_link({stress_test, First}, Name, Channel) ->
@@ -114,6 +118,16 @@ init({awset, PacketConfig}) when is_map(PacketConfig) ->
         , remote = node()
         , stress_delay = maps:get(stress_delay, PacketConfig)
         , packet_size = maps:get(packet_size, PacketConfig)}};
+init({nolasp, PacketConfig}) when is_map(PacketConfig) ->
+    % logger:log(notice, "Name = ~p  ! ~n", [Name]),
+    {ok, #state{ops = maps:get(operations_count, PacketConfig)
+        , channel = maps:get(channel, PacketConfig)
+        , name = ?MODULE
+        , ball = false
+        , remote = node()
+        , erlset = ordsets:new()
+        , stress_delay = maps:get(stress_delay, PacketConfig)
+        , packet_size = maps:get(packet_size, PacketConfig)}};
 init({stress_test, First}) ->
     {ok, #state{ops = ballgame_util:get(operations_count), channel = 1, ball = First, remote = node()}};
 init({stress_test, First, Name}) ->
@@ -141,6 +155,19 @@ handle_call(heavy_awset, _From, State) ->
     logger:log(notice, "PACKET =  ~p Size ~p bits ~n",[Packet, bit_size(Packet)]),
     erlang:send_after(?ONE,self(),<<"add">>),
     {reply, ok, State#state{set = Id, packet = Packet}};
+
+%%--------------------------------------------------------------------
+
+handle_call({play, Node}, _From, State) ->
+    logger:log(notice, "DIRECT PACKET request ! ~n"),
+    % Id = ballgame_util:declare_awset(set),
+    Packet = ballgame_util:get_packet(State#state.packet_size),
+    logger:log(notice, "PACKET =  ~p Size ~p bits ~n",[Packet, bit_size(Packet)]),
+    erlang:send_after(?ONE,self(),<<"distadd">>),
+
+    % Set = sets:new(),
+
+    {reply, ok, State#state{erlset = ordsets:new(), packet = Packet}};
 
 %%--------------------------------------------------------------------
 
@@ -215,6 +242,36 @@ handle_info(<<"add">>, State) when State#state.ops > 0 ->
     % {noreply, State#state{set = NewSet}};
     {noreply, State};
 
+handle_info(<<"distadd">>, State) when State#state.ops > 0 ->
+    logger:log(info, "ADD DIRECT ! ~n"),
+    logger:log(info, "PACKET =  ~p Size ~p bits ~n",[State#state.packet, bit_size(State#state.packet)]),
+
+    % ?PAUSE1,
+    % timer:sleep(ballgame_util:get(stress_delay)),
+    % lasp:update(State#state.set, {add, State#state.packet}, self()),
+
+    erlang:send_after(State#state.stress_delay,self(),<<"distrmv">>),
+    % erlang:send_after(10,self(),<<"rmv">>),
+    % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
+    % {noreply, State#state{set = NewSet}};
+    {noreply, State#state{erlset = ordsets:add_element(State#state.packet, State#state.erlset)}};
+
+handle_info(<<"distadd">>, State) ->
+    logger:log(notice, "FINISHED ! ~n"),
+    logger:log(notice, "SET =  ~p ~n",[ordsets:to_list(State#state.erlset)]),
+
+    % ?PAUSE1,
+    % timer:sleep(ballgame_util:get(stress_delay)),
+    % lasp:update(State#state.set, {add, State#state.packet}, self()),
+
+    erlang:send_after(State#state.stress_delay,self(),<<"distrmv">>),
+    % erlang:send_after(10,self(),<<"rmv">>),
+    % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
+    % {noreply, State#state{set = NewSet}};
+    {noreply, State#state{erlset = ordsets:add_element(State#state.packet, State#state.erlset)}};
+
 handle_info(<<"add">>, State) ->
     logger:log(notice, "FINISHED ! ~n"),
     % ?PAUSE1,
@@ -240,6 +297,21 @@ handle_info(<<"rmv">>, State) ->
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
     % {noreply, State#state{set = NewSet}};
     {noreply, State#state{ops = State#state.ops - 1}};
+
+handle_info(<<"distrmv">>, State) ->
+    logger:log(notice, "DIST RMV ! ~n"),
+    logger:log(notice, "SET =  ~p ~n",[ordsets:to_list(State#state.erlset)]),
+    % ?PAUSE1,
+    % timer:sleep(ballgame_util:get(stress_delay)),
+    % {ok, {NewSet, _, _, _}} = lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
+    % lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
+    % lasp:update(State#state.set, {rmv, State#state.packet}, self()),
+    erlang:send_after(State#state.stress_delay,self(),<<"distadd">>),
+    % erlang:send_after(10,self(),<<"add">>),
+    % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+    % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
+    % {noreply, State#state{set = NewSet}};
+    {noreply, State#state{erlset = ordsets:del_element(State#state.packet, State#state.erlset), ops = State#state.ops - 1}};
 
 handle_info({rc}, State) ->
     logger:log(notice, "Received INFO : RC ! ~n"),

@@ -34,7 +34,12 @@ start_link() ->
 start_link(awset) ->
     supervisor:start_link({local, ?MODULE},
     ?MODULE,
-    [ {awset, ballgame_util:get(packet_config)} ]).
+    [ {awset, ballgame_util:get(packet_config)} ]);
+
+start_link(nolasp) ->
+    supervisor:start_link({local, ?MODULE},
+    ?MODULE,
+    [ {nolasp, ballgame_util:get(packet_config)} ]).
 % -else.
 %     start_link() ->
 %         supervisor:start_link({local, ?MODULE},

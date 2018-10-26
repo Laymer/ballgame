@@ -163,7 +163,8 @@ handle_call({play, Node}, _From, State) ->
     % Id = ballgame_util:declare_awset(set),
     Packet = ballgame_util:get_packet(State#state.packet_size),
     logger:log(notice, "PACKET =  ~p Size ~p bits ~n",[Packet, bit_size(Packet)]),
-    erlang:send_after(?ONE,self(),<<"distadd">>),
+    % erlang:send_after(?ONE,self(),<<"distadd">>),
+    erlang:send_after(?ONE,self(),{<<"distadd">>,Node}),
 
     % Set = sets:new(),
 
@@ -242,15 +243,16 @@ handle_info(<<"add">>, State) when State#state.ops > 0 ->
     % {noreply, State#state{set = NewSet}};
     {noreply, State};
 
-handle_info(<<"distadd">>, State) when State#state.ops > 0 ->
+handle_info({<<"distadd">>,Node}, State) when State#state.ops > 0 ->
     logger:log(info, "ADD DIRECT ! ~n"),
     logger:log(info, "PACKET =  ~p Size ~p bits ~n",[State#state.packet, bit_size(State#state.packet)]),
-
     % ?PAUSE1,
+    timer:sleep(State#state.stress_delay),
+    {player, Node} ! <<"distrmv">>,
     % timer:sleep(ballgame_util:get(stress_delay)),
     % lasp:update(State#state.set, {add, State#state.packet}, self()),
 
-    erlang:send_after(State#state.stress_delay,self(),<<"distrmv">>),
+    % erlang:send_after(State#state.stress_delay,self(),<<"distrmv">>),
     % erlang:send_after(10,self(),<<"rmv">>),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),

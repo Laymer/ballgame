@@ -50,6 +50,7 @@
 
 -record(state, {channel :: pos_integer(),
                 ball :: first(),
+                table :: any(),
                 name :: atom(),
                 set :: lasp_id(),
                 ops :: pos_integer(),
@@ -107,6 +108,7 @@ set_ops_count(Ops) ->
 % -spec init({stress_test, first()}) -> {'ok', stress_state()}.
 init({awset, PacketConfig}) when is_map(PacketConfig) ->
     % logger:log(notice, "Name = ~p  ! ~n", [Name]),
+    T = ets:new(ops_table, [ordered_set, public, named_table]),
     {ok, #state{ops = maps:get(operations_count, PacketConfig)
         , channel = maps:get(channel, PacketConfig)
         , name = ?MODULE
@@ -205,18 +207,37 @@ handle_info(<<1:1>>, State) ->
 handle_info(<<"add">>, State) when State#state.ops > 0 ->
     logger:log(info, "ADD ! ~n"),
     logger:log(info, "PACKET =  ~p Size ~p bits ~n",[State#state.packet, bit_size(State#state.packet)]),
+
+    % ets:insert(ops_table,{add, State#state.packet}),
     % ?PAUSE1,
     % timer:sleep(ballgame_util:get(stress_delay)),
     lasp:update(State#state.set, {add, State#state.packet}, self()),
+
     erlang:send_after(State#state.stress_delay,self(),<<"rmv">>),
     % erlang:send_after(10,self(),<<"rmv">>),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
     % {noreply, State#state{set = NewSet}};
     {noreply, State};
+%
+% handle_info(<<"add">>, State) when State#state.ops > 0 ->
+%     logger:log(info, "ADD ! ~n"),
+%     logger:log(info, "PACKET =  ~p Size ~p bits ~n",[State#state.packet, bit_size(State#state.packet)]),
+%     % ?PAUSE1,
+%     % timer:sleep(ballgame_util:get(stress_delay)),
+%     lasp:update(State#state.set, {add, State#state.packet}, self()),
+%
+%     erlang:send_after(State#state.stress_delay,self(),<<"rmv">>),
+%     % erlang:send_after(10,self(),<<"rmv">>),
+%     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),
+%     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
+%     % {noreply, State#state{set = NewSet}};
+%     {noreply, State};
 
 handle_info(<<"add">>, State) ->
     logger:log(notice, "FINISHED ! ~n"),
+    % logger:log(notice, "TABLE =  ~p  ~n",[ets:match(ops_table, '$1')]),
+    % [ lasp:update(State#state.set, X, self()) || [X] <- ets:match(ops_table, '$1') ],
     % ?PAUSE1,
     % timer:sleep(ballgame_util:get(stress_delay)),
     % lasp:update(State#state.set, {add, <<1:1>>}, self()),
@@ -234,6 +255,7 @@ handle_info(<<"rmv">>, State) ->
     % {ok, {NewSet, _, _, _}} = lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
     % lasp:update(State#state.set, {rmv, <<1:1>>}, self()),
     lasp:update(State#state.set, {rmv, State#state.packet}, self()),
+    % ets:insert(ops_table,{rmv, State#state.packet}),
     erlang:send_after(State#state.stress_delay,self(),<<"add">>),
     % erlang:send_after(10,self(),<<"add">>),
     % ?HYPAR:forward_message(State#state.remote, 1, player, <<1:1>>, []),

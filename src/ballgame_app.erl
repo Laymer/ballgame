@@ -22,12 +22,14 @@
 
 start(_StartType, _StartArgs) ->
     prepare_game(),
-    {ok, Supervisor} = ballgame_sup:start_link(awset),
+    {ok, Supervisor} = ballgame_sup:start_link(),
     % {ok, Supervisor} = ballgame_sup:start_link(),
+    % ballgame_sup:start_player(),
+    ballgame_sup:start_temp(),
     logger:log(info, "The game is about to start"),
     LEDs = [1, 2],
-    [grisp_led:flash(L, red, 500) || L <- LEDs],
-    timer:sleep(5000),
+    [grisp_led:color(L, red) || L <- LEDs],
+    % timer:sleep(5000),
     % grisp_led:off(2),
     % Random = fun() ->
     %     {rand:uniform(2) - 1, rand:uniform(2) -1, rand:uniform(2) - 1}
@@ -52,6 +54,8 @@ prepare_game() ->
 inetconf() ->
   logger:log(info, "Preparing DB"),
   whereis(inet_db).
+
+
   % erlang:send_after(200,self(),{rc}).
   % {ok, L} = inet:getif(),
   % {{_,_,_,Num},_,_} = hd(L),

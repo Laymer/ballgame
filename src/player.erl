@@ -142,6 +142,7 @@ handle_call(heavy_awset, _From, State) ->
     Packet = ballgame_util:get_packet(State#state.packet_size),
     logger:log(notice, "PACKET =  ~p Size ~p bits ~n",[Packet, bit_size(Packet)]),
     erlang:send_after(?ONE,self(),<<"add">>),
+    erlang:send_after(?TEN,self(),<<"gc">>),
     {reply, ok, State#state{set = Id, packet = Packet}};
 
 %%--------------------------------------------------------------------
@@ -262,6 +263,11 @@ handle_info(<<"rmv">>, State) ->
     % ?HYPAR:forward_message(State#state.remote, State#state.channel, State#state.name, <<1:1>>, []),
     % {noreply, State#state{set = NewSet}};
     {noreply, State#state{ops = State#state.ops - 1}};
+
+handle_info(<<"gc">>, State) ->
+    ballgame_util:gc(),
+    erlang:send_after(?TEN,self(),<<"gc">>),
+    {noreply, State};
 
 handle_info({rc}, State) ->
     logger:log(notice, "Received INFO : RC ! ~n"),

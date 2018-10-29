@@ -7,14 +7,15 @@
  # https://www3.ntu.edu.sg/home/ehchua/programming/cpp/gcc_make.html
  # http://erlang.org/pipermail/erlang-questions/2002-January/004295.html
 REBAR            ?= $(shell which rebar3)
+BASE_DIR         ?= $(shell pwd)
 # REVISION 		    ?= $(shell git rev-parse --short HEAD)
 GRISPAPP         ?= $(shell basename `find src -name "*.app.src"` .app.src)
-BASE_DIR         ?= $(shell pwd)
-DEPLOYMENTS_DIR		?= $(BASE_DIR)/priv/deployment_args
+LIB_DEV		?= $(BASE_DIR)/priv/lib_dev/$(GRISPAPP)/src
+SRC_FILE         ?= $(shell find $(BASE_DIR)/src -name "$(GRISPAPP).app.src")
+TEST_SRC_FILE         ?= $(shell find $(LIB_DEV) -name "$(GRISPAPP).app.test.src")
+PROD_SRC_FILE         ?= $(shell find $(LIB_DEV) -name "$(GRISPAPP).app.prod.src")
 GRISPFILES_DIR		?= $(BASE_DIR)/grisp/grisp_base/files
 CACHE_DIR         ?= $(HOME)/.cache/rebar3
-# ERLANG_BIN       ?= $(shell dirname $(shell which erl))
-# HOSTNAME         ?= $(shell hostname)
 COOKIE           ?= MyCookie
 VERSION 	       ?= 0.1.0
 DEPLOY_DEST		?=	/media/laymer/GRISP
@@ -34,14 +35,16 @@ DEPLOY_DEST		?=	/media/laymer/GRISP
 	# currently not working targets :
 	build no-cfg-build tarball-build \
 	# Others
-	test-app-src prod-app-src
+	test-app-src prod-app-src \
+	# command-line utils
+	testsrc prodsrc
+
 
 all: compile
 
 ##
 ## Compilation targets
 ##
-
 
 compile:
 	$(REBAR) compile
@@ -66,14 +69,14 @@ wipe: clean grispclean
 	$(REBAR) unlock
 	$(REBAR) upgrade
 
-clean: buildclean checkoutsclean
+clean: buildclean relclean
 	$(REBAR) clean
 
 fullclean: buildclean elixirclean checkoutsclean cacheclean
 	$(REBAR) clean
 
 buildclean:
-	rm -rdf $(BASE_DIR)/_build
+	rm -rdf $(BASE_DIR)/_build/*/lib/*/ebin/*
 
 grispclean:
 	rm -rdf $(BASE_DIR)/_grisp
@@ -87,6 +90,8 @@ cacheclean:
 	rm -rdf $(CACHE_DIR)/plugins/rebar3_grisp
 checkoutsclean:
 	rm -rdf $(BASE_DIR)/_checkouts/*/ebin/*
+relclean:
+	rm -rdf $(BASE_DIR)/_build/*/rel
 #
 # Test targets
 #
@@ -98,7 +103,7 @@ shell:
 # shell: test-app-src
 # 	$(REBAR) shell --sname $(GRISPAPP) --setcookie $(COOKIE) --apps grisplite
 #
-testshell:
+testshell: testsrc
 	$(REBAR) as test shell --sname $(GRISPAPP)$(n) --setcookie $(COOKIE) --apps $(GRISPAPP)
 
 2testshell:
@@ -126,7 +131,7 @@ testshell:
 # stage: prod-app-src
 # 	$(REBAR) release -d
 
-deploy:
+deploy: prodsrc
 	$(REBAR) grisp deploy -n $(GRISPAPP) -v $(VERSION)
 
 devploy:
@@ -140,6 +145,11 @@ devploy:
 # 	cp $(DEPLOYMENTS_DIR)/2/grisp.ini.mustache $(GRISPFILES_DIR)/grisp.ini.mustache
 # 	$(REBAR) grisp deploy -n $(GRISPAPP) -v $(VERSION)
 
+testsrc:
+	cp $(TEST_SRC_FILE) $(SRC_FILE)
+
+prodsrc:
+	cp $(PROD_SRC_FILE) $(SRC_FILE)
 
 # doubledeploy: deploy 1deploy
 # 	echo "deployed"

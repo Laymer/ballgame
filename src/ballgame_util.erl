@@ -1,7 +1,6 @@
 -module(ballgame_util).
 
 -include("ballgame.hrl").
-
 -compile({nowarn_export_all}).
 
 -compile(export_all).
@@ -9,6 +8,65 @@
 %%====================================================================
 %% Utility functions
 %%====================================================================
+
+temp_aggregates_crdt() ->
+  {ok, S} = lasp:query({<<"temp">>, state_awset}),
+  sets:to_list(S).
+
+declare_crdt(Name, Type) ->
+  Bitstring = atom_to_binary(Name,utf8),
+  {ok, {Id, _, _, _}} = lasp:declare({Bitstring, Type}, Type),
+  Id.
+
+table(Name) ->
+  ets:new(Name, [ordered_set,
+                named_table,
+                public,
+                {heir, whereis(ballgame_matchmaker), []}]).
+temp() ->
+  pmod_nav:read(acc, [out_temp]).
+
+insert_timed_key(TableName, Value) ->
+  ets:insert(TableName, {erlang:monotonic_time(),Value}).
+
+store_temp() ->
+  ets:insert(temp, {erlang:monotonic_time(),pmod_nav:read(acc, [out_temp])}).
+
+grisp() ->
+  application:ensure_all_started(grisp).
+
+gc() ->
+  _ = [ erlang:garbage_collect(X, [{type, 'major'}]) || X <- erlang:processes() ].
+
+time() ->
+  logger:log(notice, "Time : ~p ~n",[erlang:monotonic_time()]).
+
+recon() ->
+    % L = recon_alloc:sbcs_to_mbcs(current),
+    [ io:format("sbcs_to_mbcs === ~p ~n", [X]) || X <- recon_alloc:sbcs_to_mbcs(current) ],
+    recon(avg).
+recon(avg) ->
+    [ io:format("average_block_sizes === ~p ~n", [X]) || X <- recon_alloc:average_block_sizes(current) ],
+    recon(usage);
+recon(usage) ->
+    io:format("memory === ~p ~n", [recon_alloc:memory(usage,current)]),
+    recon(cache);
+recon(cache) ->
+    recon_alloc:cache_hit_rates().
+
+maxrecon() ->
+    % L = recon_alloc:sbcs_to_mbcs(current),
+    [ io:format("sbcs_to_mbcs === ~p ~n", [X]) || X <- recon_alloc:sbcs_to_mbcs(current) ],
+    maxrecon(avg).
+maxrecon(avg) ->
+    [ io:format("average_block_sizes === ~p ~n", [X]) || X <- recon_alloc:average_block_sizes(current) ],
+    maxrecon(usage);
+maxrecon(usage) ->
+    io:format("memory === ~p ~n", [recon_alloc:memory(usage,current)]),
+    maxrecon(cache);
+maxrecon(cache) ->
+    recon_alloc:cache_hit_rates().
+
 
 %% Stress intensity in Kbps
 % ballgame_util:stress_throughput().
@@ -18,7 +76,7 @@ stress_throughput(#{stress_delay    := Interval,
                 operations_count     := Count,
                 packet_size          := Size}) ->
     % ((Count * Size) * (Interval / (?MILLION))). %% returns float
-    (Count * Size * Interval) div ?MILLION.
+    (Count * Size) div ?MILLION.
 
 fetch_resolv_conf() ->
     {ok, F} = case is_shell() of
@@ -514,31 +572,6 @@ clusterize() ->
     % logger:log(notice, "Usage : current ~p ~n", [recon_alloc:memory(usage,current)]),
     % logger:log(notice, "fragmentation : max ~p ~n", [recon_alloc:memory(usage,max)]),
     % logger:log(notice, "recon_alloc:cache_hit_rates() : ~p ~n", [recon_alloc:cache_hit_rates()]).
-recon() ->
-    % L = recon_alloc:sbcs_to_mbcs(current),
-    [ io:format("sbcs_to_mbcs === ~p ~n", [X]) || X <- recon_alloc:sbcs_to_mbcs(current) ],
-    recon(avg).
-recon(avg) ->
-    [ io:format("average_block_sizes === ~p ~n", [X]) || X <- recon_alloc:average_block_sizes(current) ],
-    recon(usage);
-recon(usage) ->
-    io:format("memory === ~p ~n", [recon_alloc:memory(usage,current)]),
-    recon(cache);
-recon(cache) ->
-    recon_alloc:cache_hit_rates().
-
-maxrecon() ->
-    % L = recon_alloc:sbcs_to_mbcs(current),
-    [ io:format("sbcs_to_mbcs === ~p ~n", [X]) || X <- recon_alloc:sbcs_to_mbcs(current) ],
-    maxrecon(avg).
-maxrecon(avg) ->
-    [ io:format("average_block_sizes === ~p ~n", [X]) || X <- recon_alloc:average_block_sizes(current) ],
-    maxrecon(usage);
-maxrecon(usage) ->
-    io:format("memory === ~p ~n", [recon_alloc:memory(usage,current)]),
-    maxrecon(cache);
-maxrecon(cache) ->
-    recon_alloc:cache_hit_rates().
     % recon_alloc:sbcs_to_mbcs(max),
     % recon_alloc:average_block_sizes(max),
     % recon_alloc:memory(usage,current),
